@@ -22,6 +22,7 @@ Route::get('/register', function () {
 
 Route::post('/register', [UserController::class, 'register']);
 
+Route::post('/login', [UserController::class, 'login']);
 
 // Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 

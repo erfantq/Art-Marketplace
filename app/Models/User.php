@@ -59,7 +59,7 @@ class User extends Authenticatable
         return self::$db;
     }
 
-    public static function register($username, $password)
+    public static function register($username, $password, $role)
     {
         try {
             $db = self::getDb();
@@ -75,6 +75,7 @@ class User extends Authenticatable
             $usersCollection->insertOne([
                 'username' => $username,
                 'password' => $hashedPassword,
+                'role' => $role,
                 'created_at' => now(),
             ]);
 
@@ -82,6 +83,18 @@ class User extends Authenticatable
                 'success' => true,
                 'message' => 'User registered successfully.',
             ];
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public static function findUser($username) 
+    {
+        try {
+            $db = self::getDb();
+            $usersCollection = $db->users;
+
+            return $usersCollection->findOne(['username' => $username]);
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
