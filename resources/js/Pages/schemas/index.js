@@ -11,6 +11,12 @@ export const LoginSchema = yup.object().shape({
     password : yup.string().min(5,"").matches(passwordRegEx,{"message":passwordTxt}).required(requiredTxt)
 })
 
+export const RegisterSchema = yup.object().shape({
+    username : yup.string().required(requiredTxt),
+    password : yup.string().min(5,"").matches(passwordRegEx,{"message":passwordTxt}).required(requiredTxt),
+    role : yup.string().required("Please select a role")
+})
+
 // export const CreateUserSchema = yup.object().shape({
 //     fName : yup.string().required(requiredTxt),
 //     lName : yup.string().required(requiredTxt),

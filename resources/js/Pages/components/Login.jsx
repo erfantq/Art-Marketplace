@@ -1,35 +1,41 @@
 import React, { useState, useRef } from "react";
 import { LoginSchema } from "../schemas/index";
-import { Formik, useFormik } from 'formik'
+import { Formik, useFormik } from "formik";
 
 // data :
-    // username 
-    // password
+// username
+// password
 
-export default function Login  (props)  {
-    
-    
+export default function Login(props) {
     const formRef = useRef();
 
-    const { values, errors, touched, isSubmitting, handleBlur, handleChange,handleSubmit } = useFormik({
+    const {
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+    } = useFormik({
         initialValues: {
             username: "",
-            password: ""
+            password: "",
         },
         validationSchema: LoginSchema,
         onSubmit: (values, actions) => {
-            actions.setSubmitting(false)
-            console.log(values.username)
-            console.log(values.password)
+            actions.setSubmitting(false);
+            console.log(values.username);
+            console.log(values.password);
         },
-    })
+    });
 
+    const baseInput =
+        "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
 
-    const baseInput = "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-
-    const incorrectInput = "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+    const incorrectInput =
+        "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
     return (
-        
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center p-6">
             <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8">
                 {/* Page Heading */}
@@ -41,53 +47,78 @@ export default function Login  (props)  {
                 </h2>
 
                 {/* Login Form */}
-                <form ref={formRef} method="post" action="login" onSubmit={(e) =>{
-                    e.preventDefault()
-                    handleSubmit(e)}
-                    }>
+                <form
+                    ref={formRef}
+                    method="post"
+                    action="login"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit(e);
+                    }}
+                >
                     {/* Username Field */}
                     <div className="mb-6">
-
                         <label
                             className="block mb-2 text-sm font-medium text-gray-400"
-                            htmlFor="username">
+                            htmlFor="username"
+                        >
                             Username
                         </label>
-                        <input type="text"
-                            id='username'
-                            className={errors.username && touched.username ? incorrectInput : baseInput}
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            className={
+                                errors.username && touched.username
+                                    ? incorrectInput
+                                    : baseInput
+                            }
                             placeholder="Enter your username"
                             value={values.username}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
 
-                        {errors.username && touched.username && <span className="form-label-alt text-right text-red-500">{errors.username}</span>}
+                        {errors.username && touched.username && (
+                            <span className="form-label-alt text-right text-red-500">
+                                {errors.username}
+                            </span>
+                        )}
                     </div>
 
                     {/* Password Field */}
                     <div className="mb-6">
-
                         <label
                             className="block mb-2 text-sm font-medium text-gray-400"
-                            htmlFor="password">
+                            htmlFor="password"
+                        >
                             Password
                         </label>
-                        <input type='password'
-                            id='password'
-                            className={errors.password && touched.password ? incorrectInput : baseInput}
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            className={
+                                errors.password && touched.password
+                                    ? incorrectInput
+                                    : baseInput
+                            }
                             placeholder="Enter your password"
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
 
-                        {errors.password && touched.password && <span className="form-label-alt text-right text-red-500">{errors.password}</span>}
+                        {errors.password && touched.password && (
+                            <span className="form-label-alt text-right text-red-500">
+                                {errors.password}
+                            </span>
+                        )}
                     </div>
 
                     {/* Login Button */}
                     <button
-                    type="submit"
+                        type="submit"
                         // type="submit"
                         className="w-full px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                     >
@@ -110,5 +141,4 @@ export default function Login  (props)  {
             </div>
         </div>
     );
-
-};
+}
