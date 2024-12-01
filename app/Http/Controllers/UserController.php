@@ -42,6 +42,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
+        dd($request->username);
         $user = User::findUser($request->username);
 
         if(!$user) {

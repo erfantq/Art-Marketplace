@@ -8,35 +8,23 @@ import { useFormik } from 'formik'
 
 export default function Login  (props)  {
     
-    
 
-    const formRef = useRef();
+    const formRef = useRef(null);
 
-    const onSubmit = async (values, actions) => {
-
-        try {
-
-            if (props.username.length === 0) {
-                // setAlertTxt('ایمیل وجود ندارد . درصورت تمایل میتوانید ثبت نام کنید')
-                actions.resetForm()
-            }
-            else {
-
-                if (props.password !== values.password) {
-                    // setAlertTxt('رمز عبور نادرست است.لطفا دوباره تلاش کنید !')
-                    handleAlert()
-                }
-                else {
-                    console.log("first")
-                    setTimeout(function () { navigate(`/login/${fName}-${lName}`) }, 3000)
-                }
-            }
-        } catch (error) {
-            console.log(error.message)
-        }
+    const onSubmit = (e) => {
+        console.log(values.username)
+        // e.preventDefault();
+        // console.log(e.target.value)
+        formRef.current.submit(); // Programmatically submit the form
+      };
 
 
-    }
+    // const onSubmit = (e) => {
+    //     if(isSubmitting){
+    //     e.preventDefault()
+    //     formRef.current.submit() 
+    //     }// Programmatically submit the form
+    //   };
 
     const { values, errors, touched, isSubmitting, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: {
@@ -44,7 +32,11 @@ export default function Login  (props)  {
             password: ""
         },
         validationSchema: LoginSchema,
-        onSubmit,
+        onSubmit: (values) => {
+            // This function will be called when the form is submitted
+            console.log('Form values:', values);
+            // You can handle the form submission here, e.g., make an API call
+        },
     })
 
     const baseInput = "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
@@ -118,7 +110,7 @@ export default function Login  (props)  {
                         Don't have an account?
                     </p>
                     <a
-                        href="/signUp" // Navigate to /register
+                        href="/register" // Navigate to /register
                         className="mt-2 text-sm font-medium text-purple-400 hover:underline"
                     >
                         Sign Up Here

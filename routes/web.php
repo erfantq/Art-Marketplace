@@ -8,7 +8,7 @@ use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return Inertia::render('Index');
 });
 
@@ -26,9 +26,12 @@ Route::post('/login', [UserController::class, 'login']);
 
 // Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 
-Route::get('/home', function(Request $request) {
-    $username = session('username');
-    return Inertia::render('HomeApp', compact('username'));
+Route::get('/', function(Request $request) {
+    if(session('username')) {
+        $username = session('username');
+        return Inertia::render('HomeApp', compact('username'));
+    } 
+    return Inertia::render('HomeApp');
 })->name('home');
 
 // Route::middleware([
