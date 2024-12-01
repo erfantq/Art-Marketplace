@@ -1,6 +1,7 @@
 import React, { useState , useRef } from "react";
 
-const Signup = () => {
+export default function Register (props)  {
+
   // const [csrfToken, setCsrfToken] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -158,5 +159,3 @@ const Signup = () => {
   //   </div>
   // );
 };
-
-export default Signup;

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { LoginSchema } from "../schemas/index";
-import { useFormik } from 'formik'
+import { Formik, useFormik } from 'formik'
 
 // data :
     // username 
@@ -9,48 +9,27 @@ import { useFormik } from 'formik'
 export default function Login  (props)  {
     
     
-
     const formRef = useRef();
 
-    const onSubmit = async (values, actions) => {
-
-        try {
-
-            if (props.username.length === 0) {
-                // setAlertTxt('ایمیل وجود ندارد . درصورت تمایل میتوانید ثبت نام کنید')
-                actions.resetForm()
-            }
-            else {
-
-                if (props.password !== values.password) {
-                    // setAlertTxt('رمز عبور نادرست است.لطفا دوباره تلاش کنید !')
-                    handleAlert()
-                }
-                else {
-                    console.log("first")
-                    setTimeout(function () { navigate(`/login/${fName}-${lName}`) }, 3000)
-                }
-            }
-        } catch (error) {
-            console.log(error.message)
-        }
-
-
-    }
-
-    const { values, errors, touched, isSubmitting, handleBlur, handleChange, handleSubmit } = useFormik({
+    const { values, errors, touched, isSubmitting, handleBlur, handleChange,handleSubmit } = useFormik({
         initialValues: {
             username: "",
             password: ""
         },
         validationSchema: LoginSchema,
-        onSubmit,
+        onSubmit: (values, actions) => {
+            actions.setSubmitting(false)
+            console.log(values.username)
+            console.log(values.password)
+        },
     })
+
 
     const baseInput = "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
 
     const incorrectInput = "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
     return (
+        
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center p-6">
             <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8">
                 {/* Page Heading */}
@@ -62,7 +41,10 @@ export default function Login  (props)  {
                 </h2>
 
                 {/* Login Form */}
-                <form ref={formRef} method="post" action="login" onSubmit={handleSubmit}>
+                <form ref={formRef} method="post" action="login" onSubmit={(e) =>{
+                    e.preventDefault()
+                    handleSubmit(e)}
+                    }>
                     {/* Username Field */}
                     <div className="mb-6">
 
@@ -105,7 +87,8 @@ export default function Login  (props)  {
 
                     {/* Login Button */}
                     <button
-                        type="submit"
+                    type="submit"
+                        // type="submit"
                         className="w-full px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                     >
                         Login
@@ -118,7 +101,7 @@ export default function Login  (props)  {
                         Don't have an account?
                     </p>
                     <a
-                        href="/signUp" // Navigate to /register
+                        href="/register" // Navigate to /register
                         className="mt-2 text-sm font-medium text-purple-400 hover:underline"
                     >
                         Sign Up Here

@@ -11,10 +11,10 @@ export const LoginSchema = yup.object().shape({
     password : yup.string().min(5,"").matches(passwordRegEx,{"message":passwordTxt}).required(requiredTxt)
 })
 
-export const CreateUserSchema = yup.object().shape({
-    fName : yup.string().required(requiredTxt),
-    lName : yup.string().required(requiredTxt),
-    email : yup.string().email(emailTxt).required(requiredTxt),
-    password : yup.string().min(5,"").matches(passwordRegEx,{"message" : passwordTxt}).required(requiredTxt),
-    confirmPassword :yup.string().oneOf([yup.ref('password'),null],confirmPasswordTxt) 
-})
+// export const CreateUserSchema = yup.object().shape({
+//     fName : yup.string().required(requiredTxt),
+//     lName : yup.string().required(requiredTxt),
+//     email : yup.string().email(emailTxt).required(requiredTxt),
+//     password : yup.string().min(5,"").matches(passwordRegEx,{"message" : passwordTxt}).required(requiredTxt),
+//     confirmPassword :yup.string().oneOf([yup.ref('password'),null],confirmPasswordTxt) 
+// })
