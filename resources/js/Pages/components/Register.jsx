@@ -1,11 +1,15 @@
 import React, { useState, useRef } from "react";
 import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 export default function Register(props) {
   // const [csrfToken, setCsrfToken] = useState("");
 
   const formRef = useRef();
+  const navigate = useNavigate()
 
   const {
     values,
@@ -22,12 +26,19 @@ export default function Register(props) {
       role: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values, actions) => {
+    onSubmit: async (values, actions) => {
+      try {
+        const response = await axios.post('/register', values);
+        console.log(values)
+        console.log(response.data);
+        // Handle successful registration here (e.g., show a success message, redirect)
+      } catch (error) {
+        console.error('Registration error:', error);
+        // Handle registration error here (e.g., show an error message)
+      }
       actions.setSubmitting(false);
-      console.log(values.username);
-      console.log(values.password);
-      console.log(values.role);
     },
+        
   });
 
   const baseInput =
@@ -47,8 +58,6 @@ export default function Register(props) {
         {/* Signup Form */}
         <form
           ref={formRef}
-          method="post"
-          action="register"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(e);
@@ -161,12 +170,12 @@ export default function Register(props) {
           <p className="text-sm text-gray-400">
             Already have an account?
           </p>
-          <a
-            href="/login" // Navigate to /register
-            className="mt-2 text-sm font-medium text-purple-400 hover:underline"
+          <p
+            onClick={()=>navigate('/login')} // Navigate to /register
+            className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
           >
             Login Here
-          </a>
+          </p>
         </div>
       </div>
     </div>

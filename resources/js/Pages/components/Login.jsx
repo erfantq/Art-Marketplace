@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { LoginSchema } from "../schemas/index";
 import { Formik, useFormik } from "formik";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // data :
 // username
@@ -8,6 +10,7 @@ import { Formik, useFormik } from "formik";
 
 export default function Login(props) {
     const formRef = useRef();
+    const navigate = useNavigate();
 
     const {
         values,
@@ -23,12 +26,19 @@ export default function Login(props) {
             password: "",
         },
         validationSchema: LoginSchema,
-        onSubmit: (values, actions) => {
+        onSubmit: async (values, actions) => {
+            try {
+              const response = await axios.post('/login', values);
+              console.log(values)
+              console.log(response.data);
+              // Handle successful registration here (e.g., show a success message, redirect)
+            } catch (error) {
+              console.error('Registration error:', error);
+              // Handle registration error here (e.g., show an error message)
+            }
             actions.setSubmitting(false);
-            console.log(values.username);
-            console.log(values.password);
-        },
-    });
+          },
+        });
 
     const baseInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
@@ -49,8 +59,6 @@ export default function Login(props) {
                 {/* Login Form */}
                 <form
                     ref={formRef}
-                    method="post"
-                    action="login"
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleSubmit(e);
@@ -131,12 +139,13 @@ export default function Login(props) {
                     <p className="text-sm text-gray-400">
                         Don't have an account?
                     </p>
-                    <a
-                        href="/register" // Navigate to /register
-                        className="mt-2 text-sm font-medium text-purple-400 hover:underline"
+                    <p
+                        onClick={() =>navigate('/register')}
+                        // href="/register" // Navigate to /register
+                        className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
                     >
                         Sign Up Here
-                    </a>
+                    </p>
                 </div>
             </div>
         </div>
