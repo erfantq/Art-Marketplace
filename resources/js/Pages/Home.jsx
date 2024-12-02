@@ -11,7 +11,7 @@ export default function Home() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register />}/>
         {/* <Route path='/login/:name' element={<Main />}/> */}
-        <Route path='/*' element={<Navigate to='/login' />}/>
+        {/* <Route path='/*' element={<Navigate to='/login' />}/> */}
       </Routes>
     </BrowserRouter>
 
