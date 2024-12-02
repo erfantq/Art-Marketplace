@@ -12,6 +12,7 @@ class UserController extends Controller
 {
     public function register(Request $request) 
     {
+        // dd($request->username);
         $username = $request->username;
         $password = $request->password;
         $role = $request->role;
@@ -23,7 +24,7 @@ class UserController extends Controller
             return back()->withInput();
         }
 
-        $result = User::register($username, $password, $role);
+        $result = User::register($username, $password, $role, '');
 
         if($result['success']) {
             return redirect()->route('home')->with('username', $username)->with('role', $role);

@@ -2,12 +2,14 @@ import React, { useState, useRef } from "react";
 import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Register(props) {
   // const [csrfToken, setCsrfToken] = useState("");
 
   const formRef = useRef();
+  const navigate = useNavigate()
 
   const {
     values,
@@ -28,7 +30,7 @@ export default function Register(props) {
       try {
         const response = await axios.post('/register', values);
         console.log(values)
-        console.log(response.data);
+        console.log(response);
         // Handle successful registration here (e.g., show a success message, redirect)
       } catch (error) {
         console.error('Registration error:', error);
@@ -56,10 +58,8 @@ export default function Register(props) {
         {/* Signup Form */}
         <form
           ref={formRef}
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(e);
-          }}
+          method="post"
+          action="register"
         >
           <h4 className="text-xl font-medium text-center mb-8 text-purple-400">
             Create an account
@@ -168,12 +168,12 @@ export default function Register(props) {
           <p className="text-sm text-gray-400">
             Already have an account?
           </p>
-          <a
-            href="/" // Navigate to /register
-            className="mt-2 text-sm font-medium text-purple-400 hover:underline"
+          <p
+            onClick={()=>navigate('/login')} // Navigate to /register
+            className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
           >
             Login Here
-          </a>
+          </p>
         </div>
       </div>
     </div>

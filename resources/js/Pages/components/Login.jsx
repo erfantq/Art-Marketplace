@@ -1,47 +1,50 @@
 import React, { useState, useRef } from "react";
 import { LoginSchema } from "../schemas/index";
-import { useFormik } from 'formik'
+import { Formik, useFormik } from "formik";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // data :
-    // username 
-    // password
+// username
+// password
 
-export default function Login  (props)  {
-    
+export default function Login(props) {
+    const formRef = useRef();
+    const navigate = useNavigate();
 
-    const formRef = useRef(null);
-
-    const onSubmit = (e) => {
-        console.log(values.username)
-        // e.preventDefault();
-        // console.log(e.target.value)
-        formRef.current.submit(); // Programmatically submit the form
-      };
-
-
-    // const onSubmit = (e) => {
-    //     if(isSubmitting){
-    //     e.preventDefault()
-    //     formRef.current.submit() 
-    //     }// Programmatically submit the form
-    //   };
-
-    const { values, errors, touched, isSubmitting, handleBlur, handleChange, handleSubmit } = useFormik({
+    const {
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+    } = useFormik({
         initialValues: {
             username: "",
-            password: ""
+            password: "",
         },
         validationSchema: LoginSchema,
-        onSubmit: (values) => {
-            // This function will be called when the form is submitted
-            console.log('Form values:', values);
-            // You can handle the form submission here, e.g., make an API call
-        },
-    })
+        onSubmit: async (values, actions) => {
+            try {
+              const response = await axios.post('/login', values);
+              console.log(values)
+              console.log(response.data);
+              // Handle successful registration here (e.g., show a success message, redirect)
+            } catch (error) {
+              console.error('Registration error:', error);
+              // Handle registration error here (e.g., show an error message)
+            }
+            actions.setSubmitting(false);
+          },
+        });
 
-    const baseInput = "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+    const baseInput =
+        "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
 
-    const incorrectInput = "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+    const incorrectInput =
+        "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center p-6">
             <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8">
@@ -54,50 +57,77 @@ export default function Login  (props)  {
                 </h2>
 
                 {/* Login Form */}
-                <form ref={formRef} method="post" action="login" onSubmit={handleSubmit}>
+                <form
+                    ref={formRef}
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit(e);
+                    }}
+                >
                     {/* Username Field */}
                     <div className="mb-6">
-
                         <label
                             className="block mb-2 text-sm font-medium text-gray-400"
-                            htmlFor="username">
+                            htmlFor="username"
+                        >
                             Username
                         </label>
-                        <input type="text"
-                            id='username'
-                            className={errors.username && touched.username ? incorrectInput : baseInput}
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            className={
+                                errors.username && touched.username
+                                    ? incorrectInput
+                                    : baseInput
+                            }
                             placeholder="Enter your username"
                             value={values.username}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
 
-                        {errors.username && touched.username && <span className="form-label-alt text-right text-red-500">{errors.username}</span>}
+                        {errors.username && touched.username && (
+                            <span className="form-label-alt text-right text-red-500">
+                                {errors.username}
+                            </span>
+                        )}
                     </div>
 
                     {/* Password Field */}
                     <div className="mb-6">
-
                         <label
                             className="block mb-2 text-sm font-medium text-gray-400"
-                            htmlFor="password">
+                            htmlFor="password"
+                        >
                             Password
                         </label>
-                        <input type='password'
-                            id='password'
-                            className={errors.password && touched.password ? incorrectInput : baseInput}
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            className={
+                                errors.password && touched.password
+                                    ? incorrectInput
+                                    : baseInput
+                            }
                             placeholder="Enter your password"
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
 
-                        {errors.password && touched.password && <span className="form-label-alt text-right text-red-500">{errors.password}</span>}
+                        {errors.password && touched.password && (
+                            <span className="form-label-alt text-right text-red-500">
+                                {errors.password}
+                            </span>
+                        )}
                     </div>
 
                     {/* Login Button */}
                     <button
                         type="submit"
+                        // type="submit"
                         className="w-full px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                     >
                         Login
@@ -109,15 +139,15 @@ export default function Login  (props)  {
                     <p className="text-sm text-gray-400">
                         Don't have an account?
                     </p>
-                    <a
-                        href="/register" // Navigate to /register
-                        className="mt-2 text-sm font-medium text-purple-400 hover:underline"
+                    <p
+                        onClick={() =>navigate('/register')}
+                        // href="/register" // Navigate to /register
+                        className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
                     >
                         Sign Up Here
-                    </a>
+                    </p>
                 </div>
             </div>
         </div>
     );
-
-};
+}

@@ -27,6 +27,13 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'password',
+        'email',
+        'address',
+        'wallet_balance',
+        'discount_codes',
+        'previous_purchases',
+        'current_auctions',
+        'previous_auctions',
     ];
 
     /**
@@ -59,7 +66,7 @@ class User extends Authenticatable
         return self::$db;
     }
 
-    public static function register($username, $password, $role)
+    public static function register($username, $password, $role, $email)
     {
         try {
             $db = self::getDb();
@@ -76,6 +83,13 @@ class User extends Authenticatable
                 'username' => $username,
                 'password' => $hashedPassword,
                 'role' => $role,
+                'email' => $email,
+                'address' => '',
+                'wallet_balance' => 0,
+                'discount_codes' => [],
+                'previous_purchases' => [],
+                'current_auctions' => [],
+                'previous_auctions' => [],
                 'created_at' => now(),
             ]);
 
