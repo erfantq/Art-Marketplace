@@ -21,7 +21,12 @@
     Route::get('/register', function () {
         return Inertia::render('RegisterApp');
     });
+
     Route::post('/register', [UserController::class, 'register']);
+    
+    Route::get('/artist', function () {
+        return Inertia::render('./components/ArtistPage');
+    });
 
     Route::post('/login', [UserController::class, 'login']);
 

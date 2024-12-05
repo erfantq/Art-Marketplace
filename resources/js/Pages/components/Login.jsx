@@ -1,16 +1,11 @@
 import React, { useState, useRef } from "react";
 import { LoginSchema } from "../schemas/index";
 import { Formik, useFormik } from "formik";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from '../../api/axiosApi'
 
-// data :
-// username
-// password
 
 export default function Login(props) {
-    const formRef = useRef();
     const navigate = useNavigate()
 
     const [btnSubmit, setBtnSubmit] = useState(false)
@@ -18,8 +13,10 @@ export default function Login(props) {
     const onSubmit = async (values, action) => {
   
       try {
-        await api.post('/login', values);
+        const response = await api.post('/login', values);
+
         if (isSubmitting) {
+          alert(response.data)
           setBtnSubmit(true)
           setTimeout(() => {
             setBtnSubmit(false)
@@ -46,13 +43,15 @@ export default function Login(props) {
             password: "",
         },
         validationSchema: LoginSchema,
-        onSubmit });
+        onSubmit 
+    });
 
     const baseInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
 
     const incorrectInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center p-6">
             <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8">
@@ -130,9 +129,11 @@ export default function Login(props) {
                     <button
                         type="submit"
                         // type="submit"
-                        className={`w-full px-4 py-2 text-sm font-medium text-white  rounded-md ${btnSubmit ? 'disabled:bg-purple-400' : 'bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 '}`}
+                        disabled={btnSubmit}
+                        className={`w-full px-4 py-2 text-sm font-medium text-white rounded-md  ${btnSubmit ? 'bg-purple-400 cursor-not-allowed' : 'bg-purple-700 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'}`}
                     >
-                        Login
+                     {btnSubmit ? 'Welcome...' : 'Login'}
+
                     </button>
                 </form>
 

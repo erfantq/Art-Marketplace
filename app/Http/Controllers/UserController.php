@@ -16,8 +16,6 @@ class UserController extends Controller
         $password = $request->password;
         $role = $request->role;
 
-        var_dump($username.":HSH");
-        die();
         // var_dump($password);
         // var_dump($role);
         // die();
@@ -50,23 +48,24 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::findUser($request->username);
 
-        if(!$user) {
-            $message = 'User not found.';
-            return back()->withInput()->with('message', $message);
-        }
+        // $user = User::findUser($request->username);
+        // if(!$user) {
+        //     $message = 'User not found.';
+        //     return back()->withInput()->with('message', $message);
+        // }
 
-        $role = $user['role'];
-        $username = $user['username'];
-        $hashedPassword = $user['password'];
+        // $role = $user['role'];
+        // $username = $user['username'];
+        // $hashedPassword = $user['password'];
 
-        // Verify the password
-        if(!Hash::check($request->password, $hashedPassword)) {
-            $message = 'Invalid username or password.';
-            return back()->withInput()->with('message', $message);
-        }
+        // // Verify the password
+        // if(!Hash::check($request->password, $hashedPassword)) {
+        //     $message = 'Invalid username or password.';
+        //     return back()->withInput()->with('message', $message);
+        // }
 
-        return redirect()->route('home')->with('username', $username)->with('role', $role);
+        // return redirect()->route('home')->with('username', $username)->with('role', $role);
     }
+
 }
