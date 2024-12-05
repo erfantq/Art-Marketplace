@@ -20,8 +20,14 @@
 
     Route::get('/register', function () {
         return Inertia::render('RegisterApp');
-    });
+    })->name('register');
     Route::post('/register', [UserController::class, 'register']);
+    // Route::post('/register', function (Request $request) {
+    //     return $request->username;
+    //     // die();
+
+    //     // dd($request->all());
+    // });
 
     Route::post('/login', [UserController::class, 'login']);
 

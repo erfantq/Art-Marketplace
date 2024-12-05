@@ -11,38 +11,33 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
     public function register(Request $request) 
-    {
-        // dd($request->username);
+    {  
         $username = $request->username;
         $password = $request->password;
         $role = $request->role;
+        $email = $request->email;
 
-        var_dump($username.":HSH");
-        die();
-        // var_dump($password);
-        // var_dump($role);
-        // die();
-    
-// die;
-        // $request->validate([
-        //     'username' => 'required',
-        //     'password' => 'required',
-        // ]);
         if(!$username || !$password || !$role) {
-            return back()->withInput();
+            return response()->json([
+                'message' => 'Fill all required inputs.',
+            ], 422);
         }
 
-        $result = User::register($username, $password, $role, '');
+        $result = User::register($username, $password, $role, $email);
 
         if($result['success']) {
-            return redirect()->route('home')->with('username', $username)->with('role', $role);
-            // return Inertia::render('HomeApp', compact('username'));
+            return response()->json([
+                'username' => $username,
+                'role' => $role,
+            ]);
         } 
 
         $message = $result['message'];
-            
-        return back()->withInput()->with('message', $message);
-        
+
+        return response()->json([
+            'message' => $message
+        ], 422);
+                
 
         // return back()->withInput();
         // return Inertia::render('RegisterApp', compact('message', 'username', 'password'));
