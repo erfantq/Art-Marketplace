@@ -3,13 +3,32 @@ import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
+import api from '../../api/axiosApi'
 
 export default function Register(props) {
   // const [csrfToken, setCsrfToken] = useState("");
-
-  const formRef = useRef();
   const navigate = useNavigate()
+  
+  const [btnSubmit, setBtnSubmit] = useState(false)
+
+  const onSubmit = async (values, action) => {
+
+    try {
+      const response = await api.post('/register', values);
+
+      if (isSubmitting) {
+        alert(response.data)
+        setBtnSubmit(true)
+        setTimeout(() => {
+          setBtnSubmit(false)
+        }, 4000)
+      }
+  
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+
+  }
 
   const {
     values,
@@ -26,19 +45,7 @@ export default function Register(props) {
       role: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: async (values, actions) => {
-      try {
-        const response = await axios.post('/register', values);
-        console.log(values)
-        console.log(response);
-        // Handle successful registration here (e.g., show a success message, redirect)
-      } catch (error) {
-        console.error('Registration error:', error);
-        // Handle registration error here (e.g., show an error message)
-      }
-      actions.setSubmitting(false);
-    },
-        
+    onSubmit
   });
 
   const baseInput =
@@ -48,7 +55,7 @@ export default function Register(props) {
     "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br  from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8">
         {/* Page Heading */}
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-100 font-serif">
@@ -56,11 +63,7 @@ export default function Register(props) {
         </h1>
 
         {/* Signup Form */}
-        <form
-          ref={formRef}
-          method="post"
-          action="register"
-        >
+        <form onSubmit={handleSubmit}>
           <h4 className="text-xl font-medium text-center mb-8 text-purple-400">
             Create an account
           </h4>
@@ -132,7 +135,7 @@ export default function Register(props) {
               Role
             </label>
             <select
-              id="role" 
+              id="role"
               name="role"
               value={values.role}
               onChange={handleChange}
@@ -158,9 +161,10 @@ export default function Register(props) {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            disabled={btnSubmit}
+            className={`w-full px-4 py-2 text-sm font-medium text-white rounded-md  ${btnSubmit ? 'bg-purple-400 cursor-not-allowed' : 'bg-purple-700 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'}`}
           >
-            Sign Up
+            {btnSubmit ? 'Submitting...' : 'Sign Up'}
           </button>
         </form>
 
@@ -169,7 +173,7 @@ export default function Register(props) {
             Already have an account?
           </p>
           <p
-            onClick={()=>navigate('/login')} // Navigate to /register
+            onClick={() => navigate('/login')} // Navigate to /register
             className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
           >
             Login Here

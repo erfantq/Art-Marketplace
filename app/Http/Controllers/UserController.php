@@ -16,6 +16,14 @@ class UserController extends Controller
         $username = $request->username;
         $password = $request->password;
         $role = $request->role;
+
+        var_dump($username.":HSH");
+        die();
+        // var_dump($password);
+        // var_dump($role);
+        // die();
+    
+// die;
         // $request->validate([
         //     'username' => 'required',
         //     'password' => 'required',

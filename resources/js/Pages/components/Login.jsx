@@ -3,6 +3,7 @@ import { LoginSchema } from "../schemas/index";
 import { Formik, useFormik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from '../../api/axiosApi'
 
 // data :
 // username
@@ -10,8 +11,27 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login(props) {
     const formRef = useRef();
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
+    const [btnSubmit, setBtnSubmit] = useState(false)
+  
+    const onSubmit = async (values, action) => {
+  
+      try {
+        await api.post('/login', values);
+        if (isSubmitting) {
+          setBtnSubmit(true)
+          setTimeout(() => {
+            setBtnSubmit(false)
+          }, 4000)
+        }
+    
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+  
+    }
+  
     const {
         values,
         errors,
@@ -26,19 +46,7 @@ export default function Login(props) {
             password: "",
         },
         validationSchema: LoginSchema,
-        onSubmit: async (values, actions) => {
-            try {
-              const response = await axios.post('/login', values);
-              console.log(values)
-              console.log(response.data);
-              // Handle successful registration here (e.g., show a success message, redirect)
-            } catch (error) {
-              console.error('Registration error:', error);
-              // Handle registration error here (e.g., show an error message)
-            }
-            actions.setSubmitting(false);
-          },
-        });
+        onSubmit });
 
     const baseInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
@@ -57,13 +65,7 @@ export default function Login(props) {
                 </h2>
 
                 {/* Login Form */}
-                <form
-                    ref={formRef}
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSubmit(e);
-                    }}
-                >
+                <form onSubmit={handleSubmit}>
                     {/* Username Field */}
                     <div className="mb-6">
                         <label
@@ -128,7 +130,7 @@ export default function Login(props) {
                     <button
                         type="submit"
                         // type="submit"
-                        className="w-full px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                        className={`w-full px-4 py-2 text-sm font-medium text-white  rounded-md ${btnSubmit ? 'disabled:bg-purple-400' : 'bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 '}`}
                     >
                         Login
                     </button>
