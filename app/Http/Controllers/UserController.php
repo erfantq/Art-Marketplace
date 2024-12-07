@@ -54,16 +54,17 @@ class UserController extends Controller
             return back()->withInput()->with('message', $message);
         }
 
-        $role = $user['role'];
-        $username = $user['username'];
-        $hashedPassword = $user['password'];
+        // $role = $user['role'];
+        // $username = $user['username'];
+        // $hashedPassword = $user['password'];
 
-        // Verify the password
-        if(!Hash::check($request->password, $hashedPassword)) {
-            $message = 'Invalid username or password.';
-            return back()->withInput()->with('message', $message);
-        }
+        // // Verify the password
+        // if(!Hash::check($request->password, $hashedPassword)) {
+        //     $message = 'Invalid username or password.';
+        //     return back()->withInput()->with('message', $message);
+        // }
 
-        return redirect()->route('home')->with('username', $username)->with('role', $role);
+        // return redirect()->route('home')->with('username', $username)->with('role', $role);
     }
+
 }
