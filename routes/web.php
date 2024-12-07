@@ -1,7 +1,10 @@
     <?php
 
-    use App\Http\Controllers\UserController;
-    use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArtsCotroller;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckUserRole;
+use Illuminate\Support\Facades\Route;
     use Inertia\Inertia;
     use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
     use App\Http\Middleware\VerifyCsrfToken;
@@ -12,7 +15,7 @@
 
     Route::get('/', function () {
         return Inertia::render('Index');
-    });
+    })->name('login');
 
     // Route::get('/csrf-token', function () {
     //     return response()->json(['csrfToken' => csrf_token()]);
@@ -33,10 +36,15 @@
 
     // Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 
-    Route::get('/home', function(Request $request) {
-        $username = session('username');
-        return Inertia::render('HomeApp', compact('username'));
-    })->name('home');
+
+    Route::prefix('home')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('/{artId}', [HomeController::class, 'showSelectedArt']);
+    });
+
+    Route::get('/profile', [UserController::class, 'show']);
+
+    Route::resource('{username}/arts', ArtsCotroller::class)->middleware(CheckUserRole::class);
 
     // Route::middleware([
     //     VerifyCsrfToken::class,

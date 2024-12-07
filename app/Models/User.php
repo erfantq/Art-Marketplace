@@ -57,19 +57,10 @@ class User extends Authenticatable
         ];
     }
 
-    public static function getDb()
-    {
-        if(!self::$db) {
-            $client = new Client(env('DB_URI'));
-            self::$db = $client->selectDatabase(env('DB_DATABASE'));
-        }
-        return self::$db;
-    }
-
     public static function register($username, $password, $role, $email)
     {
         try {
-            $db = self::getDb();
+            $db = DBConnection::getDb();
             $usersCollection = $db->users;
 
             $existingUser = $usersCollection->findOne(['username' => $username]);
@@ -84,12 +75,12 @@ class User extends Authenticatable
                 'password' => $hashedPassword,
                 'role' => $role,
                 'email' => $email,
-                'address' => '',
+                'address' => null,
                 'wallet_balance' => 0,
-                'discount_codes' => [],
                 'previous_purchases' => [],
                 'current_auctions' => [],
                 'previous_auctions' => [],
+                'arts' => [],
                 'created_at' => now(),
             ]);
 

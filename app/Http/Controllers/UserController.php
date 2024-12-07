@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -26,7 +27,11 @@ class UserController extends Controller
         $result = User::register($username, $password, $role, $email);
 
         if($result['success']) {
+            $user = User::findUser($username);
+            $userWithoutPassword = $user->makeHidden('password')->toArray();
+            Session::put('user', $userWithoutPassword);
             return response()->json([
+                'message' => 'success',
                 'username' => $username,
                 'role' => $role,
             ]);
@@ -46,25 +51,45 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        dd($request->username);
         $user = User::findUser($request->username);
 
+        $userWithoutPassword = $user->makeHidden('password')->toArray();
+
+        Session::put('user', $userWithoutPassword);
         if(!$user) {
             $message = 'User not found.';
-            return back()->withInput()->with('message', $message);
+            return response()->json([
+                'message' => $message,
+                'username' => $request->username,
+                'password' => $request->password,
+            ], 422);
         }
 
-        // $role = $user['role'];
-        // $username = $user['username'];
-        // $hashedPassword = $user['password'];
+        $role = $user['role'];
+        $username = $user['username'];
+        $hashedPassword = $user['password'];
 
-        // // Verify the password
-        // if(!Hash::check($request->password, $hashedPassword)) {
-        //     $message = 'Invalid username or password.';
-        //     return back()->withInput()->with('message', $message);
-        // }
+        // Verify the password
+        if(!Hash::check($request->password, $hashedPassword)) {
+            $message = 'Invalid username or password.';
+            return response()->json([
+                'message' => $message,
+                'username' => $username,
+                'password' => $request->password,
+            ], 422);
+        }
 
-        // return redirect()->route('home')->with('username', $username)->with('role', $role);
+        return response()->json([
+            'message' => 'success',
+            'username' => $username,
+            'role' => $role,
+        ]);
+    }
+
+    public function show()
+    {
+        $user = Session::get('user');
+        return Inertia::render('', compact('user'));
     }
 
 }

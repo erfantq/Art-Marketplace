@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use MongoDB\Client;
 
 return new class extends Migration
 {
@@ -13,31 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         $mongoClient = DB::connection('mongodb')->getMongoClient();
 
         $database = $mongoClient->selectDatabase(env('DB_DATABASE'));
 
-        $database->createCollection('users');
+        $database->createCollection('user_reviews');
 
         /*
-            User {
-                Username
-                Password
-                Role 
-                Email
-                Address
-                Created_at
-                Wallet-balance
-                    Relations {
-                        Discount-codes
-                        Previous_purchases
-                        Current_auctions
-                        Previous_auctions	
-                    }
-            }
+        user_reviews {
+            rate
+            comment
+            art
+            user
+        }
         */
-
     }
 
     /**
@@ -47,6 +35,6 @@ return new class extends Migration
     {
         $mongoClient = DB::connection('mongodb')->getMongoClient();
         $database = $mongoClient->selectDatabase(env('DB_DATABASE'));
-        $database->dropCollection('users');
+        $database->dropCollection('user_reviews');
     }
 };
