@@ -96,10 +96,25 @@ class User extends Authenticatable
     public static function findUser($username) 
     {
         try {
-            $db = self::getDb();
+            $db = DBConnection::getDb();
             $usersCollection = $db->users;
 
             return $usersCollection->findOne(['username' => $username]);
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public static function updateWallet($username, $value)
+    {
+        try {
+            $db = DBConnection::getDb();
+            $usersCollection = $db->users;
+
+            $filter = ['username' => $username];
+            $update = ['$set' => ['wallet_balance' => $value]];
+            $usersCollection->updateOne($filter, $update);
+            return ['success' => true, 'message' => 'wallet charge updated'];
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }

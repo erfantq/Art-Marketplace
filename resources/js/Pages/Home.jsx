@@ -25,7 +25,7 @@ export default function Home() {
         <Route path='/login/user:name/buy' element={<Buy />}/>
         <Route path='/home-page' element={<HomePage />}/>
         <Route path='/*' element={<Navigate to='/login' />}/>
-        
+                
       </Routes>
     </BrowserRouter>
 

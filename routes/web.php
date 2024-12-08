@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArtsCotroller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
 use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Route;
     use Inertia\Inertia;
@@ -45,6 +46,10 @@ use Illuminate\Support\Facades\Route;
     Route::get('/profile', [UserController::class, 'show']);
 
     Route::resource('{username}/arts', ArtsCotroller::class)->middleware(CheckUserRole::class);
+
+    Route::get('{username}/walletcharge', [UserController::class, 'showWallet']);
+
+    Route::post('{username}/walletcharge', [UserController::class, 'updateWallet']);
 
     // Route::middleware([
     //     VerifyCsrfToken::class,

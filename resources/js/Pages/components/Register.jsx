@@ -18,6 +18,8 @@ export default function Register(props) {
 
       if (isSubmitting) {
         alert(response.data)
+        console.log(response.data)
+
         setBtnSubmit(true)
         setTimeout(() => {
           setBtnSubmit(false)
