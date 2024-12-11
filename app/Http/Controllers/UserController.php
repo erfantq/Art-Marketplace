@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function register(Request $request) 
     {  
-        try{
+
         $username = $request->username;
         $password = $request->password;
         $role = $request->role;
@@ -47,15 +47,7 @@ class UserController extends Controller
         return response()->json([
             'message' => $message
         ], 422);
-    }
-     catch (\Exception $e) {
-        return response()->json([
-            'message' => 'An error occurred during registration',
-            'error' => $e->getMessage()
-        ], 500);
-    }
-
-                
+    
 
         // return back()->withInput();
         // return Inertia::render('RegisterApp', compact('message', 'username', 'password'));
@@ -66,7 +58,7 @@ class UserController extends Controller
     {
         $user = User::findUser($request->username);
 
-        unset($user['password']);
+        // unset($user['password']);
 
         Session::put('user', $user);
         if(!$user) {
@@ -115,7 +107,7 @@ class UserController extends Controller
         $user = Session::get('user');
         // dd(Inertia::render('TestWallet'));
         // TODO
-        return Inertia::render('', compact('user'));
+        return Inertia::render('components/Share/WalletCharge', compact('user'));
     }
 
     public function updateWallet(Request $request)

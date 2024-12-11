@@ -18,6 +18,11 @@ export const RegisterSchema = yup.object().shape({
     role : yup.string().required("Please select a role")
 })
 
+export const WalletChargeSchema = yup.object().shape({
+    charge : yup.string().required("Please enter an amount")
+})
+
+
 // export const CreateUserSchema = yup.object().shape({
 //     fName : yup.string().required(requiredTxt),
 //     lName : yup.string().required(requiredTxt),

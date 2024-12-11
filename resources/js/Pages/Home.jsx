@@ -8,6 +8,7 @@ import User from './components/User/User'
 import UserArtWorks from './components/User/UserArtWorks'
 import HomePage from './components/HomePage/HomePage'
 import Buy from './components/User/Buy'
+import WalletCharge from './components/Share/WalletCharge'
 
 
 export default function Home() {
@@ -16,14 +17,15 @@ export default function Home() {
     <BrowserRouter>
       <Routes>
         
+        <Route path='/home' element={<HomePage />}/>
         <Route path='/register' element={<Register />}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/artist/:name' element={<ArtistPage />}/>
-        <Route path='/artist/:name/create-bidding' element={<CreateBiddingg />}/>
+        <Route path='/:name' element={<ArtistPage />}/>
         <Route path='/user/:name' element={<User />}/>
+        <Route path='/artist/:name/create-bidding' element={<CreateBiddingg />}/>
         <Route path='/login/user:name/artworks' element={<UserArtWorks />}/>
         <Route path='/login/user:name/buy' element={<Buy />}/>
-        <Route path='/home' element={<HomePage />}/>
+        <Route path='/:name/walletcharge' element={<WalletCharge />}/>
         {/* <Route path='/*' element={<Navigate to='/login' />}/> */}
         
       </Routes>

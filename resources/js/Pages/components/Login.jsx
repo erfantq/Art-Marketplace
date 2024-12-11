@@ -13,18 +13,23 @@ export default function Login(props) {
     const onSubmit = async (values, action) => {
   
       try {
-        const response = await api.post('/login', values);
+          const response = await api.post("/login", values);
 
-        if (isSubmitting) {
-          alert(response.data)
-          setBtnSubmit(true)
-          setTimeout(() => {
-            setBtnSubmit(false)
-          }, 4000)
-        }
-    
+          sessionStorage.setItem("username", response.data.user.username);
+          sessionStorage.setItem("role", response.data.user.role);
+
+          if (isSubmitting) {
+              setBtnSubmit(true);
+              setTimeout(() => {
+                  navigate("/home");
+                  setBtnSubmit(false);
+              }, 4000);
+          }
       } catch (error) {
-        console.error('Error submitting form:', error);
+          console.error(
+              "Error submitting form:",
+              error.response?.data || error.message
+          );
       }
   
     }
