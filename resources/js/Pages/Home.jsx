@@ -18,13 +18,13 @@ export default function Home() {
         
         <Route path='/register' element={<Register />}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/login/artist:name' element={<ArtistPage />}/>
-        <Route path='/login/artist:name/create-bidding' element={<CreateBiddingg />}/>
-        <Route path='/login/user:name' element={<User />}/>
+        <Route path='/artist/:name' element={<ArtistPage />}/>
+        <Route path='/artist/:name/create-bidding' element={<CreateBiddingg />}/>
+        <Route path='/user/:name' element={<User />}/>
         <Route path='/login/user:name/artworks' element={<UserArtWorks />}/>
         <Route path='/login/user:name/buy' element={<Buy />}/>
-        <Route path='/home-page' element={<HomePage />}/>
-        <Route path='/*' element={<Navigate to='/login' />}/>
+        <Route path='/home' element={<HomePage />}/>
+        {/* <Route path='/*' element={<Navigate to='/login' />}/> */}
         
       </Routes>
     </BrowserRouter>

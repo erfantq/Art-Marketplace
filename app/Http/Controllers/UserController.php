@@ -13,6 +13,7 @@ class UserController extends Controller
 {
     public function register(Request $request) 
     {  
+        try{
         $username = $request->username;
         $password = $request->password;
         $role = $request->role;
@@ -27,9 +28,10 @@ class UserController extends Controller
         $result = User::register($username, $password, $role, $email);
 
         if($result['success']) {
-            $user = User::findUser($username);
-            $userWithoutPassword = $user->makeHidden('password')->toArray();
-            Session::put('user', $userWithoutPassword);
+            // $user = User::findUser($username);
+            // $userWithoutPassword = $user->makeHidden('password')->toArray();
+            $request->session()->put('user', $username);
+            // Session::put('user', $username);
             return response()->json([
                 'message' => 'success',
                 'username' => $username,
@@ -42,6 +44,14 @@ class UserController extends Controller
         return response()->json([
             'message' => $message
         ], 422);
+    }
+     catch (\Exception $e) {
+        return response()->json([
+            'message' => 'An error occurred during registration',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+
                 
 
         // return back()->withInput();

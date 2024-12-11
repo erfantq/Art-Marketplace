@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
 import axios from 'axios';
@@ -14,18 +14,24 @@ export default function Register(props) {
   const onSubmit = async (values, action) => {
 
     try {
-      const response = await api.post('/register', values);
+      const response = (await api.post('/register', values,{
+        headers: {
+          'Accept': 'application/json'
+      },
+      withCredentials: true // Important for sending/receiving cookies
 
-      if (isSubmitting) {
-        alert(response.data)
+      }));
+
+        sessionStorage.setItem('username', response.data.username);
+        sessionStorage.setItem('role', response.data.role);
         setBtnSubmit(true)
         setTimeout(() => {
           setBtnSubmit(false)
+          navigate('/home')
         }, 4000)
-      }
   
     } catch (error) {
-      console.error('Error submitting form:', error);
+        console.error('Error submitting form:', error.response?.data || error.message);
     }
 
   }
@@ -149,7 +155,7 @@ export default function Register(props) {
               <option value="" disabled>
                 Select your role
               </option>
-              <option value="Seller">Seller</option>
+              <option value="Artist">Artist</option>
               <option value="User">Normal User</option>
             </select>
 
