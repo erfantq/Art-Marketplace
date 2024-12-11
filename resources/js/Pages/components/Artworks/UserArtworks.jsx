@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import api from "../../../api/axiosApi";
-export default function Artwork() {
+import api from '../../../api/axiosApi'
+export default function Artworks() {
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
     const [username, setUsername] = useState("");
@@ -8,7 +8,7 @@ export default function Artwork() {
 
     const fetchData = async () => {
         try {
-            const response = await api.get('/home');
+            const response = await api.get("/home");
             console.log(response);
         } catch (error) {
             setError("Error fetching data: " + error.message);
@@ -22,5 +22,5 @@ export default function Artwork() {
         fetchData();
     }, []);
 
-    return <div>Artwork</div>;
+    return <div>alsjdahsdkh</div>;
 }

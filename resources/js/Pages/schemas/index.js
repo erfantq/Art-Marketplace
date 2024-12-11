@@ -18,6 +18,12 @@ export const RegisterSchema = yup.object().shape({
     role : yup.string().required("Please select a role")
 })
 
+export const CreateArtworkSchema = yup.object().shape({
+    name : yup.string().required(requiredTxt),
+    price : yup.string().required(requiredTxt),
+    number : yup.string().required(requiredTxt),
+})
+
 export const WalletChargeSchema = yup.object().shape({
     charge : yup.string().required("Please enter an amount")
 })

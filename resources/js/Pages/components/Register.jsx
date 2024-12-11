@@ -1,13 +1,15 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef,useEffect, useContext } from "react";
 import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
 import axios from 'axios';
 import { data, useNavigate } from "react-router-dom";
 import api from "../../api/axiosApi";
+import { UserContext } from "../../context/UserContext";
 
 export default function Register(props) {
     // const [csrfToken, setCsrfToken] = useState("");
     const navigate = useNavigate();
+    const {username,role,changeUser} = useContext(UserContext)
 
     const [btnSubmit, setBtnSubmit] = useState(false);
 
@@ -19,10 +21,7 @@ export default function Register(props) {
                 },
                 withCredentials: true, // Important for sending/receiving cookies
             });
-            
-            sessionStorage.setItem("username", response.data.user.username);
-            sessionStorage.setItem("role", response.data.user.role);
-
+            changeUser(response.data.user.username,response.data.user.role)
             setBtnSubmit(true);
             setTimeout(() => {
                 setBtnSubmit(false);

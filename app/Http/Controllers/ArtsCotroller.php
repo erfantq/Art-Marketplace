@@ -17,7 +17,7 @@ class ArtsCotroller extends Controller
 
         if($result['success']) {
             $arts = $result['arts'];
-            return Inertia::render('', compact('arts'));
+            return Inertia::render('components/Share/Artworks', compact('arts'));
         }
 
         return response()->json($result, 422);
