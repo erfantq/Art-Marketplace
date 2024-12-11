@@ -17,6 +17,7 @@ class Arts extends Model
         'number',
         'img',
         'artist',
+        'reviews',
     ];
 
 
@@ -83,7 +84,7 @@ class Arts extends Model
             $artCollection = $db->arts;
 
             $filter = ['_id' => new ObjectId($id)];
-            $update = ['set' => $info];
+            $update = ['$set' => $info];
 
             $artCollection->updateOne($filter, $update);
             return ['success' => true, 'message' => 'updated successfuly'];

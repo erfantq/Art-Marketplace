@@ -32,10 +32,13 @@ class UserController extends Controller
             // $userWithoutPassword = $user->makeHidden('password')->toArray();
             $request->session()->put('user', $username);
             // Session::put('user', $username);
+            $user = User::findUser($username);
+
+            unset($user['password']);
+            Session::put('user', $user);
             return response()->json([
                 'message' => 'success',
-                'username' => $username,
-                'role' => $role,
+                'user' => $user,
             ]);
         } 
 
@@ -63,9 +66,9 @@ class UserController extends Controller
     {
         $user = User::findUser($request->username);
 
-        $userWithoutPassword = $user->makeHidden('password')->toArray();
+        unset($user['password']);
 
-        Session::put('user', $userWithoutPassword);
+        Session::put('user', $user);
         if(!$user) {
             $message = 'User not found.';
             return response()->json([
@@ -75,7 +78,6 @@ class UserController extends Controller
             ], 422);
         }
 
-        $role = $user['role'];
         $username = $user['username'];
         $hashedPassword = $user['password'];
 
@@ -91,8 +93,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'username' => $username,
-            'role' => $role,
+            'user' => $user,
         ]);
     }
 
@@ -102,4 +103,46 @@ class UserController extends Controller
         return Inertia::render('', compact('user'));
     }
 
+    public function showWallet()
+    {
+
+        // $user = User::findUser('erfan');
+
+        // $userWithoutPassword = $user->makeHidden('password')->toArray();
+
+        // Session::put('user', $user);
+
+        $user = Session::get('user');
+        // dd(Inertia::render('TestWallet'));
+        // TODO
+        return Inertia::render('', compact('user'));
+    }
+
+    public function updateWallet(Request $request)
+    {
+
+        $user = Session::get('user');
+        $currentCharge = $user['wallet_balance'];
+        $inputCharge = $request->charge;
+        if(!is_int($inputCharge)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The value must be Integer',
+            ], 422);
+        }
+
+        $newCharge = $currentCharge + $inputCharge;
+        $result = User::updateWallet($user['username'], $newCharge);
+
+        if($result['success'] == true) {
+            return response()->json($result);
+        }
+
+        return response()->json($result, 422);
+    }
+
 }
+
+
+
+
