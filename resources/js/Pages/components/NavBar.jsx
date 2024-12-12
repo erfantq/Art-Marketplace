@@ -61,13 +61,13 @@ export default function Navbar() {
                                 </label>
                                 <div className="dropdown-menu dropdown-menu-bottom-left">
                                     <button
-                                        className="dropdown-item text-sm text-gray-900"
+                                        className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
                                         onClick={() => navigate("/" + username)}
                                     >
                                         Account setting
                                     </button>
                                     <button
-                                        className="dropdown-item text-sm text-gray-900"
+                                        className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
                                         onClick={() =>
                                             navigate(
                                                 "/" +
@@ -78,15 +78,32 @@ export default function Navbar() {
                                     >
                                         Create Artwork
                                     </button>
+                                    <button
+                                        className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
+                                        onClick={() => {
+                                            console.log(
+                                                "/" +
+                                                    username +
+                                                    "/createBiddingg"
+                                            );
+                                            navigate(
+                                                "/" +
+                                                    username +
+                                                    "/createBiddingg"
+                                            );
+                                        }}
+                                    >
+                                        Create Bidding
+                                    </button>
                                     <a
                                         tabIndex="-1"
-                                        className="dropdown-item text-sm text-gray-900"
+                                        className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
                                     >
                                         Artworks
                                     </a>
                                     <button
                                         tabIndex="-1"
-                                        className="dropdown-item text-sm text-gray-900"
+                                        className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
                                         onClick={() =>
                                             navigate(
                                                 "/" + username + "/walletcharge"
@@ -97,7 +114,7 @@ export default function Navbar() {
                                     </button>
                                     <button
                                         tabIndex="-1"
-                                        className="dropdown-item text-sm text-gray-900"
+                                        className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
                                         onClick={() => {
                                             setLogin(false);
                                             changeUser("", "");

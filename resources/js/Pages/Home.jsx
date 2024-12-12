@@ -25,12 +25,12 @@ export default function Home() {
 
                 <Route path="/user/:name" element={<User />} />
                 <Route
-                    path="/artist/:name/create-bidding"
+                    path="/:name/createBiddingg"
                     element={<CreateBiddingg />}
                 />
                 <Route path="/login/user:name/buy" element={<Buy />} />
                 <Route path="/:name/walletcharge" element={<WalletCharge />} />
-                <Route path="/*" element={<Navigate to="/login" />} />
+                {/* <Route path="/*" element={<Navigate to="/login" />} /> */}
             </Routes>
         </BrowserRouter>
     );

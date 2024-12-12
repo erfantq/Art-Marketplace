@@ -33,9 +33,9 @@ export default function ArtistPage() {
             <div className="container min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center">
                 <div className="grid grid-cols-12">
                     {/* Information Box */}
-                    <div className="col-start-1 col-end-7 container bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8 mt-10">
+                    <div className="col-start-2 col-end-8 container bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8 mt-10">
                         {/* Page Heading */}
-                        <div className="grid grid-cols-6">
+                        <div className="grid grid-cols-6 gap-4">
                             {/* <div className='col-span-2'> */}
                             <div className="col-span-5">
                                 <p className="text-4xl font-bold text-left text-gray-100 ">
@@ -46,7 +46,7 @@ export default function ArtistPage() {
                                 </h2>
                             </div>
 
-                            <div className="mb-6 col-span-3 mr-4">
+                            <div className="col-span-3 ">
                                 <label
                                     className="block mb-2 text-sm font-medium text-gray-400"
                                     htmlFor="firstName"
@@ -63,7 +63,7 @@ export default function ArtistPage() {
                             </div>
 
                             {/* Account Info Display */}
-                            <div className="mb-6 col-start-4 col-end-7">
+                            <div className="col-start-4 col-end-7">
                                 <label
                                     className="block mb-2 text-sm font-medium text-gray-400"
                                     htmlFor="lastName"
@@ -78,22 +78,37 @@ export default function ArtistPage() {
                                     className={` ${baseInput}`}
                                 />
                             </div>
-                            <div className="mb-6 col-span-full ">
+                            <div className="col-span-full ">
                                 <label
                                     className="block mb-2 text-sm font-medium text-gray-400"
-                                    htmlFor="artName"
+                                    htmlFor="address"
                                 >
-                                    ArtName
+                                    Address
                                 </label>
                                 <input
                                     disabled
                                     type="text"
-                                    id="artName"
-                                    name="artName"
+                                    id="address"
+                                    name="address"
                                     className={` ${baseInput}`}
                                 />
                             </div>
-                            <div className="mb-6 col-start-2 col-end-6 ">
+                            <div className="col-span-3 ">
+                                <label
+                                    className="block mb-2 text-sm font-medium text-gray-400"
+                                    htmlFor="email"
+                                >
+                                    Email
+                                </label>
+                                <input
+                                    disabled
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    className={` ${baseInput}`}
+                                />
+                            </div>
+                            <div className="col-span-3 ">
                                 <label
                                     className="block mb-2 text-sm font-medium text-gray-400"
                                     htmlFor="username"
@@ -109,7 +124,7 @@ export default function ArtistPage() {
                                 />
                             </div>
 
-                            <div className="mb-6 col-span-3 mr-4">
+                            <div className="col-span-3">
                                 <label
                                     className="block mb-2 text-sm font-medium text-gray-400"
                                     htmlFor="password"
@@ -124,7 +139,7 @@ export default function ArtistPage() {
                                     className={` ${baseInput}`}
                                 />
                             </div>
-                            <div className="mb-6 col-span-3 ">
+                            <div className="col-span-3 ">
                                 <label
                                     className="block mb-2 text-sm font-medium text-gray-400"
                                     htmlFor="confirmPass"
@@ -143,14 +158,21 @@ export default function ArtistPage() {
                             {/* Edit Profile Button */}
                             <button
                                 // onClick={() => navigate('/edit-profile')}
-                                className="col-start-3 col-end-5 mr-4 h-9 px-4 py-2 text-sm font-medium text-white bg-purple-700 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-md"
+                                className="col-span-2 h-9 px-4 py-2 text-sm font-medium text-white bg-purple-700 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-md"
                             >
                                 Edit Profile
+                            </button>
+                            <button
+                                type="submit"
+                                // onClick={() => navigate('/edit-profile')}
+                                className="col-span-2 invisible h-9 px-4 py-2 text-sm font-medium text-white bg-purple-700 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-md"
+                            >
+                                Save
                             </button>
                         </div>
                     </div>
                     {/* Pay */}
-                    <div className="col-span-4 container mx-5 mt-10 bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8">
+                    <div className="col-span-3 container mx-5 mt-10 bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8">
                         {/* Page Heading */}
                         <p className="text-xl text-left font-bold mb-1 text-gray-100 ">
                             Profile image
@@ -158,47 +180,19 @@ export default function ArtistPage() {
                         <p className="text-xs text-left mb-8 text-gray-100 ">
                             Change profile image
                         </p>
-                        <div class="avatar avatar-ring avatar-xl">
-                            <label
-                                class="btn btn-ghost flex cursor-pointer px-0"
-                                tabindex="0"
-                            >
-                                <img
-                                    src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-                                    alt="avatar"
-                                />
-                            </label>
-                        </div>
-                        {/* Account Info Display */}
+                        <img
+                            className="hover:opacity-30"
+                            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                            alt="avatar"
+                        />
 
                         {/* Edit Profile Button */}
                         <button
                             // onClick={() => navigate('/edit-profile')}
-                            className="w-full px-4 py-2 text-sm font-medium text-white bg-purple-700 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-md"
+                            className="w-full mt-4 px-4 py-2 text-sm font-medium text-white bg-purple-700 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-md"
                         >
-                            Edit Profile
+                            Edit Image
                         </button>
-
-                        {/* Logout Button */}
-                        <button
-                            // onClick={handleLogout}
-                            className="w-full mt-4 px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 rounded-md"
-                        >
-                            Logout
-                        </button>
-
-                        {/* Redirect to Home */}
-                        <div className="mt-6 text-center">
-                            <p className="text-sm text-gray-400">
-                                Want to go back to the home page?
-                            </p>
-                            <p
-                                // onClick={() => navigate('/home')}
-                                className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
-                            >
-                                Go to Home
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>
