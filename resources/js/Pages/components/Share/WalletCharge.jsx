@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../context/UserContext";
 import Navbar from "../NavBar";
 import { useFormik } from "formik";
 import { WalletChargeSchema } from "../../schemas";
 import api from "../../../api/axiosApi";
 
 export default function WalletCharge() {
-    const [username, setUsername] = useState("");
-    const [role, setRole] = useState("");
-    const [login, setLogin] = useState(false);
+    const { username, role, changeUser } = useContext(UserContext);
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!sessionStorage.getItem("username")) {
-            navigate("/login");
+    useEffect(function () {
+        if (username === undefined) {
+            navigate("/home");
         }
-        setUsername(sessionStorage.getItem("username"));
-        setRole(sessionStorage.getItem("role"));
     }, []);
 
     const onSubmit = async (values, action) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from '../../../api/axiosApi'
+import api from "../../../api/axiosApi";
 export default function Artworks() {
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
@@ -22,5 +22,9 @@ export default function Artworks() {
         fetchData();
     }, []);
 
-    return <div>alsjdahsdkh</div>;
+    return (
+        <div>
+            <div>asd</div>
+        </div>
+    );
 }
