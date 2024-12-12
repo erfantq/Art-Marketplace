@@ -16,7 +16,7 @@ class HomeController extends Controller
 
         if($result['success']) {
             $arts = $result['arts'];
-            return Inertia::render('Components/HomePage/HomePage', compact('user', 'arts'));
+            return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
         } 
 
         return response()->json($result, 422);

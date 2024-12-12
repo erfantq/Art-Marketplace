@@ -17,7 +17,7 @@ export default {
             },
         },
     },
-    plugins: [],
+	plugins: [require("rippleui")],
 };
 
 

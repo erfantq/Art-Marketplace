@@ -1,30 +1,38 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect, useContext } from "react";
 import { LoginSchema } from "../schemas/index";
 import { Formik, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import api from '../../api/axiosApi'
+import { UserContext } from "../../context/UserContext";
 
 
 export default function Login(props) {
     const navigate = useNavigate()
+    const {username,role,changeUser} = useContext(UserContext)
 
     const [btnSubmit, setBtnSubmit] = useState(false)
   
     const onSubmit = async (values, action) => {
   
       try {
-        const response = await api.post('/login', values);
+          const response = await api.post("/login", values);
 
-        if (isSubmitting) {
-          alert(response.data)
-          setBtnSubmit(true)
-          setTimeout(() => {
-            setBtnSubmit(false)
-          }, 4000)
-        }
-    
+        //   sessionStorage.setItem("username", response.data.user.username);
+          changeUser(response.data.user.username,response.data.user.role)
+        //   sessionStorage.setItem("role", response.data.user.role);
+
+          if (isSubmitting) {
+              setBtnSubmit(true);
+              setTimeout(() => {
+                  navigate("/home");
+                  setBtnSubmit(false);
+              }, 4000);
+          }
       } catch (error) {
-        console.error('Error submitting form:', error);
+          console.error(
+              "Error submitting form:",
+              error.response?.data || error.message
+          );
       }
   
     }
