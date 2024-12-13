@@ -17,7 +17,10 @@ class ArtsCotroller extends Controller
 
         if($result['success']) {
             $arts = $result['arts'];
-            return Inertia::render('components/Share/Artworks', compact('arts'));
+            return response()->json([
+                'arts' => $arts,
+            ]);
+            // return Inertia::render('components/Share/Artworks', compact('arts'));
         }
 
         return response()->json($result, 422);
@@ -30,6 +33,7 @@ class ArtsCotroller extends Controller
     public function create($username)
     {
         // TODO
+
         return Inertia::render('');
     }
 
@@ -44,6 +48,8 @@ class ArtsCotroller extends Controller
             'number' => $request->number,
             'img' => $request->img,
             'artist' => ['username' => $username],
+            'reviews' => [],
+            'sold_number' => 0,
         ];
 
         $result = Arts::storeArt($info);
@@ -60,7 +66,11 @@ class ArtsCotroller extends Controller
         if($result['success']) {
             $art = $result['art'];
             // TODO
-            return Inertia::render('', compact('username', 'art'));
+            return response()->json([
+                'username' => $username,
+                'art' => $art,
+            ]);
+            // return Inertia::render('', compact('username', 'art'));
         }
         return response()->json($result, 422);
     }
@@ -74,7 +84,11 @@ class ArtsCotroller extends Controller
         if($result['success']) {
             $art = $result['art'];
             // TODO
-            return Inertia::render('', compact('username', 'art'));
+            return response()->json([
+                'username' => $username,
+                'art' => $art,
+            ]);
+            // return Inertia::render('', compact('username', 'art'));
         }
         return response()->json($result, 422);
     }
@@ -112,4 +126,5 @@ class ArtsCotroller extends Controller
         }
         return response()->json($result, 422);
     }
+
 }

@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Route;
 
     // Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 
+    // Route::get('home');
 
     Route::prefix('home')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');

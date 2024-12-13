@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Auth\User as Authenticatable;
@@ -81,7 +82,7 @@ class User extends Authenticatable
                 'current_auctions' => [],
                 'previous_auctions' => [],
                 'arts' => [],
-                'created_at' => now(),
+                'created_at' => Carbon::now(),
             ]);
 
             return [
@@ -93,7 +94,7 @@ class User extends Authenticatable
         }
     }
 
-    public static function findUser($username) 
+    public static function findUser($username)          
     {
         try {
             $db = DBConnection::getDb();

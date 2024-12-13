@@ -18,6 +18,7 @@ class Arts extends Model
         'img',
         'artist',
         'reviews',
+        'sold_number'
     ];
 
 
@@ -28,7 +29,7 @@ class Arts extends Model
             $db = DBConnection::getDb();
             $artCollection = $db->arts;
 
-            $arts = $artCollection->find();
+            $arts = $artCollection->find()->toArray();
 
             return ['success' => true, 'arts' => $arts];
         } catch (\Exception $e) {
@@ -42,7 +43,7 @@ class Arts extends Model
             $db = DBConnection::getDb();
             $artCollection = $db->arts;
 
-            $arts = $artCollection->find(['artist.username' => $username]);
+            $arts = $artCollection->find(['artist.username' => $username])->toArray();
             return ['success' => true, 'arts' => $arts];
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];

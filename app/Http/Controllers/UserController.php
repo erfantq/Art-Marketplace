@@ -36,6 +36,7 @@ class UserController extends Controller
 
             unset($user['password']);
             Session::put('user', $user);
+            
             return response()->json([
                 'message' => 'success',
                 'user' => $user,

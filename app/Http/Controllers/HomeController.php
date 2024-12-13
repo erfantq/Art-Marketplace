@@ -16,7 +16,13 @@ class HomeController extends Controller
 
         if($result['success']) {
             $arts = $result['arts'];
-            return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+            $info = [
+                'success' => true,
+                'user' => $user,
+                'arts' => $arts,
+            ];
+            return response()->json($info);
+            // return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
         } 
 
         return response()->json($result, 422);
@@ -30,7 +36,11 @@ class HomeController extends Controller
         if($result['success']) {
             $art = $result['art'];
             // TODO
-            return Inertia::render('', compact('art'));
+            return response()->json([
+                'success' => true,
+                'art' => $art,
+            ]);
+            // return Inertia::render('', compact('art'));
         }
         
         return response()->json([
