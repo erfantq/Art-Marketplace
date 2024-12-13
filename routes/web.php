@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtsCotroller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Middleware\CheckUserRole;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
     use function Laravel\Prompts\alert;
 
-    Route::get('/', function () {
+    Route::get('/login', function () {
         return Inertia::render('Index');
     })->name('login');
 
@@ -38,6 +39,8 @@ use Illuminate\Support\Facades\Route;
     // Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 
     // Route::get('home');
+
+    Route::post('purchase', [TransactionsController::class, 'purchase']);
 
     Route::prefix('home')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
