@@ -21,6 +21,7 @@ class ArtSeeder extends Seeder
                 'number' => 5,
                 'img' => null,
                 'artist' => ['username' => 'test' . $i],
+                'reviews' => [],
                 'sold_number' => 0,
             ]);
         }
