@@ -2,19 +2,18 @@ import './bootstrap';
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react'
-import { createRoot } from 'react-dom/client'
-import Home from './Pages/Home';
+import { createRoot } from "react-dom/client";
 import { UserProvider } from "./context/UserContext";
 
 createInertiaApp({
-    resolve: (name) => {
+    resolve: () => {
         const pages = import.meta.glob("./Pages/**/*.jsx", { eager: true });
-        return pages[`./Pages/${name}.jsx`];
+        return pages[`./Pages/Home.jsx`];
     },
     setup({ el, App, props }) {
         createRoot(el).render(
             <UserProvider>
-                <Home />
+                <App {...props} />
             </UserProvider>
         );
     },

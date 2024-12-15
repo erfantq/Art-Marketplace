@@ -9,25 +9,23 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
+
     public function index()
     {
         $user = Session::get('user');
         $result = Arts::getArts();
 
-        if($result['success']) {
+        if ($result['success']) {
             $arts = $result['arts'];
             $info = [
                 'success' => true,
                 'user' => $user,
                 'arts' => $arts,
             ];
-            return response()->json($info);
-            // return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-        } 
-
-        return response()->json($result, 422);
-
+            return Inertia::render('components/Artworks/UserArtworks', compact("info"));
+        }
     }
+
 
     public function showSelectedArt($artId)
     {
