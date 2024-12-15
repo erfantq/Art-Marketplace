@@ -11,18 +11,19 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $user = Session::get('user');
+        $user = Session::get('user') ?? null;
+        
         $result = Arts::getArts();
-
+        
         if($result['success']) {
             $arts = $result['arts'];
+            $arts = 'test';
             $info = [
                 'success' => true,
-                'user' => $user,
                 'arts' => $arts,
             ];
-            return response()->json($info);
-            // return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+            // return response()->json($info);
+            return Inertia::ernder('components/Artworks/UserArtworks', compact('user', 'arts'));
         } 
 
         return response()->json($result, 422);

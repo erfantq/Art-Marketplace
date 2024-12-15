@@ -30,6 +30,7 @@ class User extends Authenticatable
         'password',
         'email',
         'address',
+        'active',
         'wallet_balance',
         'discount_codes',
         'previous_purchases',
@@ -58,7 +59,7 @@ class User extends Authenticatable
         ];
     }
 
-    public static function register($username, $password, $role, $email)
+    public static function register($username, $password, $role, $email, $active)
     {
         try {
             $db = DBConnection::getDb();
@@ -77,6 +78,7 @@ class User extends Authenticatable
                 'role' => $role,
                 'email' => $email,
                 'address' => null,
+                'active' => $active,
                 'wallet_balance' => 0,
                 'previous_purchases' => [],
                 'current_auctions' => [],
@@ -118,6 +120,33 @@ class User extends Authenticatable
             return ['success' => true, 'message' => 'wallet charge updated'];
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public static function getInactiveUsers()
+    {
+        try {
+            $db = DBConnection::getDb();
+            $usersCollection = $db->users;
+
+            $users = $usersCollection->find(['active' => false])->toArray();
+        } catch (\Exception $e) {
+            throw new Exception("database error:" . $e->getMessage());
+        }
+        return $users;
+    }
+
+    public static function changeActive($username) 
+    {
+        try {
+            $db = DBConnection::getDb();
+            $usersCollection = $db->users;
+
+            $filter = ['username' => $username];
+            $update = ['$set' => ['active' => true]];
+            $usersCollection->updateOne($filter, $update);
+        } catch (\Exception $e) {
+            throw new Exception("database error: " . $e->getMessage());
         }
     }
 }

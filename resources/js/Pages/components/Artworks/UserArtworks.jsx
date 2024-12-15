@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../api/axiosApi";
-export default function Artworks() {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState("");
-    const [username, setUsername] = useState("");
-    const [role, setRole] = useState("");
+export default function Artworks({user, arts}) {
 
-    const fetchData = async () => {
-        try {
-            const response = await api.get("/home");
-            console.log(response);
-        } catch (error) {
-            setError("Error fetching data: " + error.message);
-        }
-    };
+    console.log({user})
+    console.log({arts})
+    // const [data, setData] = useState([]);
+    // const [error, setError] = useState("");
+    // const [username, setUsername] = useState("");
+    // const [role, setRole] = useState("");
 
-    // Call fetchData on component mount
-    useEffect(() => {
-        setUsername(sessionStorage.getItem("username"));
-        setRole(sessionStorage.getItem("role"));
-        fetchData();
-    }, []);
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await api.get("/home");
+    //         console.log(response);
+    //     } catch (error) {
+    //         setError("Error fetching data: " + error.message);
+    //     }
+    // };
 
-    return (
-        <div>
-            <div>asd</div>
-        </div>
-    );
+    // // Call fetchData on component mount
+    // useEffect(() => {
+    //     setUsername(sessionStorage.getItem("username"));
+    //     setRole(sessionStorage.getItem("role"));
+    //     fetchData();
+    // }, []);
+
+    // return (
+        
+    //     <div>
+    //         <div>asd</div>
+    //     </div>
+    // );
+    return <>
+        <h1>your username is: { user }</h1>
+        <h1>Arts: {arts}</h1>
+    </>
 }

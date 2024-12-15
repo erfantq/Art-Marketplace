@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -25,12 +26,14 @@ class UserController extends Controller
             ], 422);
         }
 
-        $result = User::register($username, $password, $role, $email);
+        $active = (strtolower($role) == 'artist') ? false : true;
+
+        $result = User::register($username, $password, $role, $email, $active);
 
         if($result['success']) {
             // $user = User::findUser($username);
             // $userWithoutPassword = $user->makeHidden('password')->toArray();
-            $request->session()->put('user', $username);
+            // $request->session()->put('user', $username);
             // Session::put('user', $username);
             $user = User::findUser($username);
 
@@ -57,13 +60,32 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
+        $canLogin = true;
+
         $user = User::findUser($request->username);
 
         // unset($user['password']);
 
-        Session::put('user', $user);
         if(!$user) {
             $message = 'User not found.';
+            $canLogin = false;
+        }
+
+        $hashedPassword = $user['password'];
+
+        // Verify the password
+        if(!Hash::check($request->password, $hashedPassword)) {
+            $message = 'Invalid username or password.';
+            $canLogin = false;
+        }
+
+        // check the activation
+        if($user['active'] == false) {
+            $message = "Your account isn't active. It is being reviewed by the admin and will be activated if approved by the admin.";
+            $canLogin = false;
+        }
+
+        if(!$canLogin) {
             return response()->json([
                 'message' => $message,
                 'username' => $request->username,
@@ -71,18 +93,8 @@ class UserController extends Controller
             ], 422);
         }
 
-        $username = $user['username'];
-        $hashedPassword = $user['password'];
-
-        // Verify the password
-        if(!Hash::check($request->password, $hashedPassword)) {
-            $message = 'Invalid username or password.';
-            return response()->json([
-                'message' => $message,
-                'username' => $username,
-                'password' => $request->password,
-            ], 422);
-        }
+        unset($user['password']);
+        Session::put('user', $user);
 
         return response()->json([
             'message' => 'success',
@@ -132,6 +144,30 @@ class UserController extends Controller
         }
 
         return response()->json($result, 422);
+    }
+
+    public function inactiveUsers()
+    {
+        try {
+            $inactiveUsers = User::getInactiveUsers();
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
+
+        return response()->json(['inactiveUsers' => $inactiveUsers]);
+
+    }
+
+    public function makeActive(Request $request)
+    {
+        try {
+            $username = $request->username;
+
+            User::changeActive($username);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
+        return response()->json(['success' => true, 'message' => 'actived successfully.']);
     }
 
 }

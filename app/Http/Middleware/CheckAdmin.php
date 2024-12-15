@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckUserRole
+class CheckAdmin
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class CheckUserRole
     {
         if(session()->has('user')) {
             $user = Session::get('user');
-            if(strtolower($user['role']) != 'artist') {
+            if(strtolower($user['role']) != 'admin') {
                 return redirect()->to('home');
             }
         }

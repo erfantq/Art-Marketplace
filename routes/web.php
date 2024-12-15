@@ -5,7 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingsController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VerificationCotroller;
 use App\Http\Controllers\WalletController;
+use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Route;
     use Inertia\Inertia;
@@ -57,6 +59,9 @@ use Illuminate\Support\Facades\Route;
     Route::get('{username}/walletcharge', [UserController::class, 'showWallet']);
 
     Route::post('{username}/walletcharge', [UserController::class, 'updateWallet']);
+
+    Route::get('inactiveusers', [UserController::class, 'inactiveUsers'])->middleware(CheckAdmin::class);
+    Route::get('makeactive/{username}', [UserController::class, 'makeActive'])->middleware(CheckAdmin::class);
 
     // Route::middleware([
     //     VerifyCsrfToken::class,
