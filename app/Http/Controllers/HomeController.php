@@ -10,6 +10,7 @@ use Inertia\Inertia;
 class HomeController extends Controller
 {
 
+
     public function index()
     {
         $user = Session::get('user') ?? null;
@@ -30,6 +31,7 @@ class HomeController extends Controller
         return response()->json($result, 422);
 
     }
+
 
 
     public function showSelectedArt($artId)
