@@ -16,7 +16,7 @@ export default function Navbar() {
     }, []);
 
     return (
-        <div className="navbar rounded-lg navbar-glass  navbar-active navbar-sticky bg-gray-900 border border-gray-700">
+        <div className="navbar rounded-lg navbar-glass navbar-sticky bg-gray-900 border border-gray-700">
             <div className="navbar-start">
                 <a className="navbar-item text-white text-xl font-medium">
                     Art Marketpalce
@@ -27,7 +27,7 @@ export default function Navbar() {
                 <a className="navbar-item text-white">Home</a>
                 <button
                     className="navbar-item text-white"
-                    onClick={() => navigate("/home")}
+                    onClick={() => navigate("/home/arts")}
                 >
                     Artworks
                 </button>

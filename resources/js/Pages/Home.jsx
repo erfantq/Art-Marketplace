@@ -9,6 +9,7 @@ import HomePage from "./components/HomePage/HomePage";
 import Buy from "./components/User/Buy";
 import WalletCharge from "./components/Share/WalletCharge";
 import CreateArtwork from "./components/Artist/CreateArtwork";
+import UserArtworks from './components/Artworks/UserArtworks'
 
 export default function Home() {
     return (
@@ -22,7 +23,6 @@ export default function Home() {
                     path="/:name/createArtwork"
                     element={<CreateArtwork />}
                 />
-
                 <Route path="/user/:name" element={<User />} />
                 <Route
                     path="/:name/createBiddingg"
