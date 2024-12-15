@@ -24,7 +24,7 @@ class HomeController extends Controller
                 'arts' => $arts,
             ];
             // return response()->json($info);
-            return Inertia::ernder('components/Artworks/UserArtworks', compact('user', 'arts'));
+            return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
         } 
 
         return response()->json($result, 422);
