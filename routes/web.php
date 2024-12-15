@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtsCotroller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RatingsController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
@@ -45,6 +46,8 @@ use Illuminate\Support\Facades\Route;
     Route::prefix('home')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::get('/{artId}', [HomeController::class, 'showSelectedArt']);
+        Route::post('/{artId}/comment', [RatingsController::class, 'store']);
+        Route::post('/{artId}/delcomment', [RatingsController::class, 'destroy']);
     });
 
     Route::get('/profile', [UserController::class, 'show']);
