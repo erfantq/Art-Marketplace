@@ -5,7 +5,8 @@ namespace App\Models;
 use App\Http\Controllers\ArtsCotroller;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use MongoDB\Laravel\Eloquent\Casts\ObjectId;
+// use MongoDB\Laravel\Eloquent\Casts\ObjectId;
+use MongoDB\BSON\ObjectId;
 
 class Arts extends Model
 {
@@ -20,6 +21,10 @@ class Arts extends Model
         'artist',
         'reviews',
         'sold_number'
+    ];
+
+    protected $casts = [
+        '_id' => 'string', // Cast ObjectId to string if necessary
     ];
 
 
@@ -57,9 +62,10 @@ class Arts extends Model
     {
         try {
             $db = DBConnection::getDb();
-            $artCollection = $db->arts;
+            $artsCollection = $db->arts;
 
-            $art = $artCollection->findOne(['_id' => new ObjectId($id)]);
+            $art = $artsCollection->findOne(['_id' => new ObjectId($id)]);
+            // $art = $artsCollection->find(strval($id));
         } catch (\Exception $e) {
             throw new Exception("Database error: " . $e->getMessage());
         }

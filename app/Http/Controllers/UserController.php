@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use Mockery\CountValidator\Exact;
 
 class UserController extends Controller
 {
@@ -191,6 +192,40 @@ class UserController extends Controller
 
     }
 
+    public function showUpdate()
+    {
+        // TODO
+        return Inertia::render('');
+    }
+
+    public function updateUserInfo(Request $request)
+    {
+        $oldUsername = Session::get('user')['username'];
+        $username = $request->username;
+        $password = $request->password;
+        $email = $request->email;
+        $address = $request->address;
+
+        $info = [
+            'username' => $username,
+            'password' => $password,
+            'email' => $email,
+            'address' => $address,
+        ];
+        if(!$username || !$password) {
+            return response()->json(['message' => 'username and password are required.'], 422);
+        }
+        try {
+        User::updateUserInfo($info, $oldUsername);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function logout()
+    {
+        Session::flush();
+    }
 }
 
 

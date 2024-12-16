@@ -103,11 +103,12 @@ class User extends Authenticatable
             $db = DBConnection::getDb();
             $usersCollection = $db->users;
 
-            $usersCollection->findOne(['username' => $username]);
+            $user = $usersCollection->findOne(['username' => $username]);
         } catch (\Exception $e) {
             // return ['success' => false, 'message' => $e->getMessage()];
             throw new Exception("Database error: " . $e->getMessage());
         }
+        return $user;
     }
 
     public static function updateWallet($username, $value)
@@ -160,6 +161,21 @@ class User extends Authenticatable
             $purchasesInfo = $usersCollection->find(['username' => $username], ['previous_purchases' => 1, '_id' => 0])->toArray();
 
             return $purchasesInfo;
+        } catch (\Exception $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
+    }
+
+    public static function updateUserInfo($info, $oldUsername) 
+    {
+        try {
+            $db = DBConnection::getDb();
+            $usersCollection = $db->users;
+
+            $filter = ['username' => $oldUsername];
+
+            $update = ['$set' => $info];
+            $usersCollection->updateOne($filter, $update);
         } catch (\Exception $e) {
             throw new Exception("Database error: " . $e->getMessage());
         }

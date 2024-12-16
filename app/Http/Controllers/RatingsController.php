@@ -6,7 +6,8 @@ use App\Models\Ratings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use MongoDB\Laravel\Eloquent\Casts\ObjectId;
+// use MongoDB\Laravel\Eloquent\Casts\ObjectId;
+use MongoDB\BSON\ObjectId;
 
 class RatingsController extends Controller
 {

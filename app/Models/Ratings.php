@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use MongoDB\Laravel\Eloquent\Casts\ObjectId;
+// use MongoDB\Laravel\Eloquent\Casts\ObjectId;
+use MongoDB\BSON\ObjectId;
 use PhpParser\Node\Expr\Throw_;
 
 class Ratings extends Model

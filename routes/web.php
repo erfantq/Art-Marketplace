@@ -53,7 +53,11 @@ use Illuminate\Support\Facades\Route;
         Route::post('/{artId}/delcomment', [RatingsController::class, 'destroy']);
     });
 
-    Route::get('{username}/profile', [UserController::class, 'show']);
+    Route::prefix('{username}/profile')->group(function () {
+        Route::get('/', [UserController::class, 'show']);
+        Route::get('/update', [UserController::class, 'showUpdate']);
+        Route::post('/update', [UserController::class, 'updateUserInfo']);
+    });
 
     Route::resource('{username}/arts', ArtsCotroller::class)->middleware(CheckUserRole::class);
 
@@ -65,6 +69,8 @@ use Illuminate\Support\Facades\Route;
     Route::get('makeactive/{username}', [UserController::class, 'makeActive'])->middleware(CheckAdmin::class);
 
     Route::get('/orders', [UserController::class, 'getPurchasess']);
+
+    Route::get('logout', [UserController::class, 'logout']);
 
     // Route::middleware([
     //     VerifyCsrfToken::class,
