@@ -32,7 +32,7 @@ class UserController extends Controller
 
         $result = User::register($username, $password, $role, $email, $active);
 
-        if($result['success'] && strtolower($role) != "artist") {
+        if($result['success'] && $active) {
             // $user = User::findUser($username);
             // $userWithoutPassword = $user->makeHidden('password')->toArray();
             // $request->session()->put('user', $username);
@@ -49,7 +49,7 @@ class UserController extends Controller
         } 
 
         $message = $result['message'];
-        if(strtolower($role) == "artist") {
+        if(!$active) {
             $message = "Your account isn't active. It is being reviewed by the admin and will be activated if approved by the admin.";
         }
 

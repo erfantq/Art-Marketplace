@@ -9,6 +9,8 @@ use Inertia\Inertia;
 
 use function Laravel\Prompts\alert;
 
+use function Laravel\Prompts\alert;
+
 class HomeController extends Controller
 {
 
