@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
-use function Laravel\Prompts\alert;
-
-use function Laravel\Prompts\alert;
-
 class HomeController extends Controller
 {
 

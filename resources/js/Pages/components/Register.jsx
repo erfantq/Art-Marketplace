@@ -25,8 +25,9 @@ export default function Register() {
                 withCredentials: true, // Important for sending/receiving cookies
             });
 
-            sessionStorage.setItem('username', response.data.user.username)
-            sessionStorage.setItem('role', response.data.user.role)
+            sessionStorage.setItem('username', response.data.username)
+            sessionStorage.setItem('role', response.data.role)
+            console.log(response);
             setBtnSubmit(true);
             console.log(response);
             showToast('success', response.data.message)
@@ -36,7 +37,8 @@ export default function Register() {
             }, 4000);
 
         } catch (error) {
-            showToast('error', error.response.data.message)
+            console.log(error);
+            showToast('error', error.response)
         }
     };
 
