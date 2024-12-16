@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import { useSession } from '../../hooks/useSession'; // Adjusted import
 
 export default function Navbar() {
-    const { username, role, changeUser } = useContext(UserContext);
     const navigate = useNavigate("");
-    // const [username, setUsername] = useState("");
-    // const [role, setRole] = useState("");
     const [login, setLogin] = useState(false);
+    const { username, role } = useSession()
 
-    useEffect(function () {
-        if (username === undefined) {
-            navigate("/home");
-        }
-    }, []);
+    useEffect(()=>{
+        console.log(username);
+    },[])
 
     return (
         <div className="navbar rounded-lg navbar-glass navbar-sticky bg-gray-900 border border-gray-700">
@@ -24,13 +21,14 @@ export default function Navbar() {
             </div>
 
             <div className="navbar-center">
-                <a className="navbar-item text-white">Home</a>
-                <button
+                <button className="navbar-item text-white"
+                onClick={()=>navigate('/home')}>Home</button>
+                {/* { <button
                     className="navbar-item text-white"
                     onClick={() => navigate("/home/arts")}
                 >
                     Artworks
-                </button>
+                </button> } */}
                 <a className="navbar-item text-white">Contact</a>
             </div>
 
@@ -62,7 +60,7 @@ export default function Navbar() {
                                 <div className="dropdown-menu dropdown-menu-bottom-left">
                                     <button
                                         className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
-                                        onClick={() => navigate("/" + username)}
+                                        onClick={() => navigate("/" + username+"/profile")}
                                     >
                                         Account setting
                                     </button>
@@ -117,8 +115,9 @@ export default function Navbar() {
                                         className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
                                         onClick={() => {
                                             setLogin(false);
-                                            changeUser("", "");
                                             navigate("/login");
+                                            sessionStorage.setItem('username','')
+                                            sessionStorage.setItem('role','')
                                         }}
                                     >
                                         Logout

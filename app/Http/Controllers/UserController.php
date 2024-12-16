@@ -20,6 +20,8 @@ class UserController extends Controller
         $role = $request->role;
         $email = $request->email;
 
+        $active = true;
+
         if(!$username || !$password || !$role) {
             return response()->json([
                 'message' => 'Fill all required inputs.',
@@ -30,7 +32,7 @@ class UserController extends Controller
 
         $result = User::register($username, $password, $role, $email, $active);
 
-        if($result['success']) {
+        if($result['success'] && strtolower($role) != "artist") {
             // $user = User::findUser($username);
             // $userWithoutPassword = $user->makeHidden('password')->toArray();
             // $request->session()->put('user', $username);
@@ -47,6 +49,9 @@ class UserController extends Controller
         } 
 
         $message = $result['message'];
+        if(strtolower($role) == "artist") {
+            $message = "Your account isn't active. It is being reviewed by the admin and will be activated if approved by the admin.";
+        }
 
         return response()->json([
             'message' => $message
@@ -110,7 +115,7 @@ class UserController extends Controller
     public function show()
     {
         $user = Session::get('user');
-        return Inertia::render('', compact('user'));
+        return Inertia::render('components/Share/UserProfile', compact('user'));
     }
 
     public function showWallet()

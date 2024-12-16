@@ -1,15 +1,18 @@
-import React, { useState, useRef,useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
 import axios from 'axios';
 import { data, useNavigate } from "react-router-dom";
 import api from "../../api/axiosApi";
-import { UserContext } from "../../context/UserContext";
+import useToastify from '../../hooks/useToastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
-export default function Register(props) {
+export default function Register() {
     // const [csrfToken, setCsrfToken] = useState("");
+    const [register, setRegister] = useState(false)
     const navigate = useNavigate();
-    const {username,role,changeUser} = useContext(UserContext)
+    const showToast = useToastify(); // Get the toast function
 
     const [btnSubmit, setBtnSubmit] = useState(false);
 
@@ -21,17 +24,19 @@ export default function Register(props) {
                 },
                 withCredentials: true, // Important for sending/receiving cookies
             });
-            changeUser(response.data.user.username,response.data.user.role)
+
+            sessionStorage.setItem('username', response.data.user.username)
+            sessionStorage.setItem('role', response.data.user.role)
             setBtnSubmit(true);
+            console.log(response);
+            showToast('success', response.data.message)
             setTimeout(() => {
                 setBtnSubmit(false);
                 navigate("/home");
             }, 4000);
+
         } catch (error) {
-            console.error(
-                "Error submitting form:",
-                error.response?.data || error.message
-            );
+            showToast('error', error.response.data.message)
         }
     };
 
@@ -169,11 +174,10 @@ export default function Register(props) {
                     <button
                         type="submit"
                         disabled={btnSubmit}
-                        className={`w-full px-4 py-2 text-sm font-medium text-white rounded-md  ${
-                            btnSubmit
-                                ? "bg-purple-400 cursor-not-allowed"
-                                : "bg-purple-700 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-                        }`}
+                        className={`w-full px-4 py-2 text-sm font-medium text-white rounded-md  ${btnSubmit
+                            ? "bg-purple-400 cursor-not-allowed"
+                            : "bg-purple-700 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                            }`}
                     >
                         {btnSubmit ? "Submitting..." : "Sign Up"}
                     </button>

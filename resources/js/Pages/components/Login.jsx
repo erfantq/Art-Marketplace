@@ -6,37 +6,36 @@ import api from '../../api/axiosApi'
 import { UserContext } from "../../context/UserContext";
 
 
-export default function Login(props) {
-    const navigate = useNavigate()
-    const {username,role,changeUser} = useContext(UserContext)
+export default function Login() {
+    const navigate = useNavigate();
+    const { username, role, changeUser } = useContext(UserContext);
 
-    const [btnSubmit, setBtnSubmit] = useState(false)
-  
+    const [btnSubmit, setBtnSubmit] = useState(false);
+
     const onSubmit = async (values, action) => {
-  
-      try {
-          const response = await api.post("/login", values);
+        try {
+            const response = await api.post("/login", values);
 
-        //   sessionStorage.setItem("username", response.data.user.username);
-          changeUser(response.data.user.username,response.data.user.role)
-        //   sessionStorage.setItem("role", response.data.user.role);
+            //   sessionStorage.setItem("username", response.data.user.username);
+            console.log(response);
+            // changeUser(response.data.user.username, response.data.user.role);
+            //   sessionStorage.setItem("role", response.data.user.role);
 
-          if (isSubmitting) {
-              setBtnSubmit(true);
-              setTimeout(() => {
-                  navigate("/home");
-                  setBtnSubmit(false);
-              }, 4000);
-          }
-      } catch (error) {
-          console.error(
-              "Error submitting form:",
-              error.response?.data || error.message
-          );
-      }
-  
-    }
-  
+            if (isSubmitting) {
+                setBtnSubmit(true);
+                setTimeout(() => {
+                    navigate("/home");
+                    setBtnSubmit(false);
+                }, 4000);
+            }
+        } catch (error) {
+            console.error(
+                "Error submitting form:",
+                error.response?.data || error.message
+            );
+        }
+    };
+
     const {
         values,
         errors,
@@ -51,7 +50,7 @@ export default function Login(props) {
             password: "",
         },
         validationSchema: LoginSchema,
-        onSubmit 
+        onSubmit,
     });
 
     const baseInput =
@@ -138,10 +137,13 @@ export default function Login(props) {
                         type="submit"
                         // type="submit"
                         disabled={btnSubmit}
-                        className={`w-full px-4 py-2 text-sm font-medium text-white rounded-md  ${btnSubmit ? 'bg-purple-400 cursor-not-allowed' : 'bg-purple-700 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'}`}
+                        className={`w-full px-4 py-2 text-sm font-medium text-white rounded-md  ${
+                            btnSubmit
+                                ? "bg-purple-400 cursor-not-allowed"
+                                : "bg-purple-700 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                        }`}
                     >
-                     {btnSubmit ? 'Welcome...' : 'Login'}
-
+                        {btnSubmit ? "Welcome..." : "Login"}
                     </button>
                 </form>
 
@@ -151,7 +153,7 @@ export default function Login(props) {
                         Don't have an account?
                     </p>
                     <p
-                        onClick={() =>navigate('/register')}
+                        onClick={() => navigate("/register")}
                         // href="/register" // Navigate to /register
                         className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
                     >

@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
     Route::get('/login', function () {
         return Inertia::render('Index');
     })->name('login');
+    Route::post('/login', [UserController::class, 'login']);
+
 
     // Route::get('/csrf-token', function () {
     //     return response()->json(['csrfToken' => csrf_token()]);
@@ -37,7 +39,6 @@ use Illuminate\Support\Facades\Route;
     //     // dd($request->all());
     // });
 
-    Route::post('/login', [UserController::class, 'login']);
 
     // Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 
@@ -47,12 +48,12 @@ use Illuminate\Support\Facades\Route;
 
     Route::prefix('home')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
-        Route::get('/{artId}', [HomeController::class, 'showSelectedArt']);
+        Route::get('/arts/{artId}', [HomeController::class, 'showSelectedArt']);
         Route::post('/{artId}/comment', [RatingsController::class, 'store']);
         Route::post('/{artId}/delcomment', [RatingsController::class, 'destroy']);
     });
 
-    Route::get('/profile', [UserController::class, 'show']);
+    Route::get('{username}/profile', [UserController::class, 'show']);
 
     Route::resource('{username}/arts', ArtsCotroller::class)->middleware(CheckUserRole::class);
 
