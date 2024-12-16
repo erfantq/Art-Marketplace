@@ -60,7 +60,7 @@ class User extends Authenticatable
         ];
     }
 
-    public static function register($username, $password, $role, $email, $active)
+    public static function register($username,$firstname, $lastname, $password, $role, $email, $active)
     {
         try {
             $db = DBConnection::getDb();
@@ -75,6 +75,8 @@ class User extends Authenticatable
 
             $usersCollection->insertOne([
                 'username' => $username,
+                'first_name' => $firstname,
+                'last_name' => $lastname,
                 'password' => $hashedPassword,
                 'role' => $role,
                 'email' => $email,

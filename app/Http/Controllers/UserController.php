@@ -17,9 +17,12 @@ class UserController extends Controller
     {  
 
         $username = $request->username;
+        $firstname = $request->firstname;
+        $lastname = $request->lastname;
         $password = $request->password;
         $role = $request->role;
         $email = $request->email;
+
 
         $active = true;
 
@@ -31,7 +34,7 @@ class UserController extends Controller
 
         $active = (strtolower($role) == 'artist') ? false : true;
 
-        $result = User::register($username, $password, $role, $email, $active);
+        $result = User::register($username,$firstname, $lastname, $password, $role, $email, $active);
 
         if($result['success'] && $active) {
             // $user = User::findUser($username);

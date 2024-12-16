@@ -30,6 +30,7 @@ class HomeController extends Controller
     {
         try {
             $art = Arts::getArt($artId);
+            // dump($art);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
