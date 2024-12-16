@@ -22,6 +22,8 @@ class UserSeeder extends Seeder
         for ($i=0; $i < 10; $i++) { 
             DB::table('users')->insert([
                 'username' => 'erfan' . $i,
+                'first_name' => 'firstname' . $i,
+                'last_name' => 'lastname' . $i,
                 'password' => $hashedPassword,
                 'role' => $role,
                 'email' => null,
