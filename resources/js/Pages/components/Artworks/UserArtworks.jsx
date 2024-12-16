@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../api/axiosApi";
 import ArtworkDrawer from "./ArtworkDrawer";
+import { useSession } from '../../../hooks/useSession'; // Adjusted import
+
 import { useNavigate } from "react-router-dom";
 import { usePage } from "@inertiajs/react";
 
@@ -10,13 +12,14 @@ export default function UserArtworks() {
     const { arts } = usePage().props;
     // const [arts, setArts] = useState()
     const navigate = useNavigate();
+    const { username } = useSession()
 
     const [artData, setArtData] = useState([]);
     useEffect(() => {
         if (arts) {
             setArtData(arts)
         }
-    }, [arts])
+    }, [username])
 
     return (
         <div className="grid grid-cols-12 gap-6">

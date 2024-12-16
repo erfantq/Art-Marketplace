@@ -45,7 +45,8 @@ class UserController extends Controller
             
             return response()->json([
                 'message' => 'success',
-                'user' => $user,
+                'username' => $username,
+                'role'=>$role
             ]);
         } 
 
