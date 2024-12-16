@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
+use function Laravel\Prompts\alert;
+
 class HomeController extends Controller
 {
 
@@ -19,7 +21,6 @@ class HomeController extends Controller
         
         if($result['success']) {
             $arts = $result['arts'];
-            $arts = 'test';
             $info = [
                 'success' => true,
                 'arts' => $arts,
@@ -41,11 +42,11 @@ class HomeController extends Controller
         if($result['success']) {
             $art = $result['art'];
             // TODO
-            return response()->json([
+            $info = [
                 'success' => true,
                 'art' => $art,
-            ]);
-            // return Inertia::render('', compact('art'));
+            ];
+            return Inertia::render('components/Artworks/SelectedArtwork', compact('art'));
         }
         
         return response()->json([

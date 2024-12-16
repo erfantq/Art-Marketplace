@@ -4,40 +4,23 @@ import ArtworkDrawer from "./ArtworkDrawer";
 import { useNavigate } from "react-router-dom";
 import { usePage } from "@inertiajs/react";
 
-export default function Artworks(props) {
+export default function UserArtworks() {
     // const [arts, setArts] = useState([]);
     // const { user, arts: artss } = props;
-    const { arts, user, success } = usePage().props.info;
-
-    const [selectArt, setSelectArt] = useState();
+    const { arts } = usePage().props;
+    // const [arts, setArts] = useState()
     const navigate = useNavigate();
-    const [data, setData] = useState([]);
-    const [error, setError] = useState("");
-    const [username, setUsername] = useState("");
-    const [role, setRole] = useState("");
 
-    // const fetchData = async () => {
-    //     try {
-    //         console.log("artss :", artss);
-    //         console.log("userr :", user);
-    //         console.log("success: ", success);
-    //     } catch (error) {
-    //         setError("Error fetching data: " + error.message);
-    //     }
-    // };
-
-    // // Call fetchData on component mount
-    // useEffect(() => {
-    //     setUsername(sessionStorage.getItem("username"));
-    //     setRole(sessionStorage.getItem("role"));
-    //     console.log("artss:", artss);
-
-    //     fetchData();
-    // }, []);
+    const [artData, setArtData] = useState([]);
+    useEffect(() => {
+        if (arts) {
+            setArtData(arts)
+        }
+    }, [arts])
 
     return (
         <div className="grid grid-cols-12 gap-6">
-            {arts.map((art) => (
+            {artData.map((art) => (
                 <div
                     key={art.name}
                     className="col-span-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
@@ -67,7 +50,7 @@ export default function Artworks(props) {
                             className="btn bg-purple-700 text-white rounded-md"
                             htmlFor={art.name}
                             onClick={() => {
-                                setSelectArt(art);
+                                navigate('/home/arts/' + art._id.$oid);
                             }}
                         >
                             View Details
@@ -75,7 +58,7 @@ export default function Artworks(props) {
                     </div>
                 </div>
             ))}
-            {selectArt && <ArtworkDrawer selectArt={selectArt} />}
+            {/* {selectArt && <ArtworkDrawer selectArt={selectArt} />} */}
         </div>
     );
 }
