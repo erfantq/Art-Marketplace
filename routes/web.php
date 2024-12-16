@@ -63,6 +63,8 @@ use Illuminate\Support\Facades\Route;
     Route::get('inactiveusers', [UserController::class, 'inactiveUsers'])->middleware(CheckAdmin::class);
     Route::get('makeactive/{username}', [UserController::class, 'makeActive'])->middleware(CheckAdmin::class);
 
+    Route::get('/orders', [UserController::class, 'getPurchasess']);
+
     // Route::middleware([
     //     VerifyCsrfToken::class,
     //     EnsureFrontendRequestsAreStateful::class, 

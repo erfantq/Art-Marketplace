@@ -13,18 +13,15 @@ class ArtsCotroller extends Controller
      */
     public function index($username)
     {
-        $result = Arts::getArtistArts($username);
-
-        if($result['success']) {
-            $arts = $result['arts'];
-            return response()->json([
-                'arts' => $arts,
-            ]);
-            // return Inertia::render('components/Share/Artworks', compact('arts'));
+        try {
+            $arts = Arts::getArtistArts($username);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return response()->json($result, 422);
-
+        return response()->json([
+            'arts' => $arts,
+        ]);
     }
 
     /**
@@ -52,9 +49,12 @@ class ArtsCotroller extends Controller
             'sold_number' => 0,
         ];
 
-        $result = Arts::storeArt($info);
-
-        return response()->json($result);
+        try {
+            Arts::storeArt($info);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+    
     }
 
     /**
@@ -62,17 +62,16 @@ class ArtsCotroller extends Controller
      */
     public function show($username, string $id)
     {
-        $result = Arts::getArt($id);
-        if($result['success']) {
-            $art = $result['art'];
-            // TODO
-            return response()->json([
-                'username' => $username,
-                'art' => $art,
-            ]);
-            // return Inertia::render('', compact('username', 'art'));
+        try {
+            $art = Arts::getArt($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
-        return response()->json($result, 422);
+        
+        return response()->json([
+            'username' => $username,
+            'art' => $art,
+        ]);
     }
 
     /**
@@ -80,17 +79,16 @@ class ArtsCotroller extends Controller
      */
     public function edit($username, string $id)
     {
-        $result = Arts::getArt($id);
-        if($result['success']) {
-            $art = $result['art'];
-            // TODO
-            return response()->json([
-                'username' => $username,
-                'art' => $art,
-            ]);
-            // return Inertia::render('', compact('username', 'art'));
+        try {
+            $art = Arts::getArt($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
-        return response()->json($result, 422);
+        
+        return response()->json([
+            'username' => $username,
+            'art' => $art,
+        ]);
     }
 
     /**
@@ -106,12 +104,12 @@ class ArtsCotroller extends Controller
             'artist' => ['username' => $username],
         ];
 
-        $result = Arts::updateArt($info, $id);
-
-        if($result['success']) {
-            return response()->json($result);
+        try {
+            Arts::updateArt($info, $id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
-        return response()->json($result, 422);
+
     }
 
     /**
@@ -119,12 +117,12 @@ class ArtsCotroller extends Controller
      */
     public function destroy($username, string $id)
     {
-        $result = Arts::deleteArt($id);
-
-        if($result['success']) {
-            return response()->json($result);
+        try {
+            Arts::deleteArt($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
-        return response()->json($result, 422);
+
     }
 
 }

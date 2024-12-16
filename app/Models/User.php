@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Session;
 use MongoDB\Client;
 
 use function Symfony\Component\Clock\now;
@@ -102,9 +103,10 @@ class User extends Authenticatable
             $db = DBConnection::getDb();
             $usersCollection = $db->users;
 
-            return $usersCollection->findOne(['username' => $username]);
+            $usersCollection->findOne(['username' => $username]);
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            // return ['success' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 
@@ -117,9 +119,8 @@ class User extends Authenticatable
             $filter = ['username' => $username];
             $update = ['$set' => ['wallet_balance' => $value]];
             $usersCollection->updateOne($filter, $update);
-            return ['success' => true, 'message' => 'wallet charge updated'];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 
@@ -147,6 +148,20 @@ class User extends Authenticatable
             $usersCollection->updateOne($filter, $update);
         } catch (\Exception $e) {
             throw new Exception("database error: " . $e->getMessage());
+        }
+    }
+
+    public static function getPurchases($username)
+    {
+        try {
+            $db = DBConnection::getDb();
+            $usersCollection = $db->users;
+
+            $purchasesInfo = $usersCollection->find(['username' => $username], ['previous_purchases' => 1, '_id' => 0])->toArray();
+
+            return $purchasesInfo;
+        } catch (\Exception $e) {
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 }

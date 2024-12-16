@@ -13,44 +13,26 @@ class HomeController extends Controller
 
     public function index()
     {
-        $user = Session::get('user') ?? null;
-        
-        $result = Arts::getArts();
-        
-        if($result['success']) {
-            $arts = $result['arts'];
-            $arts = 'test';
-            $info = [
-                'success' => true,
-                'arts' => $arts,
-            ];
-            // return response()->json($info);
-            return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-        } 
-
-        return response()->json($result, 422);
-
+        try {
+            $user = Session::get('user') ?? null;
+            $arts = Arts::getArts();    
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+          
+        return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
     }
 
 
 
     public function showSelectedArt($artId)
     {
-        $result = Arts::getArt($artId);
-
-        if($result['success']) {
-            $art = $result['art'];
-            // TODO
-            return response()->json([
-                'success' => true,
-                'art' => $art,
-            ]);
-            // return Inertia::render('', compact('art'));
+        try {
+            $art = Arts::getArt($artId);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
         
-        return response()->json([
-            'success' => false,
-            'message' => $result['message'],
-        ], 422);
+        return response()->json(['art' => $art]);
     }
 }

@@ -19,26 +19,29 @@ class TransactionsController extends Controller
     }
     public function purchase(Request $request)
     {
-        $timestamp = Carbon::now();
-        $user = Session::get('user');
-        $buyerUsername = $user['username'];
-
-        $artId = $request->artId;
-        $number = $request->number;
-
-        $transactionInfo = [
-            'timestamp' => $timestamp,
-            'buyer' => $buyerUsername,
-            'artId' => $artId,
-            'number' => $number,
-        ];
-        $result = $this->transactionService->processPurchase($buyerUsername, $artId, $transactionInfo);
-
-        if($result['error']) {
-            return response()->json($result, 422);
+        try {
+            
+            $timestamp = Carbon::now();
+            $user = Session::get('user');
+            $buyerUsername = $user['username'];
+    
+            $artId = $request->artId;
+            $number = $request->number;
+    
+            $transactionInfo = [
+                'timestamp' => $timestamp,
+                'buyer' => $buyerUsername,
+                'artId' => $artId,
+                'number' => $number,
+                'order_status' => 0,
+            ];
+            $this->transactionService->processPurchase($buyerUsername, $artId, $transactionInfo);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);            
         }
 
-        return response()->json($result);
-        
+        return response()->json(['message' => 'purchase was successful.']);
     }
+
+
 }

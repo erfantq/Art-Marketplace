@@ -30,7 +30,7 @@ class RatingsController extends Controller
         try {
             $result = Ratings::store($info, $artId);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], 422);
         }
 
         return response()->json($result);
@@ -41,7 +41,7 @@ class RatingsController extends Controller
         try {
             $result = Ratings::deleteReview($artId, $rateId);
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return response()->json(['message' => $e->getMessage()], 422);
         }
 
         return $result;

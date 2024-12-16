@@ -60,42 +60,47 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $canLogin = true;
+        try {
+            $canLogin = true;
 
-        $user = User::findUser($request->username);
+            $user = User::findUser($request->username);
 
-        // unset($user['password']);
+            // unset($user['password']);
 
-        if(!$user) {
-            $message = 'User not found.';
-            $canLogin = false;
+            if(!$user) {
+                $message = 'User not found.';
+                $canLogin = false;
+            }
+
+            $hashedPassword = $user['password'];
+
+            // Verify the password
+            if(!Hash::check($request->password, $hashedPassword)) {
+                $message = 'Invalid username or password.';
+                $canLogin = false;
+            }
+
+            // check the activation
+            if($user['active'] == false) {
+                $message = "Your account isn't active. It is being reviewed by the admin and will be activated if approved by the admin.";
+                $canLogin = false;
+            }
+
+            if(!$canLogin) {
+                return response()->json([
+                    'message' => $message,
+                    'username' => $request->username,
+                    'password' => $request->password,
+                ], 422);
+            }
+
+            unset($user['password']);
+            Session::put('user', $user);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
-
-        $hashedPassword = $user['password'];
-
-        // Verify the password
-        if(!Hash::check($request->password, $hashedPassword)) {
-            $message = 'Invalid username or password.';
-            $canLogin = false;
-        }
-
-        // check the activation
-        if($user['active'] == false) {
-            $message = "Your account isn't active. It is being reviewed by the admin and will be activated if approved by the admin.";
-            $canLogin = false;
-        }
-
-        if(!$canLogin) {
-            return response()->json([
-                'message' => $message,
-                'username' => $request->username,
-                'password' => $request->password,
-            ], 422);
-        }
-
-        unset($user['password']);
-        Session::put('user', $user);
-
+        
         return response()->json([
             'message' => 'success',
             'user' => $user,
@@ -137,13 +142,12 @@ class UserController extends Controller
         }
 
         $newCharge = $currentCharge + $inputCharge;
-        $result = User::updateWallet($user['username'], $newCharge);
-
-        if($result['success'] == true) {
-            return response()->json($result);
+        try {
+            User::updateWallet($user['username'], $newCharge);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return response()->json($result, 422);
     }
 
     public function inactiveUsers()
@@ -151,7 +155,7 @@ class UserController extends Controller
         try {
             $inactiveUsers = User::getInactiveUsers();
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 422);
+            return response()->json(['message' => $e->getMessage()], 422);
         }
 
         return response()->json(['inactiveUsers' => $inactiveUsers]);
@@ -165,9 +169,21 @@ class UserController extends Controller
 
             User::changeActive($username);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 422);
+            return response()->json(['message' => $e->getMessage()], 422);
         }
         return response()->json(['success' => true, 'message' => 'actived successfully.']);
+    }
+
+    public function getPurchases()
+    {
+        $user_username = Session::get('user')['username'];
+        try {
+            $purchases = User::getPurchases($user_username);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
+        return response()->json(['purchases' => $purchases]);
+
     }
 
 }

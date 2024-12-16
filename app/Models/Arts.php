@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\ArtsCotroller;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use MongoDB\Laravel\Eloquent\Casts\ObjectId;
 
@@ -30,11 +31,11 @@ class Arts extends Model
             $artCollection = $db->arts;
 
             $arts = $artCollection->find()->toArray();
-
-            return ['success' => true, 'arts' => $arts];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
+
+        return $arts;
     }
 
     public static function getArtistArts($username) 
@@ -44,10 +45,11 @@ class Arts extends Model
             $artCollection = $db->arts;
 
             $arts = $artCollection->find(['artist.username' => $username])->toArray();
-            return ['success' => true, 'arts' => $arts];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
+
+        return $arts;
     }
 
     // get specific art
@@ -58,11 +60,11 @@ class Arts extends Model
             $artCollection = $db->arts;
 
             $art = $artCollection->findOne(['_id' => new ObjectId($id)]);
-
-            return ['success' => true, 'art' => $art];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
+
+        return $art;
     }
 
     public static function storeArt($info)
@@ -72,9 +74,8 @@ class Arts extends Model
             $artCollection = $db->arts;
 
             $artCollection->insertOne($info);
-            return ['success' => true, 'message' => 'Art stored successfuly'];
         } catch (\Exception $e) {
-            return ['succsess' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 
@@ -88,9 +89,8 @@ class Arts extends Model
             $update = ['$set' => $info];
 
             $artCollection->updateOne($filter, $update);
-            return ['success' => true, 'message' => 'updated successfuly'];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 
@@ -103,9 +103,8 @@ class Arts extends Model
             $filter = ['_id' => new ObjectId($id)];
 
             $artCollection->deleteOne($filter);
-            return ['success' => true, 'message' => 'deleted successfuly'];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 }

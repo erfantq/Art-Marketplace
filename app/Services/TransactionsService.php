@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Arts;
 use App\Models\DBConnection;
 use App\Models\User;
+use Exception;
 use MongoDB\Laravel\Eloquent\Casts\ObjectId;
 
 class TransactionsService   
@@ -34,24 +35,7 @@ class TransactionsService
 
             // Insert the transaction info in transactionCollection
             $newWallet = $buyer['wallet_balance'] - $art['price'];
-            $insertResult = $this->transactionCollection->insertOne($transactionInfo);
-
-            // update the wallet_balance and previous_purchases for buyer
-            $transactionId = $insertResult->getInsertedId();
-
-            $filter = ['username' => $buyerUsername];
-            $update = [
-                '$push' => [
-                    'previous_purchases' => [
-                        'transaction_id' => $transactionId,
-                    ],
-                ],
-                '$set' => [
-                    'wallet_balance' => $newWallet,
-                ],
-            ];
-
-            $this->userCollection->updateOne($filter, $update);
+            $this->transactionCollection->insertOne($transactionInfo);
 
             // update the wallet_balance and previous_purchases for seller
             $seller = $this->userCollection->findOne(['username' => $art['artist.username']]);
@@ -62,7 +46,7 @@ class TransactionsService
             $update = [
                 '$push' => [
                     'previous_purchases' => [
-                        'transaction_id' => $transactionId,
+                        $transactionInfo,
                     ],
                 ],
                 '$set' => [
@@ -71,6 +55,25 @@ class TransactionsService
             ];
 
             $this->userCollection->updateOne($filter, $update);
+
+            // update the wallet_balance and previous_purchases for buyer
+            unset($transactionInfo['buyer']);
+
+            $filter = ['username' => $buyerUsername];
+            $update = [
+                '$push' => [
+                    'previous_purchases' => [
+                        $transactionInfo,
+                    ],
+                ],
+                '$set' => [
+                    'wallet_balance' => $newWallet,
+                ],
+            ];
+
+            $this->userCollection->updateOne($filter, $update);
+
+            
 
 
             // update the number and sold_number for art
@@ -86,9 +89,8 @@ class TransactionsService
             ];
             $this->artsCollection->updateOne($filter, $update);
             
-            return response()->json(['success' => true, 'message' => 'purchase was successful.']);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            throw new Exception("Database error: " . $e->getMessage());
         }
 
 
