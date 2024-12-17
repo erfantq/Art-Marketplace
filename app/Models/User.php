@@ -11,6 +11,7 @@ use MongoDB\Laravel\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Session;
 use MongoDB\Client;
+use MongoDB\BSON\ObjectId;
 
 use function Symfony\Component\Clock\now;
 
@@ -140,7 +141,7 @@ class User extends Authenticatable
         return $users;
     }
 
-    public static function changeActive($username) 
+    public static function makeActive($username) 
     {
         try {
             $db = DBConnection::getDb();
@@ -182,4 +183,65 @@ class User extends Authenticatable
             throw new Exception("Database error: " . $e->getMessage());
         }
     }
+
+    public static function getBuyRequests($username) 
+    {
+        $db = DBConnection::getDb();
+        $usersCollection = $db->users;
+
+        $pipeline = [
+            [
+                '$match' => [
+                    '_id' => new ObjectId($username) // Match the user by ID
+                ]
+            ],
+            [
+                '$lookup' => [
+                    'from' => 'transactions',        // The collection to join
+                    'localField' => 'previous_purchases.id',  // Field in the 'users' collection
+                    'foreignField' => '_id',         // Field in the 'transactions' collection
+                    'as' => 'purchases'             // Alias for the joined data
+                ]
+            ],
+            [
+                '$unwind' => '$transactions' // Flatten the purchases array
+            ],
+            [
+                '$match' => [
+                    'transactions.order_status' => 0 // Filter where order_status = 0
+                ]
+            ],
+            [
+                '$project' => [
+                    'previous_purchases' => 1, // Project only the purchases data
+                    '_id' => 0        // Exclude the user ID if not needed
+                ]
+            ]
+        ];
+
+        $buyRequests = $usersCollection->aggregate($pipeline)->toArray();
+        return $buyRequests;
+    }
+
+    // public static function getPreviousPurchases($username)
+    // {
+    //     try {
+    //         $db = DBConnection::getDb();
+    //         $usersCollection = $db->users;
+
+    //         $previousPurchases = $usersCollection->aggregate([
+    //             // Match the user with the given username
+    //             ['$match' => ['username' => $username]],
+    //             // Project only the matching purchases
+    //             ['$project' => [
+    //                 '_id' => 0, 
+    //                 'previous_purchases' => 1,
+    //             ]]
+    //         ]);
+
+    //     } catch (\Exception $e) {
+    //         throw new Exception("Database error: " . $e->getMessage());
+    //     }
+    //     return $previousPurchases;
+    // }
 }

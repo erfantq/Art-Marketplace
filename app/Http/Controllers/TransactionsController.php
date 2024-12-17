@@ -33,7 +33,7 @@ class TransactionsController extends Controller
                 'buyer' => $buyerUsername,
                 'artId' => $artId,
                 'number' => $number,
-                'order_status' => 0,
+                'order_status' => 0,    
             ];
             $this->transactionService->processPurchase($buyerUsername, $artId, $transactionInfo);
         } catch (\Exception $e) {
@@ -41,6 +41,11 @@ class TransactionsController extends Controller
         }
 
         return response()->json(['message' => 'purchase was successful.']);
+    }
+
+    public static function changeOrderStatus($transactionId, $status)
+    {
+
     }
 
 

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
-use Mockery\CountValidator\Exact;
 
-class UserController extends Controller
+class BaseUserController extends Controller
 {
     public function register(Request $request) 
     {  
@@ -117,73 +115,14 @@ class UserController extends Controller
         ]);
     }
 
-    public function show()
-    {
-        $user = Session::get('user');
-        return Inertia::render('components/Share/UserProfile', compact('user'));
-    }
-
     public function showWallet()
     {
-
-        // $user = User::findUser('erfan');
-
-        // $userWithoutPassword = $user->makeHidden('password')->toArray();
-
-        // Session::put('user', $user);
-
         $user = Session::get('user');
-        // dd(Inertia::render('TestWallet'));
         // TODO
         return Inertia::render('components/Share/WalletCharge', compact('user'));
     }
 
-    public function updateWallet(Request $request)
-    {
-
-        $user = Session::get('user');
-        $currentCharge = $user['wallet_balance'];
-        $inputCharge = $request->charge;
-        if(!is_int($inputCharge)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'The value must be Integer',
-            ], 422);
-        }
-
-        $newCharge = $currentCharge + $inputCharge;
-        try {
-            User::updateWallet($user['username'], $newCharge);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
-
-    }
-
-    public function inactiveUsers()
-    {
-        try {
-            $inactiveUsers = User::getInactiveUsers();
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
-
-        return response()->json(['inactiveUsers' => $inactiveUsers]);
-
-    }
-
-    public function makeActive(Request $request)
-    {
-        try {
-            $username = $request->username;
-
-            User::changeActive($username);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
-        return response()->json(['success' => true, 'message' => 'actived successfully.']);
-    }
-
+    // If it is normal user gives the buyed arts, If it is artist gives the selled arts
     public function getPurchases()
     {
         $user_username = Session::get('user')['username'];
@@ -226,27 +165,8 @@ class UserController extends Controller
         }
     }
 
-
-    // seller
-    public function buyRequests()
-    {
-        $user_username = Session::get('user')['username'];
-
-        try {
-            $buyRequests = User::getBuyRequests($user_username);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
-
-        return response()->json(['buy_requests' => $buyRequests]);
-    }
-
     public function logout()
     {
         Session::flush();
     }
 }
-
-
-
-
