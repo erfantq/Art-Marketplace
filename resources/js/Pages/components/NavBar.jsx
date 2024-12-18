@@ -1,16 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
-import { useSession } from '../../hooks/useSession'; // Adjusted import
 
 export default function Navbar() {
     const navigate = useNavigate("");
     const [login, setLogin] = useState(false);
-    const { username, role } = useSession()
+    const [username, setUsername] = useState('')
+    const [role, setRole] = useState('')
 
-    useEffect(()=>{
-        console.log(username);
-    },[])
+
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+    
+        // Check if user exists and has username and role properties
+        if (user && user.username && user.role) {
+            setUsername(user.username);
+            setRole(user.role);
+        }
+    }, [])
+
 
     return (
         <div className="navbar rounded-lg navbar-glass navbar-sticky bg-gray-900 border border-gray-700">
@@ -22,7 +29,7 @@ export default function Navbar() {
 
             <div className="navbar-center">
                 <button className="navbar-item text-white"
-                onClick={()=>navigate('/home')}>Home</button>
+                    onClick={() => navigate('/home')}>Home</button>
                 {/* { <button
                     className="navbar-item text-white"
                     onClick={() => navigate("/home/arts")}
@@ -60,7 +67,14 @@ export default function Navbar() {
                                 <div className="dropdown-menu dropdown-menu-bottom-left">
                                     <button
                                         className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600"
-                                        onClick={() => navigate("/" + username+"/profile")}
+                                        onClick={() => {
+                                            if (role === "User") {
+                                                navigate("/user/" + username + "/profile")
+                                            } else if (role == 'Artist') {
+                                                navigate("/artist/" + username + "/profile")
+                                            }
+
+                                        }}
                                     >
                                         Account setting
                                     </button>
@@ -69,8 +83,8 @@ export default function Navbar() {
                                         onClick={() =>
                                             navigate(
                                                 "/" +
-                                                    username +
-                                                    "/createArtwork"
+                                                username +
+                                                "/createArtwork"
                                             )
                                         }
                                     >
@@ -81,13 +95,13 @@ export default function Navbar() {
                                         onClick={() => {
                                             console.log(
                                                 "/" +
-                                                    username +
-                                                    "/createBiddingg"
+                                                username +
+                                                "/createBiddingg"
                                             );
                                             navigate(
                                                 "/" +
-                                                    username +
-                                                    "/createBiddingg"
+                                                username +
+                                                "/createBiddingg"
                                             );
                                         }}
                                     >
@@ -116,8 +130,7 @@ export default function Navbar() {
                                         onClick={() => {
                                             setLogin(false);
                                             navigate("/login");
-                                            sessionStorage.setItem('username','')
-                                            sessionStorage.setItem('role','')
+                                            sessionStorage.setItem('user', JSON.stringify({}))
                                         }}
                                     >
                                         Logout

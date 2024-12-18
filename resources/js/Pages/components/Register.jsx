@@ -6,7 +6,6 @@ import { data, useNavigate } from "react-router-dom";
 import api from "../../api/axiosApi";
 import useToastify from '../../hooks/useToastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 
 export default function Register() {
     // const [csrfToken, setCsrfToken] = useState("");
@@ -24,12 +23,10 @@ export default function Register() {
                 },
                 withCredentials: true, // Important for sending/receiving cookies
             });
+            console.log(response);
 
-            sessionStorage.setItem('username', response.data.username)
-            sessionStorage.setItem('role', response.data.role)
-            console.log(response);
-            setBtnSubmit(true);
-            console.log(response);
+            sessionStorage.setItem("user", JSON.stringify(response.data.user));
+            setBtnSubmit(true)
             showToast('success', response.data.message)
             setTimeout(() => {
                 setBtnSubmit(false);

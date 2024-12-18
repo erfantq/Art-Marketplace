@@ -53,7 +53,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('/{artId}/delcomment', [RatingsController::class, 'destroy']);
     });
 
-    Route::prefix('{username}/profile')->group(function () {
+    Route::prefix('/user/{username}/profile')->group(function () {
         Route::get('/', [UserController::class, 'show']);
         Route::get('/update', [UserController::class, 'showUpdate']);
         Route::post('/update', [UserController::class, 'updateUserInfo']);

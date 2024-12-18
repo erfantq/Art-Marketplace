@@ -11,17 +11,19 @@ use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Mockery\CountValidator\Exact;
 
+use function Laravel\Prompts\alert;
+
 class UserController extends Controller
 {
     public function register(Request $request) 
     {  
 
         $username = $request->username;
-        $firstname = $request->firstname;
-        $lastname = $request->lastname;
+        $firstname = "";
+        $lastname = "";
         $password = $request->password;
         $role = $request->role;
-        $email = $request->email;
+        $email = "";
 
 
         $active = true;
@@ -48,8 +50,7 @@ class UserController extends Controller
             
             return response()->json([
                 'message' => 'success',
-                'username' => $username,
-                'role'=>$role
+                'user' => $user
             ]);
         } 
 
@@ -120,7 +121,7 @@ class UserController extends Controller
     public function show()
     {
         $user = Session::get('user');
-        return Inertia::render('components/Share/UserProfile', compact('user'));
+        return Inertia::render('components/User/UserProfile', compact('user'));
     }
 
     public function showWallet()
@@ -205,22 +206,36 @@ class UserController extends Controller
     public function updateUserInfo(Request $request)
     {
         $oldUsername = Session::get('user')['username'];
+
         $username = $request->username;
         $password = $request->password;
         $email = $request->email;
         $address = $request->address;
+        $first_name = $request->first_name;
+        $last_name = $request->last_name;
+
 
         $info = [
             'username' => $username,
-            'password' => $password,
+            'password' => password_hash($password, PASSWORD_BCRYPT),
             'email' => $email,
             'address' => $address,
+            'first_name'=>$first_name,
+            'last_name'=>$last_name
         ];
         if(!$username || !$password) {
             return response()->json(['message' => 'username and password are required.'], 422);
         }
         try {
         User::updateUserInfo($info, $oldUsername);
+            $user = User::findUser($info['username']);
+            unset($user['password']);
+            Session::put('user', $user);
+            return response()->json([
+                'message' => 'Successfully update!',
+                'user' => $user,
+            ]);
+
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }

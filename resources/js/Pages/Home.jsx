@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-do
 import Login from './components/Login'
 import Register from './components/Register'
 // import ArtistPage from './components/ArtistPage'
-import UserProfile from './components/Share/UserProfile'
+import UserProfile from './components/User/UserProfile'
+import EditUserProfile from './components/User/EditUserProfile'
 import CreateBiddingg from './components/Artist/CreateBiddingg'
-import User from "./components/User/User";
 import HomePage from "./components/HomePage/HomePage";
 import Buy from "./components/User/Buy";
 import WalletCharge from "./components/Share/WalletCharge";
@@ -23,7 +23,9 @@ export default function Home() {
                     path="/:name/createArtwork"
                     element={<CreateArtwork />}
                 />
-                <Route path="/:name/profile" element={<UserProfile />} />
+                <Route path="/user/:name/profile" element={<UserProfile />} />
+                <Route path="/user/:name/profile/update" element={<EditUserProfile />} />
+                
                 <Route
                     path="/:name/createBiddingg"
                     element={<CreateBiddingg />}

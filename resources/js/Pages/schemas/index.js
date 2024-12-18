@@ -2,9 +2,9 @@ import * as yup from 'yup';
 
 // var passwordRegEx = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 var requiredTxt = 'Please enter a value!'
-// var emailTxt = 'لطفا ایمیل را به درستی وارد کنید'
+var emailTxt = 'Please enter a valid email'
 var passwordTxt = 'Enter at least 5 characters and a special letter'
-// var confirmPasswordTxt = 'رمز عبور مطابقت ندارد'
+var confirmPasswordTxt = 'Password not match!'
 // password : yup.string().min(5,"").matches(passwordRegEx,{"message":passwordTxt}).required(requiredTxt)
 
 export const LoginSchema = yup.object().shape({
@@ -28,11 +28,14 @@ export const WalletChargeSchema = yup.object().shape({
     charge : yup.string().required("Please enter an amount")
 })
 
+// password : yup.string().min(5,"").matches(passwordRegEx,{"message" : passwordTxt}).required(requiredTxt),
 
-// export const CreateUserSchema = yup.object().shape({
-//     fName : yup.string().required(requiredTxt),
-//     lName : yup.string().required(requiredTxt),
-//     email : yup.string().email(emailTxt).required(requiredTxt),
-//     password : yup.string().min(5,"").matches(passwordRegEx,{"message" : passwordTxt}).required(requiredTxt),
-//     confirmPassword :yup.string().oneOf([yup.ref('password'),null],confirmPasswordTxt) 
-// })
+export const EditUserProgile = yup.object().shape({
+    first_name : yup.string(),
+    last_name : yup.string(),
+    email : yup.string().email(emailTxt),
+    address : yup.string(),
+    username : yup.string().required(requiredTxt),
+    password : yup.string().required(requiredTxt),
+    // confirmPassword :yup.string().oneOf([yup.ref('password'),null],confirmPasswordTxt) 
+})

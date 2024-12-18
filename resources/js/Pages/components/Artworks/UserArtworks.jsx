@@ -15,11 +15,16 @@ export default function UserArtworks() {
     const { username } = useSession()
 
     const [artData, setArtData] = useState([]);
+
     useEffect(() => {
-        if (arts) {
-            setArtData(arts)
+        sessionStorage.setItem('arts', JSON.stringify(arts))
+        setArtData(JSON.parse(sessionStorage.getItem('arts')));
+
+        // Check if user exists and has username and role properties
+        if (!artData) {
+            setArtData(JSON.parse({}))
         }
-    }, [username])
+    }, [])
 
     return (
         <div className="grid grid-cols-12 gap-6">

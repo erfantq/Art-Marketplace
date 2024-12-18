@@ -2,14 +2,22 @@ import React, { useContext, useState, useEffect } from "react";
 import Navbar from "../NavBar";
 import { useSession } from "../../../hooks/useSession";
 import { usePage } from "@inertiajs/react";
+import { useNavigate } from "react-router-dom";
 
 export default function ArtistPage() {
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
-    const { username, role } = useSession()
-    const { user } = usePage().props;
+    const [user, setUser] = useState({})
+    const navigate = useNavigate()
     console.log(user);
+    useEffect(() => {
+        setUser(JSON.parse(sessionStorage.getItem('user')));
 
+        // Check if user exists and has username and role properties
+        if (!user) {
+            setUser(JSON.parse({}))
+        }
+    }, [])
     const divStyles = "w-full h-9 px-1 py-2 text-sm bg-gray-800 border-left border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
     const styles = {
         div: {
@@ -18,15 +26,17 @@ export default function ArtistPage() {
             color: " text-sm bg-gray-800 border-l-2 border-gray-700 hover:border-purple-600 text-gray-300 "
         },
         buttun: {
-            grid: "w-full btn h-9 px-2 py-2 my-4 rounded-md  ",
-            color: "text-sm font-medium text-white bg-purple-700 "
+            normal: {
+                grid: " w-full btn h-9 px-2 py-2 my-4 rounded-md  ",
+                color: " text-sm font-medium text-white bg-purple-700 "
+            },
+            submitting: {
+                grid: " w-full btn h-9 px-2 py-2 my-4 rounded-md  ",
+                color: " text-sm font-medium text-white bg-purple-400 cursor-not-allowed "
+
+            }
         }
     }
-    const baseInput =
-        "w-full px-1 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
-
-    const incorrectInput =
-        "max-w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
 
     return (
         <div>
@@ -43,7 +53,7 @@ export default function ArtistPage() {
                                     Information of account
                                 </p>
                                 <h2 className="text-xl font-medium text-left mb-12 text-purple-400">
-                                    Account of {role}
+                                    Account of User
                                 </h2>
                             </div>
 
@@ -53,8 +63,8 @@ export default function ArtistPage() {
                                 >
                                     FirstName
                                 </label>
-                                <div className={styles.div.transition + styles.div.grid + styles.div.color}>
-                                    {user.firstName}
+                                <div className={JSON.stringify(styles.div)}>
+                                    {user.first_name}
                                 </div>
                             </div>
 
@@ -65,8 +75,8 @@ export default function ArtistPage() {
                                 >
                                     LastName
                                 </label>
-                                <div className={styles.div.transition + styles.div.grid + styles.div.color}>
-                                    {user.lastName}
+                                <div className={JSON.stringify(styles.div)}>
+                                    {user.last_name}
                                 </div>
                             </div>
                             <div className="col-span-full ">
@@ -75,7 +85,7 @@ export default function ArtistPage() {
                                 >
                                     Address
                                 </label>
-                                <div className={styles.div.transition + styles.div.grid + styles.div.color}>
+                                <div className={JSON.stringify(styles.div)}>
                                     {user.address}
                                 </div>
                             </div>
@@ -85,7 +95,7 @@ export default function ArtistPage() {
                                 >
                                     Email
                                 </label>
-                                <div className={styles.div.transition + styles.div.grid + styles.div.color}>
+                                <div className={JSON.stringify(styles.div)}>
                                     {user.email}
                                 </div>
                             </div>
@@ -95,7 +105,7 @@ export default function ArtistPage() {
                                 >
                                     Username
                                 </label>
-                                <div className={styles.div.transition + styles.div.grid + styles.div.color}>
+                                <div className={JSON.stringify(styles.div)}>
                                     {user.username}
                                 </div>
                             </div>
@@ -106,7 +116,7 @@ export default function ArtistPage() {
                                 >
                                     Wallet Ballance
                                 </label>
-                                <div className={styles.div.transition + styles.div.grid + styles.div.color}>
+                                <div className={JSON.stringify(styles.div)}>
                                     {user.wallet_balance}
                                 </div>
                             </div>
@@ -126,7 +136,8 @@ export default function ArtistPage() {
 
                         {/* Edit Profile Button */}
                         <button
-                            className={styles.buttun.color + styles.buttun.grid}
+                            className={JSON.stringify(styles.buttun.normal)}
+                            onClick={() => navigate('/user/' + user.username + '/profile/update')}
                         >
                             Edit Profile
                         </button>
