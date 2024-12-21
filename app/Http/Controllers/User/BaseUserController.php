@@ -43,12 +43,14 @@ class BaseUserController extends Controller
 
             unset($user['password']);
             Session::put('user', $user);
+            Session::save();
             
-            return response()->json([
-                'message' => 'success',
-                'username' => $username,
-                'role'=>$role
-            ]);
+            // return response()->json([
+            //     'message' => 'success',
+            //     'username' => $username,
+            //     'role'=>$role
+            // ]);
+            return redirect()->to('/');
         } 
 
         $message = $result['message'];
@@ -104,15 +106,17 @@ class BaseUserController extends Controller
 
             unset($user['password']);
             Session::put('user', $user);
+            Session::save();
 
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
         
-        return response()->json([
-            'message' => 'success',
-            'user' => $user,
-        ]);
+        // return response()->json([
+        //     'message' => 'success',
+        //     'user' => $user,
+        // ]);
+        return redirect()->to('/');
     }
 
     public function showWallet()
@@ -135,10 +139,11 @@ class BaseUserController extends Controller
 
     }
 
-    public function showUpdate()
+    public function showUpdate($username)
     {
+        $user = Session::get('user');
         // TODO
-        return Inertia::render('');
+        return Inertia::render('', compact('user'));
     }
 
     public function updateUserInfo(Request $request)

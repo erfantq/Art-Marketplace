@@ -18,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->validateCsrfTokens(
             // Specify the routes to exclude from CSRF protection
-            except: ['stripe', 'login', 'register']
+            // except: ['stripe', 'login', 'register']
+            except: ['*']
         );
     })
     ->withExceptions(function (Exceptions $exceptions) {

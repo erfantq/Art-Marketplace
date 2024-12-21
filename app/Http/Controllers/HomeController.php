@@ -16,11 +16,32 @@ class HomeController extends Controller
     {
         try {
             $user = Session::get('user') ?? null;
+            
             $arts = Arts::getArts();    
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
-          
+        if ($user != null) {
+            $role = strtolower($user['role']);
+        
+            switch ($role) {
+                case 'user':
+                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+                    break;
+                case 'artist':
+                    // TODO
+                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+                    break;
+                case 'admin':
+                    // TODO
+                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+                    break;
+                default:
+                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+                    break;
+            }
+        
+        }
         return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
     }
 
@@ -30,11 +51,10 @@ class HomeController extends Controller
     {
         try {
             $art = Arts::getArt($artId);
-            // dump($art);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
         
-        return response()->json(['art' => $art]);
+        return Inertia::render('components/Artworks/SelectedArtwork', compact('art'));
     }
 }

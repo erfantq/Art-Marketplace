@@ -18,7 +18,6 @@ class RatingsController extends Controller
         $rate = $request->rate;
         $comment = $request->comment;
         $username = Session::get('user')['username'];
-        
 
         $info = [
             '_id' => new ObjectId(),
@@ -29,22 +28,21 @@ class RatingsController extends Controller
         ];
 
         try {
-            $result = Ratings::store($info, $artId);
+            Ratings::store($info, $artId);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
-
-        return response()->json($result);
+        return response()->json(['message' => 'Comment submited successfully.']);
     }
 
     public function destroy($artId, $rateId)
     {
         try {
-            $result = Ratings::deleteReview($artId, $rateId);
+            Ratings::deleteReview($artId, $rateId);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return $result;
+        return response()->json(['message' => 'Comment deleted successfully.']);
     }
 }

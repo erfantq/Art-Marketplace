@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DBConnection;
 use App\Models\Transactions;
 use App\Services\TransactionsService;
 use Carbon\Carbon;
@@ -40,13 +41,10 @@ class TransactionsController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);            
         }
 
-        return response()->json(['message' => 'purchase was successful.']);
+        return response()->json(['message' => 'Purchase was successful.']);
     }
 
-    public static function changeOrderStatus($transactionId, $status)
-    {
-
-    }
+    
 
 
 }

@@ -23,7 +23,10 @@ return new class extends Migration
             timestamp,
             buyer,
             artId,
+            number,
+            oreder_status,
         }
+            
         */
     }
 

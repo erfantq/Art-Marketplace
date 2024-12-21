@@ -19,9 +19,13 @@ class ArtsCotroller extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return response()->json([
-            'arts' => $arts,
-        ]);
+        // return response()->json([
+        //     'arts' => $arts,
+        // ]);
+
+
+        // TODO
+        return Inertia::render('', compact('arts'));
     }
 
     /**
@@ -31,7 +35,7 @@ class ArtsCotroller extends Controller
     {
         // TODO
 
-        return Inertia::render('');
+        return Inertia::render('', $username);
     }
 
     /**
@@ -68,10 +72,13 @@ class ArtsCotroller extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
         
-        return response()->json([
-            'username' => $username,
-            'art' => $art,
-        ]);
+        // return response()->json([
+        //     'username' => $username,
+        //     'art' => $art,
+        // ]);
+
+        // TODO
+        return Inertia::render('', compact('username', 'art'));
     }
 
     /**
@@ -85,10 +92,13 @@ class ArtsCotroller extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
         
-        return response()->json([
-            'username' => $username,
-            'art' => $art,
-        ]);
+        // return response()->json([
+        //     'username' => $username,
+        //     'art' => $art,
+        // ]);
+
+        // TODO
+        return Inertia::render('', compact('username', 'art'));
     }
 
     /**
@@ -110,6 +120,8 @@ class ArtsCotroller extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
+        return response()->json(['message' => 'Updated successfully.']);
+
     }
 
     /**
@@ -122,6 +134,8 @@ class ArtsCotroller extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
+
+        return response()->json(['message' => 'Deleted successfully.']);
 
     }
 

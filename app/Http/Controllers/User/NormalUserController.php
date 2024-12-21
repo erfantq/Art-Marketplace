@@ -15,10 +15,14 @@ class NormalUserController extends Controller
 
     }
     
-    public function show()
+    public function show($username)
     {
-        $user = Session::get('user');
+        $user = $username;
         // TODO
         return Inertia::render('components/Share/UserProfile', compact('user'));
     }
+
+    
+
+
 }

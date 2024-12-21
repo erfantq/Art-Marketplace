@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Arts;
 use App\Models\DBConnection;
 use App\Models\User;
+use MongoDB\BSON\ObjectId;
 use Exception;
 
 class TransactionsService   
@@ -12,14 +13,28 @@ class TransactionsService
 
     protected $userCollection;
     protected $artsCollection;
-    protected $transactionCollection;
+    protected $transactionsCollection;
 
     public function __construct()
     {
         $db = DBConnection::getDb();
         $this->userCollection = $db->users;
         $this->artsCollection = $db->arts;
-        $this->transactionCollection = $db->transactions;
+        $this->transactionsCollection = $db->transactions;
+    }
+
+    public function changeOrderStatus($transactionId, $status)
+    {
+    
+        $filter = ['_id' => new ObjectId((string) $transactionId)];
+        $update = ['$set' => ['oreder_status' => $status]];
+        try {
+            $this->transactionsCollection->updateOne($filter, $update);
+        } catch (\Exception $e) {
+            throw new \Exception("Database error: " . $e->getMessage());
+        }
+        return response()->json(['message' => 'Buy request approved successfully']);
+      
     }
 
     public function processPurchase($buyerUsername, $artId, $transactionInfo)
@@ -32,7 +47,7 @@ class TransactionsService
                 throw new \Exception("Insufficient wallet balance.");
             }
 
-            // Insert the transaction info in transactionCollection
+            // Insert the transaction info in transactionsCollection
             $transactionInsert = self::insertIntoTransaction($transactionInfo);
 
             $transactionId = $transactionInsert->getInsertedId();
@@ -59,7 +74,7 @@ class TransactionsService
 
     private function insertIntoTransaction($transactionInfo)
     {
-        return $this->transactionCollection->insertOne($transactionInfo);
+        return $this->transactionsCollection->insertOne($transactionInfo);
     }
 
     private function updateSeller($art, $transactionId)

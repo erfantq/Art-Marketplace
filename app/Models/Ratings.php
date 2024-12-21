@@ -20,9 +20,8 @@ class Ratings extends Model
             
             $artsCollection->updateOne($filter, $update);
 
-            return ['success' => true, 'message' => 'rate submited.'];
         } catch (\Exception $e) {
-            throw new \Exception("couldn't store art:" . $e->getMessage());
+            throw new \Exception("Couldn't submit comment:" . $e->getMessage());
         }
     }
 
@@ -39,9 +38,9 @@ class Ratings extends Model
                 $update
             );
             
-            return ['success' => true, 'message' => 'deleted successfuly.'];
         } catch (\Exception $e) {
             throw new \Exception("couldn't delete art: " . $e->getMessage());
         }
+
     }
 }

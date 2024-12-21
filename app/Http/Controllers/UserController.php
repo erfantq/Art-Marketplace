@@ -47,6 +47,7 @@ class UserController extends Controller
 
             unset($user['password']);
             Session::put('user', $user);
+            // session(['user' => $user]);
             
             return response()->json([
                 'message' => 'success',
@@ -107,6 +108,9 @@ class UserController extends Controller
 
             unset($user['password']);
             Session::put('user', $user);
+            Session::save();
+            // session(['user' => $user]);
+            // session()->save();
 
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
@@ -124,7 +128,7 @@ class UserController extends Controller
         return Inertia::render('components/User/UserProfile', compact('user'));
     }
 
-    public function showWallet()
+    public function showWallet(Request $request)
     {
 
         // $user = User::findUser('erfan');
@@ -134,6 +138,8 @@ class UserController extends Controller
         // Session::put('user', $user);
 
         $user = Session::get('user');
+        // $user = session('user');
+        // $user = $request->session()->get('user');
         // dd(Inertia::render('TestWallet'));
         // TODO
         return Inertia::render('components/Share/WalletCharge', compact('user'));
@@ -143,6 +149,9 @@ class UserController extends Controller
     {
 
         $user = Session::get('user');
+        // $user = session('user');
+        // $user = $request->session()->get('user');
+
         $currentCharge = $user['wallet_balance'];
         $inputCharge = $request->charge;
         if(!is_int($inputCharge)) {
@@ -227,8 +236,8 @@ class UserController extends Controller
             return response()->json(['message' => 'username and password are required.'], 422);
         }
         try {
-        User::updateUserInfo($info, $oldUsername);
-            $user = User::findUser($info['username']);
+            User::updateUserInfo($info, $oldUsername);
+            $user = User::findUser($username);
             unset($user['password']);
             Session::put('user', $user);
             return response()->json([
