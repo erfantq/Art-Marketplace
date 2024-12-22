@@ -23,6 +23,7 @@ class ArtSeeder extends Seeder
                 'artist' => ['username' => 'test' . $i],
                 'reviews' => [],
                 'sold_number' => 0,
+                'bidding' => false,
             ]);
         }
         

@@ -6,7 +6,7 @@ use App\Models\Arts;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ArtsCotroller extends Controller
+class ArtsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -51,6 +51,7 @@ class ArtsCotroller extends Controller
             'artist' => ['username' => $username],
             'reviews' => [],
             'sold_number' => 0,
+            'bidding' => false,
         ];
 
         try {
@@ -138,5 +139,7 @@ class ArtsCotroller extends Controller
         return response()->json(['message' => 'Deleted successfully.']);
 
     }
+
+    
 
 }

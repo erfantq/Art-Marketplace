@@ -1,14 +1,15 @@
     <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ArtsController;
 use App\Http\Controllers\ArtsCotroller;
-use App\Http\Controllers\BaseNormalUserAdminController;
-use App\Http\Controllers\BaseUserController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\NormalUserController;
 use App\Http\Controllers\RatingsController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\User\AdminController;
+use App\Http\Controllers\User\ArtistController;
+use App\Http\Controllers\User\BaseNormalUserAdminController;
+use App\Http\Controllers\User\BaseUserController;
+use App\Http\Controllers\User\NormalUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationCotroller;
 use App\Http\Controllers\WalletController;
@@ -58,7 +59,7 @@ use function Laravel\Prompts\alert;
             Route::post('/update', [BaseUserController::class, 'updateUserInfo']);
         });
 
-        Route::resource('{username}/arts', ArtsCotroller::class)->middleware(RoleMiddleware::class.':artist');
+        Route::resource('{username}/arts', ArtsController::class)->middleware(RoleMiddleware::class.':artist');
         
         Route::get('{username}/walletcharge', [BaseUserController::class, 'showWallet'])->middleware(RoleMiddleware::class.':admin,user');
         Route::post('{username}/walletcharge', [BaseNormalUserAdminController::class, 'updateWallet'])->middleware(RoleMiddleware::class.':admin,user');

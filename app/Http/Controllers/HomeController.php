@@ -27,18 +27,14 @@ class HomeController extends Controller
             switch ($role) {
                 case 'user':
                     return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-                    break;
                 case 'artist':
                     // TODO
                     return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-                    break;
                 case 'admin':
                     // TODO
                     return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-                    break;
                 default:
                     return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-                    break;
             }
         
         }

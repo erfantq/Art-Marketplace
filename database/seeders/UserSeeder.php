@@ -29,6 +29,7 @@ class UserSeeder extends Seeder
                 'email' => null,
                 'address' => null,
                 'wallet_balance' => 0,
+                'active' => true,
                 'previous_purchases' => [],
                 'current_auctions' => [],
                 'previous_auctions' => [],
