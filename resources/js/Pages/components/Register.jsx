@@ -8,10 +8,8 @@ import useToastify from '../../hooks/useToastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
-    // const [csrfToken, setCsrfToken] = useState("");
-    const [register, setRegister] = useState(false)
-    const navigate = useNavigate();
-    const showToast = useToastify(); // Get the toast function
+    // const navigate = useNavigate()
+    const showToast = useToastify()
 
     const [btnSubmit, setBtnSubmit] = useState(false);
 
@@ -23,19 +21,17 @@ export default function Register() {
                 },
                 withCredentials: true, // Important for sending/receiving cookies
             });
-            console.log(response);
-
-            sessionStorage.setItem("user", JSON.stringify(response.data.user));
             setBtnSubmit(true)
-            showToast('success', response.data.message)
-            setTimeout(() => {
-                setBtnSubmit(false);
-                navigate("/home");
-            }, 4000);
+            showToast('success', "Succussfully Register")
+            // setTimeout(() => {
+            //     setBtnSubmit(false);
+            //     // navigate("/");
+            // }, 4000);
 
         } catch (error) {
-            console.log(error);
             showToast('error', error.response)
+            showToast('error', "error.response")
+            console.log(error);
         }
     };
 
