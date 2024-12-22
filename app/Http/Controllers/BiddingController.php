@@ -54,4 +54,6 @@ class BiddingController extends Controller
     }
 
     
+
+    
 }
