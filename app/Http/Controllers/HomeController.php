@@ -17,7 +17,7 @@ class HomeController extends Controller
         try {
             $user = Session::get('user') ?? null;
             
-            $arts = Arts::getArts();    
+            $arts = Arts::getArts(); 
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -26,7 +26,7 @@ class HomeController extends Controller
         
             switch ($role) {
                 case 'user':
-                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+                    return Inertia::render('components/HomePage/HomePage', compact('user', 'arts'));
                 case 'artist':
                     // TODO
                     return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
