@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import Navbar from "../NavBar";
+import Navbar from "../Share/NavBar";
 import { useSession } from "../../../hooks/useSession";
 import { usePage } from "@inertiajs/react";
 

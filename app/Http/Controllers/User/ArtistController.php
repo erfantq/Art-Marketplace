@@ -30,7 +30,7 @@ class ArtistController extends Controller
     {
         $user = Session::get('user');
         // TODO
-        return Inertia::render('components/Share/UserProfile', compact('user'));
+        return Inertia::render('components/Profile/ArtistProfile', compact('user'));
     }
 
     public function buyRequests()

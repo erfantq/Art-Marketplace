@@ -125,7 +125,7 @@ class UserController extends Controller
     public function show()
     {
         $user = Session::get('user');
-        return Inertia::render('components/User/UserProfile', compact('user'));
+        return Inertia::render('components/Profile/UserProfile', compact('user'));
     }
 
     public function showWallet(Request $request)

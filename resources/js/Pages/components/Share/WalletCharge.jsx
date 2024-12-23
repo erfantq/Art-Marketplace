@@ -1,24 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../NavBar";
+import Navbar from "./NavBar";
 import { useFormik } from "formik";
 import { WalletChargeSchema } from "../../schemas";
 import api from "../../../api/axiosApi";
 import useToastify from "../../../hooks/useToastify";
-export default function WalletCharge() {
+export default function WalletCharge({ user }) {
 
-    const navigate = useNavigate()
-    const [user, setUser] = useState({})
+    // const [user, setUser] = useState({})
     const showToast = useToastify()
 
-    useEffect(() => {
-        setUser(JSON.parse(sessionStorage.getItem('user')));
+    // useEffect(() => {
+    //     setUser(JSON.parse(sessionStorage.getItem('user')));
 
-        // Check if user exists and has username and role properties
-        if (!user) {
-            setUser(JSON.parse({}))
-        }
-    }, [])
+    //     // Check if user exists and has username and role properties
+    //     if (!user) {
+    //         setUser(JSON.parse({}))
+    //     }
+    // }, [])
 
     const onSubmit = async (values, action) => {
         try {
@@ -47,7 +46,7 @@ export default function WalletCharge() {
                 error.response?.data || error.message
             );
         }
-    };
+    }
 
     const {
         values,
@@ -73,7 +72,7 @@ export default function WalletCharge() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar username={user.username} role={user.role} />
             <div className="container min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 flex items-center justify-center">
                 <div className="grid grid-cols-9">
                     {/* Information Box */}

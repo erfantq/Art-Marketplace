@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../NavBar";
+import Navbar from "../Share/NavBar";
 import { useFormik } from "formik";
 import { WalletChargeSchema } from "../../schemas";
 import api from "../../../api/axiosApi";

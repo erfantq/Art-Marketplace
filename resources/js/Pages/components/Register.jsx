@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
 import axios from 'axios';
-import { data, useNavigate } from "react-router-dom";
 import api from "../../api/axiosApi";
 import useToastify from '../../hooks/useToastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from "@inertiajs/react";
 
 export default function Register() {
     // const navigate = useNavigate()
@@ -21,17 +21,22 @@ export default function Register() {
                 },
                 withCredentials: true, // Important for sending/receiving cookies
             });
+            // if (response.status === 200) {
+            //     // Redirect received from the backend
+            //     window.location.href = response.headers.location;
+            // }
+            // response.redirect('/')
+
             setBtnSubmit(true)
-            showToast('success', "Succussfully Register")
-            // setTimeout(() => {
-            //     setBtnSubmit(false);
-            //     // navigate("/");
-            // }, 4000);
+            showToast('success', "Succussfully Registeration")
+            setTimeout(() => {
+                if (response.status === 200) {
+                    window.location.href = '/'
+                }
+            }, 4000);
 
         } catch (error) {
-            showToast('error', error.response)
-            showToast('error', "error.response")
-            console.log(error);
+            showToast('error', error.response?.data.message)
         }
     };
 
@@ -47,6 +52,7 @@ export default function Register() {
         initialValues: {
             username: "",
             password: "",
+            email: "",
             role: "",
         },
         validationSchema: RegisterSchema,
@@ -68,6 +74,7 @@ export default function Register() {
                 </h1>
 
                 {/* Signup Form */}
+                {/* action="/register" method="post" */}
                 <form onSubmit={handleSubmit}>
                     <h4 className="text-xl font-medium text-center mb-8 text-purple-400">
                         Create an account
@@ -100,7 +107,34 @@ export default function Register() {
                             </span>
                         )}
                     </div>
-
+                    {/* Email field */}
+                    <div className="mb-6">
+                        <label
+                            htmlFor="email"
+                            className="block mb-2 text-sm font-medium text-gray-400"
+                        >
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={values.email}
+                            placeholder="Enter your email"
+                            className={
+                                errors.email && touched.email
+                                    ? incorrectInput
+                                    : baseInput
+                            }
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        {errors.email && touched.email && (
+                            <span className="text-red-500 text-xs">
+                                {errors.email}
+                            </span>
+                        )}
+                    </div>
                     {/* Password Field */}
                     <div className="mb-6">
                         <label
@@ -156,6 +190,7 @@ export default function Register() {
                             </option>
                             <option value="Artist">Artist</option>
                             <option value="User">Normal User</option>
+                            <option value="Admin">Admin</option>
                         </select>
 
                         {errors.role && touched.role && (
@@ -182,12 +217,11 @@ export default function Register() {
                     <p className="text-sm text-gray-400">
                         Already have an account?
                     </p>
-                    <p
-                        onClick={() => navigate("/login")} // Navigate to /register
-                        className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
-                    >
+
+                    <Link href="/login"
+                        className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer">
                         Login Here
-                    </p>
+                    </Link>
                 </div>
             </div>
         </div>

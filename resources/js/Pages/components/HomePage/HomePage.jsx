@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import Navbar from '../NavBar'
+import Navbar from '../Share/NavBar'
 import UserArtworks from "../Artworks/UserArtworks";
 // import api from '../../../api/axiosApi'
 import { usePage } from '@inertiajs/react';
@@ -30,7 +30,7 @@ export default function HomePage({ arts, user }) {
         console.log("arts",arts);
         console.log("user", user);
         // fetchUserAndArts()
-    }, [user, arts])
+    }, [])
 
 
     return (
@@ -40,6 +40,7 @@ export default function HomePage({ arts, user }) {
                 {/* <div className="grid grid-cols-12"> */}
                 {/* <UserArtworks /> */}
                 {/* </div> */}
+                ksdvkjsnvjknsjkdvn
             </div>
         </div>
     );
