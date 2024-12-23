@@ -15,11 +15,14 @@ class BaseUserController extends Controller
     {  
 
         $username = $request->username;
-        $firstname = $request->firstname;
-        $lastname = $request->lastname;
+        $firstname = $request->firstname ?? null;
+        // $firstname = 'test';
+        $lastname = $request->lastname ?? null;
+        // $lastname = 'test';
         $password = $request->password;
         $role = $request->role;
-        $email = $request->email;
+        $email = $request->email ?? null;
+        // $email = 'test@gmail.com';
 
 
         $active = true;

@@ -67,9 +67,9 @@ class User extends Authenticatable
             $db = DBConnection::getDb();
             $usersCollection = $db->users;
 
-            $existingUser = $usersCollection->findOne(['username' => $username]);
-            if($existingUser) {
-                return ['success' => false, 'message' => 'Username already exists'];
+            $existingUser = $usersCollection->findOne(['username' => $username]) ?? null;
+            if($existingUser != null) {
+                return ['success' => false, 'message' => 'This username already exists'];
             }
 
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);

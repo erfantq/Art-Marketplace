@@ -35,7 +35,7 @@ use function Laravel\Prompts\alert;
     Route::post('/register', [BaseUserController::class, 'register']);
     
     Route::get('/login', function () {
-        return Inertia::render('Index');
+        return Inertia::render('components/Login');
     })->name('login');
     Route::post('/login', [BaseUserController::class, 'login']);
 
