@@ -40,7 +40,7 @@ use function Laravel\Prompts\alert;
     Route::post('/login', [BaseUserController::class, 'login']);
 
     Route::get('/', [HomeController::class, 'index']);
-
+    
     Route::prefix('/product')->group(function () {
         Route::get('/{productId}', [HomeController::class, 'showSelectedArt'])->middleware(RoleMiddleware::class.':user');
         Route::post('{productId}/comment', [RatingsController::class, 'store']);
