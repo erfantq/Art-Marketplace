@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Arts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
@@ -18,6 +19,8 @@ class HomeController extends Controller
             $user = Session::get('user') ?? null;
 
             // var_dump($user);
+            // Log::info(Session::all());
+
             $arts = Arts::getArts();
             // dd($arts);
         } catch (\Exception $e) {

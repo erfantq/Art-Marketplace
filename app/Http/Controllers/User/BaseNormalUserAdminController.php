@@ -13,8 +13,10 @@ class BaseNormalUserAdminController extends Controller
     {
 
         $user = Session::get('user');
+        $username = $user['username'];
         $currentCharge = $user['wallet_balance'];
         $inputCharge = $request->charge;
+        $inputCharge = (int) $inputCharge;
         if(!is_int($inputCharge)) {
             return response()->json([
                 'success' => false,
@@ -23,6 +25,9 @@ class BaseNormalUserAdminController extends Controller
         }
 
         $newCharge = $currentCharge + $inputCharge;
+        $user['wallet_balance'] = $newCharge;
+        Session::put('user', $user);
+        Session::save();
         try {
             User::updateWallet($user['username'], $newCharge);
             // return response()->json([

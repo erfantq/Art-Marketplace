@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
@@ -110,6 +111,7 @@ class BaseUserController extends Controller
             unset($user['password']);
             Session::put('user', $user);
             Session::save();
+            // Log::info(Session::all());
 
             // var_dump(Session::get('user'));
 
