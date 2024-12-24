@@ -19,13 +19,13 @@ class ArtsController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        // return response()->json([
-        //     'arts' => $arts,
-        // ]);
+        return response()->json([
+            'arts' => $arts,
+        ]);
 
 
         // TODO
-        return Inertia::render('', compact('arts'));
+        // return Inertia::render('components/HomePage/ArtistHome', compact('arts'));
     }
 
     /**

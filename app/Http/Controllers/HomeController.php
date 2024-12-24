@@ -16,6 +16,7 @@ class HomeController extends Controller
     {
         try {
             $user = Session::get('user') ?? null;
+            dd($user);
 
             $arts = Arts::getArts();
             // dd($arts);

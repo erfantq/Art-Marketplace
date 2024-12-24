@@ -1,12 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Share/NavBar';
 import UserArtworks from '../Artworks/UserArtworks';
+import useToastify from '../../../hooks/useToastify';
+import api from '../../../api/axiosApi';
+export default function ArtistHome({ user }) {
 
-export default function ArtistHome({ user, arts }) {
+  const showToast = useToastify()
+  const [arts, setArts] = useState([])
+
+  const getArtistArts = async (values, action) => {
+    try {
+      const response = await api.get(user.username + "/arts", {
+
+        headers: {
+          Accept: "application/json",
+        },
+        withCredentials: true,
+      })
+      setArts(response.data.arts)
+
+      console.log(response);
+    } catch (error) {
+      showToast('error', error.response?.data.message)
+    }
+  };
 
     useEffect(() => {
-        console.log(user);
+      getArtistArts()
     }, [])
+
     return (
         <div>
             <Navbar username={user.username} role={user.role} />

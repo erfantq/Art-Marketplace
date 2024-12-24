@@ -50,7 +50,7 @@ export default function UserArtworks({arts}) {
                         <p className="text-sm text-gray-400 my-2">
                             Price : ${art.price}
                         </p>
-                        <label
+                        {/* <label
                             className="btn bg-purple-700 text-white rounded-md"
                             htmlFor={art.name}
                             onClick={() => {
@@ -58,7 +58,7 @@ export default function UserArtworks({arts}) {
                             }}
                         >
                             View Details
-                        </label>
+                        </label> */}
                     </div>
                 </div>
             ))}

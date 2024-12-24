@@ -3,14 +3,17 @@ import UserHome from './UserHome'
 import ArtistHome from './ArtistHome'
 import AdminHome from './AdminHome'
 import DefaultHome from './DefaultHome';
+import useToastify from '../../../hooks/useToastify';
+import api from '../../../api/axiosApi'
+
 export default function HomePageHandler({ user, arts }) {
-    let Component;
+
 
     switch (user?.role?.toLowerCase()) {
         case 'user':
             return (<UserHome user={user} arts={arts}/>)
         case 'artist':
-            return (<ArtistHome user={user} arts={arts}/>)
+            return (<ArtistHome user={user} />)
         case 'admin':
             return (<AdminHome user={user} arts={arts}/>)
         default:
