@@ -19,7 +19,7 @@ class AdminController extends Controller
     {
         $user = Session::get('user');
         // TODO
-        return Inertia::render('components/Share/UserProfile', compact('user'));
+        return Inertia::render('components/Profile/AdminProfile', compact('user'));
     }
 
     public function inactiveUsers()

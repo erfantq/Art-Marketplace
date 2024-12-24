@@ -2,33 +2,29 @@ import React, { useState, useEffect } from "react";
 import api from "../../../api/axiosApi";
 import ArtworkDrawer from "./ArtworkDrawer";
 import { useSession } from '../../../hooks/useSession'; // Adjusted import
-
-import { useNavigate } from "react-router-dom";
-import { usePage } from "@inertiajs/react";
-
-export default function UserArtworks() {
+export default function UserArtworks({arts}) {
     // const [arts, setArts] = useState([]);
     // const { user, arts: artss } = props;
-    const { arts } = usePage().props;
+    // const { arts } = usePage().props;
     // const [arts, setArts] = useState()
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { username } = useSession()
 
     const [artData, setArtData] = useState([]);
 
-    useEffect(() => {
-        sessionStorage.setItem('arts', JSON.stringify(arts))
-        setArtData(JSON.parse(sessionStorage.getItem('arts')));
+    // useEffect(() => {
+    //     sessionStorage.setItem('arts', JSON.stringify(arts))
+    //     setArtData(JSON.parse(sessionStorage.getItem('arts')));
 
-        // Check if user exists and has username and role properties
-        if (!artData) {
-            setArtData(JSON.parse({}))
-        }
-    }, [])
+    //     // Check if user exists and has username and role properties
+    //     if (!artData) {
+    //         setArtData(JSON.parse({}))
+    //     }
+    // }, [])
 
     return (
         <div className="grid grid-cols-12 gap-6">
-            {artData.map((art) => (
+            {arts.map((art) => (
                 <div
                     key={art.name}
                     className="col-span-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"

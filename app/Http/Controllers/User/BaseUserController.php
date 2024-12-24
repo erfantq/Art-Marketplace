@@ -146,7 +146,7 @@ class BaseUserController extends Controller
     {
         $user = Session::get('user');
         // TODO
-        return Inertia::render('', compact('user'));
+        return Inertia::render('components/Profile/UpdateProfile', compact('user'));
     }
 
     public function updateUserInfo(Request $request)
@@ -154,12 +154,16 @@ class BaseUserController extends Controller
         $oldUsername = Session::get('user')['username'];
         $username = $request->username;
         $password = $request->password;
+        $first_name = $request->first_name;
+        $last_name = $request->last_name;
         $email = $request->email;
         $address = $request->address;
 
         $info = [
             'username' => $username,
             'password' => $password,
+            'first_name'=> $first_name,
+            'last_name'=> $last_name,
             'email' => $email,
             'address' => $address,
         ];

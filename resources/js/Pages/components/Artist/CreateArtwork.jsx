@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import Navbar from "../NavBar";
+import Navbar from "../Share/NavBar";
 import { UserContext } from "../../../context/UserContext";
 import { useFormik } from "formik";
 import { CreateArtworkSchema } from "../../schemas";

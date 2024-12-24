@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { LoginSchema } from "../schemas/index";
 import { Formik, useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
 import api from '../../api/axiosApi'
 import useToastify from "../../hooks/useToastify";
+import { Link } from "@inertiajs/react";
 
 
 export default function Login() {
-    const navigate = useNavigate();
     const showToast = useToastify() // Get the toast function
 
     const [btnSubmit, setBtnSubmit] = useState(false);
@@ -16,16 +15,15 @@ export default function Login() {
         try {
             const response = await api.post("/login", values);
 
-            sessionStorage.setItem("user", JSON.stringify(response.data.user));
-
-            console.log(response.data);
-            showToast('success', "Welcome " + response.data.user.first_name + " " + response.data.user.last_name)
+            showToast('success', "Welcome !!")
             if (isSubmitting) {
                 setBtnSubmit(true);
                 setTimeout(() => {
-                    navigate("/home");
                     setBtnSubmit(false);
-                }, 4000);
+                    if (response.status === 200) {
+                        window.location.href = '/'
+                    }
+                }, 5000);
             }
         } catch (error) {
             showToast('error', error.response?.data.message)
@@ -151,13 +149,11 @@ export default function Login() {
                     <p className="text-sm text-gray-400">
                         Don't have an account?
                     </p>
-                    <p
-                        onClick={() => navigate("/register")}
-                        // href="/register" // Navigate to /register
-                        className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer"
-                    >
+
+                    <Link href="/register"
+                        className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer">
                         Sign Up Here
-                    </p>
+                    </Link>
                 </div>
             </div>
         </div>

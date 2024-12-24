@@ -16,29 +16,32 @@ class HomeController extends Controller
     {
         try {
             $user = Session::get('user') ?? null;
-            
-            $arts = Arts::getArts(); 
+
+            $arts = Arts::getArts();
+            // dd($arts);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
-        if ($user != null) {
-            $role = strtolower($user['role']);
+        // if ($user != null) {
+        //     $role = strtolower($user['role']);
         
-            switch ($role) {
-                case 'user':
-                    return Inertia::render('components/HomePage/HomePage', compact('user', 'arts'));
-                case 'artist':
-                    // TODO
-                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-                case 'admin':
-                    // TODO
-                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-                default:
-                    return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
-            }
+        //      return Inertia::render('components/HomePage/HomePage', compact('user', 'arts'));
+
+        //     // switch ($role) {
+        //     //     case 'user':
+        //     //         return Inertia::render('components/HomePage/HomePage', compact('user', 'arts'));
+        //     //     case 'artist':
+        //     //         // TODO
+        //     //         return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+        //     //     case 'admin':
+        //     //         // TODO
+        //     //         return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+        //     //     default:
+        //     //         return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+        //     // }
         
-        }
-        return Inertia::render('components/Artworks/UserArtworks', compact('user', 'arts'));
+        // }
+        return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts'));
     }
 
 

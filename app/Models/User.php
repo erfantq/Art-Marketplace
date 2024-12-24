@@ -69,6 +69,7 @@ class User extends Authenticatable
 
             $existingUser = $usersCollection->findOne(['username' => $username]) ?? null;
             if($existingUser != null) {
+                // dd($existingUser);
                 return ['success' => false, 'message' => 'This username already exists'];
             }
 

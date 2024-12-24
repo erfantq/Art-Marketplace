@@ -14,6 +14,7 @@ export const LoginSchema = yup.object().shape({
 
 export const RegisterSchema = yup.object().shape({
     username : yup.string().required(requiredTxt),
+    email: yup.string().email(emailTxt),
     password : yup.string().required(requiredTxt),
     role : yup.string().required("Please select a role")
 })
@@ -30,10 +31,10 @@ export const WalletChargeSchema = yup.object().shape({
 
 // password : yup.string().min(5,"").matches(passwordRegEx,{"message" : passwordTxt}).required(requiredTxt),
 
-export const EditUserProgile = yup.object().shape({
-    first_name : yup.string(),
-    last_name : yup.string(),
-    email : yup.string().email(emailTxt),
+export const UpdateProfile = yup.object().shape({
+    first_name: yup.string().max(20),
+    last_name: yup.string().max(20),
+    email: yup.string().email(emailTxt).required(emailTxt),
     address : yup.string(),
     username : yup.string().required(requiredTxt),
     password : yup.string().required(requiredTxt),

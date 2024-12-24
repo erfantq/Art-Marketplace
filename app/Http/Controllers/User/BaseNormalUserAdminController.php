@@ -25,6 +25,10 @@ class BaseNormalUserAdminController extends Controller
         $newCharge = $currentCharge + $inputCharge;
         try {
             User::updateWallet($user['username'], $newCharge);
+            // return response()->json([
+            //     'curr'=>$currentCharge,
+            //     'new'=>$newCharge
+            // ]);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
