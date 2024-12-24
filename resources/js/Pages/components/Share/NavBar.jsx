@@ -5,17 +5,17 @@ import { IoWalletOutline } from "react-icons/io5";
 
 export default function Navbar({ username, role }) {
 
-    useEffect(() => {
-        // const user = JSON.parse(sessionStorage.getItem('user'));
+    // useEffect(() => {
+    //     // const user = JSON.parse(sessionStorage.getItem('user'));
 
-        // // Check if user exists and has username and role properties
-        // if (user && user.username && user.role) {
-        //     setUsername(user.username);
-        //     setRole(user.role);
-        // }
-        console.log(username);
-        console.log(role.toLowerCase());
-    }, [])
+    //     // // Check if user exists and has username and role properties
+    //     // if (user && user.username && user.role) {
+    //     //     setUsername(user.username);
+    //     //     setRole(user.role);
+    //     // }
+    //     console.log(username);
+    //     console.log(role.toLowerCase());
+    // }, [])
 
 
     return (
@@ -30,7 +30,7 @@ export default function Navbar({ username, role }) {
                 <Link href="/" className="navbar-item text-white ">
                     Home
                 </Link>
-                {role.toLowerCase() !== 'artist' && (<Link
+                {username && role.toLowerCase() !== 'artist' && (<Link
                     href={username + "/walletcharge"}
                     className="navbar-item text-white bg-black flex items-center">
                     <span>Wallet</span>

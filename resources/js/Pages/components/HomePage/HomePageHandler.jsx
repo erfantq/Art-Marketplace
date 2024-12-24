@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import UserHome from './UserHome'
 import ArtistHome from './ArtistHome'
 import AdminHome from './AdminHome'
+import DefaultHome from './DefaultHome';
 export default function HomePageHandler({ user, arts }) {
     let Component;
 
@@ -13,7 +14,7 @@ export default function HomePageHandler({ user, arts }) {
         case 'admin':
             return (<AdminHome user={user} arts={arts}/>)
         default:
-            return (<UserHome user={user} arts={arts}/>)
+            return (<DefaultHome user={user} arts={arts} />)
 
     }
 
