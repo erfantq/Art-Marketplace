@@ -176,5 +176,6 @@ class BaseUserController extends Controller
     public function logout()
     {
         Session::flush();
+        return redirect()->to('/login');
     }
 }
