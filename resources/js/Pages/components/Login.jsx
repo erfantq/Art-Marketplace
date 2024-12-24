@@ -5,6 +5,9 @@ import api from '../../api/axiosApi'
 import useToastify from "../../hooks/useToastify";
 import { Link } from "@inertiajs/react";
 
+import axios from 'axios';  
+
+
 
 export default function Login() {
     const showToast = useToastify() // Get the toast function
@@ -13,6 +16,10 @@ export default function Login() {
 
     const onSubmit = async (values, action) => {
         try {
+            const api = axios.create({
+                baseURL: '/', // Replace with your backend URL
+                withCredentials: true, // Enable cookies
+            });
             const response = await api.post("/login", values);
 
             showToast('success', "Welcome !!")

@@ -5,6 +5,8 @@ import { useFormik } from "formik";
 import { WalletChargeSchema } from "../../schemas";
 import api from "../../../api/axiosApi";
 import useToastify from "../../../hooks/useToastify";
+import axios from 'axios';
+
 export default function WalletCharge({ user }) {
 
     // const [user, setUser] = useState({})
@@ -21,6 +23,10 @@ export default function WalletCharge({ user }) {
 
     const onSubmit = async (values, action) => {
         try {
+            const api = axios.create({
+                baseURL: '/', // Replace with your backend URL
+                withCredentials: true, // Enable cookies
+            });
             const response = await api.post("/" + user.username + "/walletcharge", values,
                 {
                     headers: {
