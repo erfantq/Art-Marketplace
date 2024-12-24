@@ -17,6 +17,7 @@ class HomeController extends Controller
         try {
             $user = Session::get('user') ?? null;
 
+            // var_dump($user);
             $arts = Arts::getArts();
             // dd($arts);
         } catch (\Exception $e) {
