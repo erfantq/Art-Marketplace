@@ -111,6 +111,8 @@ class BaseUserController extends Controller
             Session::put('user', $user);
             Session::save();
 
+            // var_dump(Session::get('user'));
+
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
