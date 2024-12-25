@@ -27,14 +27,7 @@ export default function WalletCharge({ user }) {
                 baseURL: '/', // Replace with your backend URL
                 withCredentials: true, // Enable cookies
             });
-            const response = await api.post("/" + user.username + "/walletcharge", values,
-                {
-                    headers: {
-                        Accept: "application/json",
-                    },
-                    withCredentials: true, // Important for sending/receiving cookies
-                }
-            );
+            const response = await api.post("/" + user.username + "/walletcharge", values);
             console.log(response);
 
             // setBtnSubmit(true);

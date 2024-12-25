@@ -31,7 +31,7 @@ export default function Navbar({ username, role }) {
                     Home
                 </Link>
                 {username && role.toLowerCase() !== 'artist' && (<Link
-                    href={username + "/walletcharge"}
+                    href={"/" + username + "/walletcharge"}
                     className="navbar-item text-white bg-black flex items-center">
                     <span>Wallet</span>
                     <IoWalletOutline className="flex ml-2" />

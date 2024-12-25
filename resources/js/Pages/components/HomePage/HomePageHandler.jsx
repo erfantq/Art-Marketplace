@@ -3,8 +3,6 @@ import UserHome from './UserHome'
 import ArtistHome from './ArtistHome'
 import AdminHome from './AdminHome'
 import DefaultHome from './DefaultHome';
-import useToastify from '../../../hooks/useToastify';
-import api from '../../../api/axiosApi'
 
 export default function HomePageHandler({ user, arts }) {
 

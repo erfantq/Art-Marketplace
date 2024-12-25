@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Share/NavBar';
 import UserArtworks from '../Artworks/UserArtworks';
 import useToastify from '../../../hooks/useToastify';
-import api from '../../../api/axiosApi';
 export default function ArtistHome({ user }) {
 
   const showToast = useToastify()
@@ -10,13 +9,11 @@ export default function ArtistHome({ user }) {
 
   const getArtistArts = async (values, action) => {
     try {
-      const response = await api.get(user.username + "/arts", {
-
-        headers: {
-          Accept: "application/json",
-        },
-        withCredentials: true,
-      })
+      const api = axios.create({
+        baseURL: '/', // Replace with your backend URL
+        withCredentials: true
+    });
+      const response = await api.get(user.username + "/arts")
       setArts(response.data.arts)
 
       console.log(response);

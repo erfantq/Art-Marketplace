@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { RegisterSchema } from "../schemas";
 import { Formik, useFormik } from "formik";
 import axios from 'axios';
-import api from "../../api/axiosApi";
 import useToastify from '../../hooks/useToastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "@inertiajs/react";
@@ -15,18 +14,11 @@ export default function Register() {
 
     const onSubmit = async (values, action) => {
         try {
-            const response = await api.post("/register", values, {
-                headers: {
-                    Accept: "application/json",
-                },
-                withCredentials: true, // Important for sending/receiving cookies
+            const api = axios.create({
+                baseURL: '/', // Replace with your backend URL
+                withCredentials: true, // Enable cookies
             });
-            // if (response.status === 200) {
-            //     // Redirect received from the backend
-            //     window.location.href = response.headers.location;
-            // }
-            // response.redirect('/')
-
+            const response = await api.post("/register", values);
             setBtnSubmit(true)
             showToast('success', "Succussfully Registeration")
             setTimeout(() => {
@@ -34,9 +26,12 @@ export default function Register() {
                     window.location.href = '/'
                 }
             }, 4000);
-
+            
         } catch (error) {
             showToast('error', error.response?.data.message)
+            if (values.role == 'Artist') {
+                resetForm()
+            }
         }
     };
 
@@ -48,6 +43,7 @@ export default function Register() {
         handleBlur,
         handleChange,
         handleSubmit,
+        resetForm
     } = useFormik({
         initialValues: {
             username: "",

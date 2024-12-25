@@ -17,8 +17,6 @@ class HomeController extends Controller
     {
         try {
             $user = Session::get('user') ?? null;
-            dd($user);
-
             // var_dump($user);
             // Log::info(Session::all());
 
