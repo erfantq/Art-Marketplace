@@ -22,8 +22,10 @@ return new class extends Migration
         biddings {
             Art
             Base_price
-            Highest_price
-            Current_user
+            Highest_suggestion
+            winner
+            start_time
+            end_time
         }
 
         */

@@ -7,18 +7,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Session;
 
-class BiddingWinnerNotification extends Notification
+class BiddingLoserNotification extends Notification
 {
     use Queueable;
 
     protected $bidding;
+    protected $loserUsername;
     /**
      * Create a new notification instance.
      */
-    public function __construct($bidding)
+    public function __construct($bidding, $loserUsername)
     {
         $this->bidding = $bidding;
+        $this->loserUsername = $loserUsername;
     }
 
     /**
@@ -36,12 +39,14 @@ class BiddingWinnerNotification extends Notification
     {
         $artIdString = (string) $this->bidding['art_id'];
         $itemName = Arts::getArt($artIdString)['name'];
+        $winner = $this->bidding['winner'];
         return [
             'bidding_id' => $this->bidding['_id'],
             'item_name' => $itemName,
-            'username' => $this->bidding['winner'],
+            'username' => Session::get('user')['username'],  //
             'end_time' => $this->bidding['end_time'],
-            'message' => "Congratulations! You've won the bidding for {$this->bidding->item_name}.",
+            'message' => "Oh no! The user {$winner} has suggested
+                           a more price than you for bidding {$itemName}. Your wallet is recharged.",
         ];
     }
 

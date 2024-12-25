@@ -8,6 +8,7 @@ use App\Services\TransactionsService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use MongoDB\BSON\ObjectId;
 
 class TransactionsController extends Controller
 {
@@ -31,12 +32,12 @@ class TransactionsController extends Controller
     
             $transactionInfo = [
                 'timestamp' => $timestamp,
+                'art_id' => new ObjectId((string) $artId),
                 'buyer' => $buyerUsername,
-                'artId' => $artId,
                 'number' => $number,
                 'order_status' => 0,    
             ];
-            $this->transactionService->processPurchase($buyerUsername, $artId, $transactionInfo);
+            $this->transactionService->processPurchase($buyerUsername, $artId, $transactionInfo, false);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);            
         }

@@ -37,7 +37,7 @@ class TransactionsService
       
     }
 
-    public function processPurchase($buyerUsername, $artId, $transactionInfo)
+    public function processPurchase($buyerUsername, $artId, $transactionInfo, $isBidding)
     {
         try {
             $buyer = User::findUser($buyerUsername);
@@ -55,7 +55,7 @@ class TransactionsService
             self::updateSeller($art, $transactionId);
 
             // update the wallet_balance and previous_purchases for buyer
-            self::updateBuyer($art, $buyer, $transactionId);
+            self::updateBuyer($art, $buyer, $transactionId, $isBidding);
 
             // update the number and sold_number for art
             self::updateArt($art, $transactionInfo);
@@ -98,9 +98,13 @@ class TransactionsService
         $this->userCollection->updateOne($filter, $update);
     }
 
-    private function updateBuyer($art, $buyer, $transactionId)
+    private function updateBuyer($art, $buyer, $transactionId, $isBidding)
     {
-        $newWallet = $buyer['wallet_balance'] - $art['price'];
+        if($isBidding) {
+            $newWallet = $buyer['wallet_balance'];
+        } else {
+            $newWallet = $buyer['wallet_balance'] - $art['price'];
+        }
 
         $filter = ['username' => $buyer['username']];
         $update = [
