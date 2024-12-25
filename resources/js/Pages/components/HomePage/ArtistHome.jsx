@@ -33,7 +33,7 @@ export default function ArtistHome({ user }) {
                 {/* <div className="grid grid-cols-12"> */}
                 {/* <UserArtworks /> */}
                 {/* </div> */}
-                <UserArtworks arts={arts} />
+                <UserArtworks arts={arts} user={user} />
 
 
             </div>

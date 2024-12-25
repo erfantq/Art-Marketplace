@@ -2,25 +2,38 @@ import React, { useState, useEffect } from "react";
 import api from "../../../api/axiosApi";
 import ArtworkDrawer from "./ArtworkDrawer";
 import { useSession } from '../../../hooks/useSession'; // Adjusted import
-export default function UserArtworks({arts}) {
+import { Link } from "@inertiajs/react";
+import useToastify from "../../../hooks/useToastify";
+export default function UserArtworks({ arts, user }) {
     // const [arts, setArts] = useState([]);
     // const { user, arts: artss } = props;
     // const { arts } = usePage().props;
     // const [arts, setArts] = useState()
     // const navigate = useNavigate();
     const { username } = useSession()
-
+    const showToast = useToastify()
     const [artData, setArtData] = useState([]);
 
-    // useEffect(() => {
-    //     sessionStorage.setItem('arts', JSON.stringify(arts))
-    //     setArtData(JSON.parse(sessionStorage.getItem('arts')));
+    useEffect(() => {
+    // sessionStorage.setItem('arts', JSON.stringify(arts))
+    // setArtData(JSON.parse(sessionStorage.getItem('arts')));
 
-    //     // Check if user exists and has username and role properties
-    //     if (!artData) {
-    //         setArtData(JSON.parse({}))
-    //     }
-    // }, [])
+        // // Check if user exists and has username and role properties
+        // if (!artData) {
+        //     setArtData(JSON.parse({}))
+        // }
+        console.log(arts);
+        console.log(user);
+    }, [])
+
+    const styles = {
+        buttun: {
+            normal: {
+                grid: " w-2/3 btn h-9 px-2 py-2 my-4 rounded-md  ",
+                color: " text-sm font-medium text-white bg-purple-700 "
+            }
+        }
+    }
 
     return (
         <div className="grid grid-cols-12 gap-6">
@@ -50,6 +63,16 @@ export default function UserArtworks({arts}) {
                         <p className="text-sm text-gray-400 my-2">
                             Price : ${art.price}
                         </p>
+                        <Link href={'/product/' + art._id.$oid}
+                            // onClick={(e) => {
+                            //     if (user.username === null) {
+                            //         e.preventDefault()
+                            //         showToast('error', 'Please Log in to your account')
+                            //     }
+                            // }}
+                            className={JSON.stringify(styles.buttun.normal)}>
+                            About it
+                        </Link>
                         {/* <label
                             className="btn bg-purple-700 text-white rounded-md"
                             htmlFor={art.name}

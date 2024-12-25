@@ -43,7 +43,7 @@ use function Laravel\Prompts\alert;
     
     Route::prefix('/product')->group(function () {
         Route::get('/{productId}', [HomeController::class, 'showSelectedArt'])->middleware(RoleMiddleware::class.':user');
-        Route::post('{productId}/comment', [RatingsController::class, 'store']);
+        Route::post('/{productId}/comment', [RatingsController::class, 'store']);
         Route::post('{productId}/delcomment', [RatingsController::class, 'destory']);
     });
 
