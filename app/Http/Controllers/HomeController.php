@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Arts;
+use App\Models\Notification;
 use App\Services\BiddingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
@@ -24,8 +26,12 @@ class HomeController extends Controller
             $biddingService = new BiddingService();
             $biddingService->processExpiredBiddings();
 
-            $notifications = Auth::user()->notifications; // All notifications
-            $unreadNotifications = Auth::user()->unreadNotifications;  // Only unread notifications
+            if($user != null) {
+                $notifications = Notification::getUserNotifications($user['username']); // All notifications
+            } else {
+                $notifications = null;
+            }
+            // $unreadNotifications = Auth::user()->unreadNotifications;  // Only unread notifications
 
             $arts = Arts::getArts();
             // dd($arts);
@@ -51,7 +57,8 @@ class HomeController extends Controller
         //     // }
         
         // }
-        return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts', 'notifications', 'unreadNotifications'));
+        return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts'));
+        // return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts', 'notifications', 'unreadNotifications'));
     }
 
 
