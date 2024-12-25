@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Share/NavBar';
 import useToastify from '../../../hooks/useToastify';
-import api from '../../../api/axiosApi'
 import InactiveUsers from '../Admin/InactiveUsers';
 export default function AdminHome({ user }) {
   const showToast = useToastify()
@@ -9,13 +8,11 @@ export default function AdminHome({ user }) {
 
   const getInactiveUsers = async (values, action) => {
     try {
-      const response = await api.get("/inactiveusers", {
-
-        headers: {
-          Accept: "application/json",
-        },
-        withCredentials: true,
-      })
+      const api = axios.create({
+        baseURL: '/', // Replace with your backend URL
+        withCredentials: true, // Enable cookies
+    });
+      const response = await api.get("/inactiveusers")
       setInactiveUsers(response.data.inactiveUsers)
 
       console.log(response);

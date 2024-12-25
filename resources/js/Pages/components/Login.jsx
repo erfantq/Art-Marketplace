@@ -1,18 +1,17 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { LoginSchema } from "../schemas/index";
 import { Formik, useFormik } from "formik";
-import api from '../../api/axiosApi'
 import useToastify from "../../hooks/useToastify";
 import { Link } from "@inertiajs/react";
-
-import axios from 'axios';  
-
-
-
+import axios from 'axios';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 export default function Login() {
-    const showToast = useToastify() // Get the toast function
-
+    const showToast = useToastify(); // Get the toast function
     const [btnSubmit, setBtnSubmit] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    // const styles = {
+    //     icon
+    // }
 
     const onSubmit = async (values, action) => {
         try {
@@ -21,23 +20,19 @@ export default function Login() {
                 withCredentials: true, // Enable cookies
             });
             const response = await api.post("/login", values);
-
-            showToast('success', "Welcome !!")
+            showToast('success', "Welcome !!");
             if (isSubmitting) {
                 setBtnSubmit(true);
                 setTimeout(() => {
                     setBtnSubmit(false);
                     if (response.status === 200) {
-                        window.location.href = '/'
+                        window.location.href = '/';
                     }
                 }, 5000);
             }
         } catch (error) {
-            showToast('error', error.response?.data.message)
-            console.error(
-                "Error submitting form:",
-                error.response?.data || error.message
-            );
+            showToast('error', error.response?.data.message);
+            console.error("Error submitting form:", error.response?.data || error.message);
         }
     };
 
@@ -60,7 +55,6 @@ export default function Login() {
 
     const baseInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
-
     const incorrectInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
 
@@ -79,27 +73,19 @@ export default function Login() {
                 <form onSubmit={handleSubmit}>
                     {/* Username Field */}
                     <div className="mb-6">
-                        <label
-                            className="block mb-2 text-sm font-medium text-gray-400"
-                            htmlFor="username"
-                        >
+                        <label className="block mb-2 text-sm font-medium text-gray-400" htmlFor="username">
                             Username
                         </label>
                         <input
                             type="text"
                             id="username"
                             name="username"
-                            className={
-                                errors.username && touched.username
-                                    ? incorrectInput
-                                    : baseInput
-                            }
+                            className={errors.username && touched.username ? incorrectInput : baseInput}
                             placeholder="Enter your username"
                             value={values.username}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-
                         {errors.username && touched.username && (
                             <span className="form-label-alt text-right text-red-500">
                                 {errors.username}
@@ -108,41 +94,39 @@ export default function Login() {
                     </div>
 
                     {/* Password Field */}
-                    <div className="mb-6">
-                        <label
-                            className="block mb-2 text-sm font-medium text-gray-400"
-                            htmlFor="password"
-                        >
+                    <label className="block mb-2 text-sm font-medium text-gray-400" htmlFor="password">
                             Password
                         </label>
+                    <div className="mb-1 relative">
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"} // Toggle between text and password
                             id="password"
                             name="password"
-                            className={
-                                errors.password && touched.password
-                                    ? incorrectInput
-                                    : baseInput
-                            }
+                            className={errors.password && touched.password ? incorrectInput : baseInput}
                             placeholder="Enter your password"
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-
+                        <span
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                            onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                        >
+                            {showPassword ? <FaRegEye className="text-gray-400" />
+                                : <FaRegEyeSlash className="text-gray-400" />} {/* Show eye icon */}
+                        </span>
+                    </div>
                         {errors.password && touched.password && (
-                            <span className="form-label-alt text-right text-red-500">
+                        <span className="form-label-alt text-right text-red-500 mb-2">
                                 {errors.password}
                             </span>
-                        )}
-                    </div>
+                    )}
 
                     {/* Login Button */}
                     <button
                         type="submit"
-                        // type="submit"
                         disabled={btnSubmit}
-                        className={`w-full px-4 py-2 text-sm font-medium text-white rounded-md  ${btnSubmit
+                        className={`w-full px-4 py-2 mt-6 text-sm font-medium text-white rounded-md  ${btnSubmit
                             ? "bg-purple-400 cursor-not-allowed"
                             : "bg-purple-700 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                             }`}
@@ -153,12 +137,8 @@ export default function Login() {
 
                 {/* Redirect to Signup */}
                 <div className="mt-6 text-center">
-                    <p className="text-sm text-gray-400">
-                        Don't have an account?
-                    </p>
-
-                    <Link href="/register"
-                        className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer">
+                    <p className="text-sm text-gray-400">Don't have an account?</p>
+                    <Link href="/register" className="mt-2 text-sm font-medium text-purple-400 hover:underline cursor-pointer">
                         Sign Up Here
                     </Link>
                 </div>

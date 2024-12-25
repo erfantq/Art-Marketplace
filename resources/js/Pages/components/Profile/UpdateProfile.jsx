@@ -1,11 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import Navbar from "../Share/NavBar";
-import { useSession } from "../../../hooks/useSession";
-import { usePage } from "@inertiajs/react";
 import { useFormik } from "formik";
 import { UpdateProfile } from "../../schemas";
 import useToastify from "../../../hooks/useToastify";
-import api from '../../../api/axiosApi'
 export default function UserProfile({ user }) {
 
     const [btnSubmit, setBtnSubmit] = useState(false);
@@ -55,6 +52,10 @@ export default function UserProfile({ user }) {
 
     const onSubmit = async (values, action) => {
         try {
+            const api = axios.create({
+                baseURL: '/', // Replace with your backend URL
+                withCredentials: true
+            });
             const response = await api.post("/" + oldUsername + "/profile/update", values);
 
             showToast('success', "Update Seccessfully!")

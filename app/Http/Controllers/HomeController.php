@@ -19,7 +19,6 @@ class HomeController extends Controller
     {
         try {
             $user = Session::get('user') ?? null;
-
             // var_dump($user);
             // Log::info(Session::all());
             $biddingService = new BiddingService();
