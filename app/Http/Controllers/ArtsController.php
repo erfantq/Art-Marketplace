@@ -35,8 +35,7 @@ class ArtsController extends Controller
     public function create($username)
     {
         // TODO
-
-        return Inertia::render('', $username);
+        return Inertia::render('components/Artist/CreateArtwork', $username);
     }
 
     /**
