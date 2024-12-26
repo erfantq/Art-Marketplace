@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Arts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class ArtsController extends Controller
@@ -56,6 +57,7 @@ class ArtsController extends Controller
 
         try {
             Arts::storeArt($info);
+            Session::push('arts', $info);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

@@ -28,8 +28,8 @@ class BiddingController extends Controller
         $info = [
             'art_id' => new ObjectId((string) $artId),
             'base_price' => $base_price,
-            'highest_price' => 0,
-            'current_user' => null,
+            'highest_suggestion' => 0,
+            'winner' => null,
             'start_time' =>  Carbon::now(),
             'end_time' => Carbon::parse($endTime)->timestamp,
         ];
@@ -53,6 +53,17 @@ class BiddingController extends Controller
         return response()->json(['message' => 'Deleted successfully.']);
     }
 
+    public function suggestNewPrice(Request $request)
+    {
+        $user = Session::get('user');
+        $artId = $request->artId;
+        $suggestedPrice = $request->price;
+        try {
+            $this->biddingService->processNewSuggestion($user, $artId, $suggestedPrice);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 403);
+        }
+    }
     
 
     

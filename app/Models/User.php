@@ -224,6 +224,8 @@ class User extends Authenticatable
         return $buyRequests;
     }
 
+    
+
     // public static function getPreviousPurchases($username)
     // {
     //     try {

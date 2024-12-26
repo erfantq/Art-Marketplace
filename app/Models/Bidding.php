@@ -11,8 +11,10 @@ class Bidding extends Model
     protected $fillable = [
         'art_id',
         'base_price',
-        'highest_price',
-        'current_user',
+        'highest_suggestion',
+        'winner',
+        'start_time',
+        'end_time',
     ];
 
     

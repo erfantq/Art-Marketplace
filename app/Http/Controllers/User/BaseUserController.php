@@ -175,7 +175,9 @@ class BaseUserController extends Controller
             return response()->json(['message' => 'username and password are required.'], 422);
         }
         try {
-        User::updateUserInfo($info, $oldUsername);
+            User::updateUserInfo($info, $oldUsername);
+            $user = User::findUser($username);
+            Session::put('user', $user);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
