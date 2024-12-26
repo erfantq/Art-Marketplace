@@ -107,7 +107,7 @@ class User extends Authenticatable
             $db = DBConnection::getDb();
             $usersCollection = $db->users;
 
-            $user = $usersCollection->findOne(['username' => $username]);
+            $user = $usersCollection->findOne(['username' => $username]) ?? null;
         } catch (\Exception $e) {
             // return ['success' => false, 'message' => $e->getMessage()];
             throw new Exception("Database error: " . $e->getMessage());

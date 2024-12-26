@@ -8,7 +8,9 @@ use App\Services\BiddingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\UTCDateTime;
 
 
 class BiddingController extends Controller
@@ -19,11 +21,18 @@ class BiddingController extends Controller
         $this->biddingService = new BiddingService();
     }
 
-    public function add(Request $request, $artId)
+    public function showAdd()
+    {
+        // TODO
+        return Inertia::render('');
+    }
+
+    public function add(Request $request)
     {
         $artist = Session::get('user');
         $base_price = $request->base_price;
         $endTime = $request->end_date;
+        $artId = $request->art_id;
 
         $info = [
             'art_id' => new ObjectId((string) $artId),
@@ -31,7 +40,7 @@ class BiddingController extends Controller
             'highest_suggestion' => 0,
             'winner' => null,
             'start_time' =>  Carbon::now(),
-            'end_time' => Carbon::parse($endTime)->timestamp,
+            'end_time' => new UTCDateTime(Carbon::parse($endTime)->timestamp * 1000),
         ];
 
         try {

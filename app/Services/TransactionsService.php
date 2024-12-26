@@ -79,11 +79,13 @@ class TransactionsService
 
     private function updateSeller($art, $transactionId)
     {
-        $seller = $this->userCollection->findOne(['username' => $art['artist.username']]);
+
+        
+        $seller = $this->userCollection->findOne(['username' => $art['artist']['username']]);
 
         $newIncome = $seller['wallet_balance'] + $art['price'];
         
-        $filter = ['username' => $art['artist.username']];
+        $filter = ['username' => $art['artist']['username']];
         $update = [
             '$push' => [
                 'previous_purchases' => [

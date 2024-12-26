@@ -20,7 +20,7 @@ class ArtSeeder extends Seeder
                 'price' => 100,
                 'number' => 5,
                 'img' => null,
-                'artist' => ['username' => 'test' . $i],
+                'artist' => ['username' => 'erfan' . $i],
                 'reviews' => [],
                 'sold_number' => 0,
                 'bidding' => false,

@@ -81,8 +81,8 @@ class BaseUserController extends Controller
 
             // unset($user['password']);
 
-            if(!$user) {
-                $message = 'User not found.';
+            if($user == null) {
+                throw new \Exception("User not found.");
                 $canLogin = false;
             }
 
@@ -163,9 +163,11 @@ class BaseUserController extends Controller
         $email = $request->email;
         $address = $request->address;
 
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
         $info = [
             'username' => $username,
-            'password' => $password,
+            'password' => $hashedPassword,
             'first_name'=> $first_name,
             'last_name'=> $last_name,
             'email' => $email,

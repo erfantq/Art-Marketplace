@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ratings;
 use Carbon\Carbon;
+use MongoDB\BSON\UTCDateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 // use MongoDB\Laravel\Eloquent\Casts\ObjectId;
@@ -14,14 +15,14 @@ class RatingsController extends Controller
     public function store(Request $request, $artId)
     {
 
-        $timestamp = Carbon::now();
+        // $timestamp = Carbon::now(); // Y:M:D H:I:S
         $rate = $request->rate;
         $comment = $request->comment;
         $username = Session::get('user')['username'];
 
         $info = [
             '_id' => new ObjectId(),
-            'timestamp' => $timestamp,
+            'timestamp' => new UTCDateTime(Carbon::now()->timestamp * 1000),
             'rate' => $rate,
             'comment' => $comment,
             'username' => $username,
@@ -35,10 +36,12 @@ class RatingsController extends Controller
         return response()->json(['message' => 'Comment submited successfully.','comment'=>$info]);
     }
 
-    public function destroy($artId, $rateId)
+    public function destroy(Request $request)
     {
+        $artId = $request->art_id;
+        $reviewId = $request->review_Id;
         try {
-            Ratings::deleteReview($artId, $rateId);
+            Ratings::deleteReview($artId, $reviewId);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

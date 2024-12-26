@@ -96,7 +96,7 @@ export default function WalletCharge({ user }) {
                                     <label
                                         className="col-span-4 mb-2 text-sm font-medium text-gray-400"
                                         htmlFor="charge"
-                                    >
+                                    >   
                                         Amount of charge
                                     </label>
                                     <input

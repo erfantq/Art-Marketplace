@@ -63,7 +63,7 @@ export default function UserProfile({ user }) {
                 setBtnSubmit(true);
                 setTimeout(() => {
                     if (response.status === 200) {
-                        window.location.href = "/" + user.role.toLowerCase() + "/" + user.username + "/profile"
+                        window.location.href = "/" + user.role.toLowerCase() + "/" + values.username + "/profile"
                     }
                     setBtnSubmit(false);
                 }, 5000);

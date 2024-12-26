@@ -48,7 +48,6 @@ class BiddingService
     public function processNewSuggestion($user, $artId, $suggestedPrice)
     {
         try {
-            $timestamp = Carbon::now();
             $buyerUsername = $user['username'];
             $bidding = $this->biddingsCollection->findOne(['art_id' => new ObjectId((string) $artId)]);
             if($user['wallet_balance'] < $suggestedPrice) {

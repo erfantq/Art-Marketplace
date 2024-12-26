@@ -57,8 +57,8 @@ class HomeController extends Controller
         //     // }
         
         // }
-        return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts'));
-        // return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts', 'notifications', 'unreadNotifications'));
+        // return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts'));
+        return Inertia::render('components/HomePage/HomePageHandler', compact('user', 'arts', 'notifications'));
     }
 
 
@@ -73,6 +73,11 @@ class HomeController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return Inertia::render('components/Artworks/SelectedArtwork', compact('user','art'));
+        if($art['bidding'] == false) {
+            return Inertia::render('components/Artworks/SelectedArtwork', compact('user','art'));
+        } else {
+            // TODO
+            return Inertia::render('', compact('user', 'art'));
+        }
     }
 }

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ArtsController;
 use App\Http\Controllers\ArtsCotroller;
+use App\Http\Controllers\BiddingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RatingsController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\User\AdminController;
@@ -14,8 +16,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationCotroller;
 use App\Http\Controllers\WalletController;
 use App\Http\Middleware\AuthMiddleware;
-use App\Http\Middleware\CheckAdmin;
-use App\Http\Middleware\CheckUserRole;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -64,6 +64,13 @@ use function Laravel\Prompts\alert;
         Route::get('{username}/walletcharge', [BaseUserController::class, 'showWallet'])->middleware(RoleMiddleware::class.':admin,user');
         Route::post('{username}/walletcharge', [BaseNormalUserAdminController::class, 'updateWallet'])->middleware(RoleMiddleware::class.':admin,user');
 
+        Route::get('/notifications', [NotificationController::class, 'index']);
+
+        Route::prefix('/bidding')->group(function () {
+            Route::get('/add', [BiddingController::class, 'showAdd'])->middleware(RoleMiddleware::class.':artist');
+            Route::post('/add', [BiddingController::class, 'add'])->middleware(RoleMiddleware::class.':artist');
+            Route::post('/suggest', [BiddingController::class, 'suggestNewPrice'])->middleware(RoleMiddleware::class.':user');
+        });
     });
 
     Route::get('/inactiveusers', [AdminController::class, 'inactiveUsers'])->middleware(RoleMiddleware::class.':admin');

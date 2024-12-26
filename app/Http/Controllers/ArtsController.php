@@ -26,7 +26,7 @@ class ArtsController extends Controller
 
 
         // TODO
-        // return Inertia::render('components/HomePage/ArtistHome', compact('arts'));
+        return Inertia::render('components/HomePage/ArtistHome', compact('arts'));
     }
 
     /**

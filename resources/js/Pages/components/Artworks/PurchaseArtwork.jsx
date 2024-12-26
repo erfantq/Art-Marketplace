@@ -110,7 +110,7 @@ export default function PurchaseArtwork({ art, user }) {
                                 }
                                 placeholder="Enter your password"
                                 // value={values.number}
-                                value={2}
+                                value={values.number}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
