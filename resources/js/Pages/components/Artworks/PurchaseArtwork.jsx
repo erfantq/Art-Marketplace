@@ -4,11 +4,12 @@ import { PurchaseSchema } from '../../schemas';
 import axios from 'axios';
 import { IoPricetagsOutline } from "react-icons/io5";
 import { IoWalletOutline } from "react-icons/io5";
+import useToastify from '../../../hooks/useToastify';
 
 export default function PurchaseArtwork({ art, user }) {
 
     const [btnSubmit, setBtnSubmit] = useState(false)
-
+    const showToast = useToastify()
     const onSubmit = async (values) => {
         try {
             const api = axios.create({
@@ -18,7 +19,9 @@ export default function PurchaseArtwork({ art, user }) {
 
             const response = await api.post('/purchase', values)
             console.log(response);
+            showToast('succuss', response.data.message)
         } catch (error) {
+            showToast("error", error.response?.data.message)
             console.log(error);
         }
 
@@ -132,6 +135,7 @@ export default function PurchaseArtwork({ art, user }) {
                         <div className="col-span-4 ">
                             <button
                                 type="submit"
+
                                 className={btnSubmit
                                     ? JSON.stringify(styles.buttun.submitting)
                                     : JSON.stringify(styles.buttun.normal)}

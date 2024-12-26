@@ -5,12 +5,14 @@ import axios from 'axios';
 import useToastify from '../../hooks/useToastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "@inertiajs/react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 export default function Register() {
     // const navigate = useNavigate()
     const showToast = useToastify()
 
     const [btnSubmit, setBtnSubmit] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async (values, action) => {
         try {
@@ -26,7 +28,7 @@ export default function Register() {
                     window.location.href = '/'
                 }
             }, 4000);
-            
+
         } catch (error) {
             showToast('error', error.response?.data.message)
             if (values.role == 'Artist') {
@@ -57,7 +59,6 @@ export default function Register() {
 
     const baseInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500";
-
     const incorrectInput =
         "w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
 
@@ -132,15 +133,15 @@ export default function Register() {
                         )}
                     </div>
                     {/* Password Field */}
-                    <div className="mb-6">
                         <label
                             htmlFor="password"
                             className="block mb-2 text-sm font-medium text-gray-400"
                         >
                             Password
                         </label>
+                    <div className="mb-6 relative">
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
                             value={values.password}
@@ -153,13 +154,20 @@ export default function Register() {
                             }
                             placeholder="Enter your password"
                         />
+                        <span
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                            onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                        >
+                            {showPassword ? <FaRegEye className="text-gray-400" />
+                                : <FaRegEyeSlash className="text-gray-400" />} {/* Show eye icon */}
+                        </span>
 
+                    </div>
                         {errors.password && touched.password && (
-                            <span className="text-red-500 text-xs">
+                        <span className="form-label-alt text-right text-red-500 mb-2">
                                 {errors.password}
                             </span>
-                        )}
-                    </div>
+                    )}
 
                     {/* Role Selection */}
                     <div className="mb-6">

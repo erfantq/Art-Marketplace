@@ -79,7 +79,7 @@ export default function Navbar({ username, role }) {
                                     </Link>
                                     {role.toLowerCase() === 'artist' && (
                                         <Link
-                                            href={"/" + username + "/createArtwork"}
+                                            href={username + "/arts/create"}
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
                                             Create Artwork
                                         </Link>)
