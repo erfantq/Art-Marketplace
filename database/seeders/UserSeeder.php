@@ -37,6 +37,22 @@ class UserSeeder extends Seeder
                 'created_at' => Carbon::now(),
             ]);
         }
+        DB::table('users')->insert([
+            'username' => 'admin',
+            'first_name' => 'firstname',
+            'last_name' => 'lastname',
+            'password' => $hashedPassword,
+            'role' => 'Admin',
+            'email' => null,
+            'address' => null,
+            'wallet_balance' => 0,
+            'active' => true,
+            'previous_purchases' => [],
+            'current_auctions' => [],
+            'previous_auctions' => [],
+            'arts' => [],
+            'created_at' => Carbon::now(),
+        ]);
         
     }
 }

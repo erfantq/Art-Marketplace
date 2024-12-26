@@ -70,9 +70,11 @@ use function Laravel\Prompts\alert;
     
     Route::get('/makeactive/{username}', [AdminController::class, 'makeActive'])->middleware(RoleMiddleware::class.':admin');
     
-    Route::get('/orders', [BaseUserController::class, 'getPurchasess'])->middleware(RoleMiddleware::class.':user,artist');
+    Route::get('/orders', [BaseUserController::class, 'getPurchases'])->middleware(RoleMiddleware::class.':user,artist');
 
     Route::get('/logout', [BaseUserController::class, 'logout']);
+
+    
 
 
   
