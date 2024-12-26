@@ -19,7 +19,7 @@ export default function Navbar({ username, role }) {
 
 
     return (
-        <div className="navbar rounded-lg navbar-glass navbar-sticky bg-gray-900 border border-gray-700">
+        <div className="navbar rounded-lg navbar-glass navbar-sticky bg-gray-900 border border-gray-700 shadow-lg shadow-purple-800/50">
             <div className="navbar-start">
                 <p className="navbar-item text-white text-xl font-medium">
                     Art Marketpalce
@@ -63,13 +63,13 @@ export default function Navbar({ username, role }) {
                                     />
                                 </label>
                                 <div className="dropdown-menu dropdown-menu-bottom-left">
-                                {role.toLowerCase() === 'admin' && (
+                                    {/* {role.toLowerCase() === 'admin' && (
                                         <Link
                                             href="/inactiveusers"
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
                                             Inactive Users
                                         </Link>)
-                                    }
+                                    } */}
                                     <Link
                                         href={role.toLowerCase() === 'user' ? "/user/" + username + "/profile"
                                             : role.toLowerCase() === 'artist' ? "/artist/" + username + "/profile"

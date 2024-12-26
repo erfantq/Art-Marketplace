@@ -32,7 +32,7 @@ class RatingsController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
-        return response()->json(['message' => 'Comment submited successfully.']);
+        return response()->json(['message' => 'Comment submited successfully.','comment'=>$info]);
     }
 
     public function destroy($artId, $rateId)

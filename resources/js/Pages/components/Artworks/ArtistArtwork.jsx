@@ -4,27 +4,41 @@ import ArtworkDrawer from "./ArtworkDrawer";
 import { useSession } from '../../../hooks/useSession'; // Adjusted import
 import { Link } from "@inertiajs/react";
 import useToastify from "../../../hooks/useToastify";
-export default function UserArtworks({ arts, user }) {
-    // const [arts, setArts] = useState([]);
-    // const { user, arts: artss } = props;
-    // const { arts } = usePage().props;
-    // const [arts, setArts] = useState()
-    // const navigate = useNavigate();
+import axios from "axios";
+export default function ArtistArtworks({ user }) {
+
+    const [arts, setArts] = useState([])
     const { username } = useSession()
     const showToast = useToastify()
     const [artData, setArtData] = useState([]);
 
     useEffect(() => {
-    // sessionStorage.setItem('arts', JSON.stringify(arts))
-    // setArtData(JSON.parse(sessionStorage.getItem('arts')));
+        // sessionStorage.setItem('arts', JSON.stringify(arts))
+        // setArtData(JSON.parse(sessionStorage.getItem('arts')));
 
         // // Check if user exists and has username and role properties
         // if (!artData) {
         //     setArtData(JSON.parse({}))
         // }
-        console.log(arts);
-        console.log(user);
+        getArtworks()
+        console.log("arts", arts);
     }, [])
+
+    const getArtworks = async () => {
+        try {
+            const api = axios.create({
+                baseURL: '/', // Replace with your backend URL
+                withCredentials: true
+            })
+
+            const response = api.get(user.username + '/arts')
+            console.log("res", (await response).data)
+            setArts(response.data.arts)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const styles = {
         buttun: {

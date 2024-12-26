@@ -29,6 +29,14 @@ export const WalletChargeSchema = yup.object().shape({
     charge : yup.string().required("Please enter an amount")
 })
 
+export const PurchaseSchema = yup.object().shape({
+    number : yup.string().required("Please enter an amount")
+})
+
+export const ArtworkCommentSchema = yup.object().shape({
+    comment : yup.string().required("Please write a comment")
+})
+
 // password : yup.string().min(5,"").matches(passwordRegEx,{"message" : passwordTxt}).required(requiredTxt),
 
 export const UpdateProfile = yup.object().shape({
