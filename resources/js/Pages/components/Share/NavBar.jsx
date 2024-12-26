@@ -19,7 +19,7 @@ export default function Navbar({ username, role }) {
 
 
     return (
-        <div className="navbar rounded-lg navbar-glass navbar-sticky bg-gray-900 border border-gray-700">
+        <div className="navbar rounded-lg navbar-glass navbar-sticky bg-gray-900 border border-gray-700 shadow-lg shadow-purple-800/50">
             <div className="navbar-start">
                 <p className="navbar-item text-white text-xl font-medium">
                     Art Marketpalce

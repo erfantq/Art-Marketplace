@@ -7,6 +7,7 @@ import { CiImageOff } from "react-icons/ci";
 import ShowComments from "./ShowComments";
 import axios from "axios";
 import useToastify from "../../../hooks/useToastify";
+import PurchaseArtwork from "./PurchaseArtwork";
 
 export default function SelectedArtwork({ art, user }) {
     // const [comments, setComments] = useState(art.reviews);
@@ -28,11 +29,11 @@ export default function SelectedArtwork({ art, user }) {
         },
         buttun: {
             normal: {
-                grid: " w-1/2 btn h-9 px-2 py-2 my-4 rounded-md  ",
+                grid: "  btn h-9 px-2 py-2 my-4 rounded-md  ",
                 color: " text-sm font-medium text-white bg-purple-700 "
             },
             submitting: {
-                grid: " w-1/2 btn h-9 px-2 py-2 my-4 rounded-md spinner-dot-pulse spinner-sm [--spinner-color:var(--gray-2)] ",
+                grid: "  btn h-9 px-2 py-2 my-4 rounded-md  ",
                 color: " text-sm font-medium text-white bg-purple-400 cursor-not-allowed "
 
             }
@@ -43,7 +44,7 @@ export default function SelectedArtwork({ art, user }) {
         textarea: {
             valid: {
                 grid: " bg-gray-800 w-full rounded-md ",
-                color: " w-full p-3 text-gray-600 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-200 "
+                color: " w-full p-3 text-gray-400 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-200 "
             },
             inValid: {
                 grid: " bg-gray-800 w-full rounded-md ",
@@ -137,10 +138,34 @@ export default function SelectedArtwork({ art, user }) {
                                     {art.number}
                                 </div>
                             </div>
+                            <div className="col-span-3">
+
+                                <label
+                                    htmlFor="modal-1"
+                                    type="button"
+                                    className={JSON.stringify(styles.buttun.normal) + " w-full  "}
+                                >
+                                    Purchuse
+                                </label>
+
+                            </div>
+                            <div className="col-span-3">
+
+                                <button
+                                    type="button"
+                                    disabled
+                                    className={JSON.stringify(styles.buttun.normal) + " w-full "}
+                                >
+                                    Bidding
+                                </button>
+
+                            </div>
+                            <PurchaseArtwork art={art} user={user}/>
                             {/* Comments Section */}
                             {/* <CommentSection comments={comments} onAddComment={handleAddComment} /> */}
                             {/* Comment Section */}
                             <form onSubmit={handleSubmit} className="col-span-full">
+
                                 <label
                                     className="block mb-2 text-md font-medium text-gray-400"
                                     htmlFor="comment"
@@ -173,9 +198,11 @@ export default function SelectedArtwork({ art, user }) {
                                         ? JSON.stringify(styles.buttun.submitting)
                                         : JSON.stringify(styles.buttun.normal)}
                                 >
-
                                     {btnSubmit ? "Updating..." : "Add Comment"}
-                                    <div className="spinner-pulse-dot"></div>
+                                    {btnSubmit && (<div className="ml-1 spinner-dot-pulse spinner-sm [--spinner-color:var(--gray-2)]">
+                                        <div className="spinner-pulse-dot"></div>
+                                    </div>)}
+
 
                                 </button>
                             </form>
