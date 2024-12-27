@@ -142,6 +142,7 @@ class BaseUserController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
+        // return Inertia::render('components/Artist/Artist', compact('user'));
         return response()->json(['purchases' => $purchases]);
 
     }

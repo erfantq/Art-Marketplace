@@ -24,7 +24,8 @@ class BiddingController extends Controller
     public function showAdd()
     {
         // TODO
-        return Inertia::render('');
+        dd(Session::get('user'));
+        return Inertia::render('components/Artist/CreateBiddingg');
     }
 
     public function add(Request $request)

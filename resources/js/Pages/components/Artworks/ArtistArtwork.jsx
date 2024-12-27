@@ -5,9 +5,9 @@ import { useSession } from '../../../hooks/useSession'; // Adjusted import
 import { Link } from "@inertiajs/react";
 import useToastify from "../../../hooks/useToastify";
 import axios from "axios";
-export default function ArtistArtworks({ user }) {
+export default function ArtistArtworks({ user, arts }) {
 
-    const [arts, setArts] = useState([])
+    // const [arts, setArts] = useState([])
     const { username } = useSession()
     const showToast = useToastify()
     const [artData, setArtData] = useState([]);
@@ -20,25 +20,26 @@ export default function ArtistArtworks({ user }) {
         // if (!artData) {
         //     setArtData(JSON.parse({}))
         // }
-        getArtworks()
+        // getArtworks()
         console.log("arts", arts);
+        // setArts
     }, [])
 
-    const getArtworks = async () => {
-        try {
-            const api = axios.create({
-                baseURL: '/', // Replace with your backend URL
-                withCredentials: true
-            })
+    // const getArtworks = async () => {
+    //     try {
+    //         const api = axios.create({
+    //             baseURL: '/', // Replace with your backend URL
+    //             withCredentials: true
+    //         })
 
-            const response = api.get(user.username + '/arts')
-            console.log("res", (await response).data)
-            setArts(response.data.arts)
+    //         const response = api.get(user.username + '/arts')
+    //         console.log("res", (await response).data)
+    //         setArts(response.data.arts)
 
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     const styles = {
         buttun: {
@@ -77,7 +78,7 @@ export default function ArtistArtworks({ user }) {
                         <p className="text-sm text-gray-400 my-2">
                             Price : ${art.price}
                         </p>
-                        <Link href={'/product/' + art._id.$oid}
+                        <Link href={user.username+'/arts/' + art._id.$oid}
                             className={JSON.stringify(styles.buttun.normal)}>
                             About it
                         </Link>

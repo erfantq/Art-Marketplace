@@ -2,9 +2,11 @@ import { Link } from "@inertiajs/react";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoWalletOutline } from "react-icons/io5";
-
+import axios from "axios";
+import useToastify from "../../../hooks/useToastify";
 export default function Navbar({ username, role }) {
 
+    const showToast = useToastify()
     // useEffect(() => {
     //     // const user = JSON.parse(sessionStorage.getItem('user'));
 
@@ -16,6 +18,23 @@ export default function Navbar({ username, role }) {
     //     console.log(username);
     //     console.log(role.toLowerCase());
     // }, [])
+
+    // const createArtwork = async (values, action) => {
+    //     try {
+    //       const api = axios.create({
+    //         baseURL: '/', // Replace with your backend URL
+    //         withCredentials: true
+    //       });
+    //       const response = await api.get("/bidding/add")
+    //     //   setArts(response.data.arts)
+    //     if (response.status === 200) {
+    //         window.location.href = username + "/bidding/add";
+    //     }
+    //       console.log(response);
+    //     } catch (error) {
+    //       showToast('error', error.response?.data.message)
+    //     }
+    //   };
 
 
     return (
@@ -80,22 +99,23 @@ export default function Navbar({ username, role }) {
                                     {role.toLowerCase() === 'artist' && (
                                         <Link
                                             href={username + "/arts/create"}
+                                            // onClick={createArtwork}
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
                                             Create Artwork
                                         </Link>)
                                     }
                                     {role.toLowerCase() === 'artist' && (
                                         <Link
-                                            href={"/" + username + "/createBiddingg"}
+                                            href={"/bidding/add"}
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
                                             Create Bidding
                                         </Link>)
                                     }
                                     {role.toLowerCase() === 'artist' && (
                                         <Link
-                                            href={"/" + username + "/createBiddingg"}
+                                            href='/orders'
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
-                                            My Artworks
+                                            My Seles
                                         </Link>)
                                     }
                                         <Link
