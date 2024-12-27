@@ -40,7 +40,7 @@ class Notification extends Model
         $artIdString = (string) $bidding['art_id'];
         $itemName = Arts::getArt($artIdString)['name'];
         $info = [
-            'bidding_id' => $bidding['_id'],
+            // 'bidding_id' => $bidding['_id'],
             'item_name' => $itemName,
             'username' => $bidding['winner'],
             'end_time' => $bidding['end_time'],
@@ -63,7 +63,7 @@ class Notification extends Model
         $itemName = Arts::getArt($artIdString)['name'];
         $winner = $bidding['winner'];
         $info = [
-            'bidding_id' => $bidding['_id'],
+            // 'bidding_id' => $bidding['_id'],
             'item_name' => $itemName,
             'username' => $loserUsername,  //
             'end_time' => $bidding['end_time'],
