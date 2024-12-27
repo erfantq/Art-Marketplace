@@ -87,11 +87,11 @@ class TransactionsService
         
         $filter = ['username' => $art['artist']['username']];
         $update = [
-            '$push' => [
-                'previous_purchases' => [
-                    'id' => $transactionId,
-                ],
-            ],
+            // '$push' => [
+            //     'previous_purchases' => [
+            //         'id' => $transactionId,
+            //     ],
+            // ],
             '$set' => [
                 'wallet_balance' => $newIncome,
             ],
@@ -110,11 +110,11 @@ class TransactionsService
 
         $filter = ['username' => $buyer['username']];
         $update = [
-            '$push' => [
-                'previous_purchases' => [
-                    'id' => $transactionId,
-                ],
-            ],
+            // '$push' => [
+            //     'previous_purchases' => [
+            //         'id' => $transactionId,
+            //     ],
+            // ],
             '$set' => [
                 'wallet_balance' => $newWallet,
             ],

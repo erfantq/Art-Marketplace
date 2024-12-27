@@ -22,13 +22,24 @@ class BiddingController extends Controller
         $this->biddingService = new BiddingService();
     }
 
+    public function index($artId)
+    {
+        try {
+            $bidding = Bidding::getBidding($artId);
+            $user = Session::get('user') ?? null;
+            return Inertia::render('/', compact('bidding', 'user'));
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
+    }
+
     public function showAdd()
     {
         // TODO
         $user = Session::get('user');
         $arts = Arts::getArtistArts($user->username);
         return Inertia::render('components/Artist/CreateBiddingg',compact('arts','user'));
-    }
+        }
 
     public function add(Request $request)
     {
@@ -39,6 +50,7 @@ class BiddingController extends Controller
 
         $info = [
             'art_id' => new ObjectId((string) $artId),
+            'artist' => $artist['username'],
             'base_price' => $base_price,
             'highest_suggestion' => 0,
             'winner' => null,

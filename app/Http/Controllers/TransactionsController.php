@@ -35,7 +35,8 @@ class TransactionsController extends Controller
                 'art_id' => new ObjectId((string) $artId),
                 'buyer' => $buyerUsername,
                 'number' => $number,
-                'order_status' => 0,    
+                'order_status' => 0,  
+                'bidding' => false,
             ];
             $this->transactionService->processPurchase($buyerUsername, $artId, $transactionInfo, false);
         } catch (\Exception $e) {

@@ -104,6 +104,7 @@ class BiddingService
             'artId' => new ObjectId((string) $artId),
             'number' => 1,
             'order_status' => 0,    
+            'bidding' => true,
         ];
         $this->transactionService->processPurchase($winner, $artIdString, $transactionInfo, true);
 
