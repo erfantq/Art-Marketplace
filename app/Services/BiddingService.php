@@ -2,10 +2,12 @@
 namespace App\Services;
 
 use App\Models\DBConnection;
+use App\Models\Notification;
 use App\Notifications\BiddingLoserNotification;
 use App\Notifications\BiddingWinnerNotification;
 use Carbon\Carbon;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\UTCDateTime;
 use Exception;
 use Illuminate\Support\Facades\Session;
 
@@ -72,7 +74,8 @@ class BiddingService
     public function processExpiredBiddings()
     {
         try {
-            $now = Carbon::now();
+            // $now = Carbon::now();
+            $now = new UTCDateTime(Carbon::now()->timestamp * 1000);
             $biddings = $this->biddingsCollection->find()->toArray();
             foreach ($biddings as $bidding) {
                 if($now >= $bidding['end_time']) {
@@ -86,7 +89,8 @@ class BiddingService
 
                     $this->updateBidding($artId);
 
-                    $winner->notify(new BiddingWinnerNotification($bidding));
+                    // $winner->notify(new BiddingWinnerNotification($bidding));
+                    Notification::insertWinnerNotification($bidding);
                 }
             }
         } catch (\Exception $e) {
@@ -131,16 +135,17 @@ class BiddingService
 
             $oldWinner = $this->usersCollection->findOne(['username' => $oldWinnerUsername]);
 
-            $oldUserWalletBalance = $oldUser['wallet_balance'];
+            $oldUserWalletBalance = $oldWinner['wallet_balance'];
             $oldUserNewWalletBalance = $oldUserWalletBalance + $backMoney;
 
             $filter = ['username' => $oldWinnerUsername];
             $update = ['$set' => ['wallet_balance' => $oldUserNewWalletBalance]];
             $this->usersCollection->updateOne($filter, $update);
 
-            $oldWinner->notify(new BiddingLoserNotification($bidding, $oldWinnerUsername));
+            // $oldWinner->notify(new BiddingLoserNotification($bidding, $oldWinnerUsername));
+            Notification::insertLoserNotification($bidding, $oldWinnerUsername);
         } catch (\Exception $e) {
-            throw new \Exception("Database error: " . $e->getMessage());
+            throw new \Exception("Database error1: " . $e->getMessage());
         }
     }
 
@@ -161,7 +166,7 @@ class BiddingService
             $user['wallet_balance'] = $newWalletBalance;
             Session::put('user', $user);
         } catch (\Exception $e) {
-            throw new \Exception("Database error: " . $e->getMessage());
+            throw new \Exception("Database error2: " . $e->getMessage());
         }
     }
 
