@@ -225,7 +225,7 @@ export default function CreateBiddingg({ user, arts }) {
                       ? JSON.stringify(styles.input.inValid)
                       : JSON.stringify(styles.input.valid)
                   }
-                  value={values.end_date.replace('T', ' ').concat(':00')}
+                  value={values.end_date.replace('T', ' ').concat(':00').toString()}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

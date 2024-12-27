@@ -74,11 +74,12 @@ class BiddingService
     public function processExpiredBiddings()
     {
         try {
-            // $now = Carbon::now();
-            $now = new UTCDateTime(Carbon::now()->timestamp * 1000);
+            $now = Carbon::now()->timestamp;
+            // $now = new UTCDateTime(Carbon::now()->timestamp * 1000);
             $biddings = $this->biddingsCollection->find()->toArray();
             foreach ($biddings as $bidding) {
                 if($now >= $bidding['end_time']) {
+                    dd($bidding);
                     
                     $winnerUsername = $bidding['winner'];
                     $winner = $this->usersCollection->findOne(['username' => $winnerUsername]);
