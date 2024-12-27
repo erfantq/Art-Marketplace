@@ -70,7 +70,7 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
         {purchases.length === 0 ? (
           <div className={styles.noUsers}>
             <CiCircleAlert className='text-5xl mb-2' />
-            <span className='flex text-center'>Inactive artist does not exist!</span>
+            <span className='flex text-center'>History is Empty!</span>
           </div>
         )
           : dataPurchases.map((purchase, index) => (

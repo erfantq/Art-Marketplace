@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoWalletOutline } from "react-icons/io5";
 import axios from "axios";
+import { IoIosNotificationsOutline } from "react-icons/io";
 import useToastify from "../../../hooks/useToastify";
 export default function Navbar({ username, role }) {
 
@@ -57,8 +58,9 @@ export default function Navbar({ username, role }) {
 
                 </Link>)}
                 <label htmlFor='drawer-1'
-                    className='navbar-item bg-black text-white'>
-                    Notifications
+                    className='navbar-item text-white bg-black flex items-center'>
+                    <span>Notifications</span>
+                    <IoIosNotificationsOutline className="flex ml-2 text-xl" />
                 </label>
                 {/* <a className="navbar-item text-white">Bidding</a> */}
             </div>

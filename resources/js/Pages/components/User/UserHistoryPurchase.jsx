@@ -70,7 +70,7 @@ export default function UserHistoryPurchase({ purchases, user }) {
         {purchases.length === 0 ? (
           <div className={styles.noUsers}>
             <CiCircleAlert className='text-5xl mb-2' />
-            <span className='flex text-center'>Inactive artist does not exist!</span>
+            <span className='flex text-center'>History is Empty!</span>
           </div>
         )
           : dataPurchases.map((purchase, index) => (
@@ -97,7 +97,7 @@ export default function UserHistoryPurchase({ purchases, user }) {
                   </li>
                 </ol>
                 {/* <p className='col-span-2 items-center flex'>Created at : {user.created_at.$date.$numberLong}</p> */}
-                <button type='submit'
+                {/* <button type='submit'
                   className={btnSubmit[purchase.username] ? JSON.stringify(styles.buttun.submitting)
                     : JSON.stringify(styles.buttun.normal)}
                   onClick={() => setPurchaseSelect(purchase._id.$oid)}>
@@ -105,7 +105,7 @@ export default function UserHistoryPurchase({ purchases, user }) {
                   {btnSubmit[purchase.username] && (<div className="ml-2 spinner-dot-pulse spinner-sm [--spinner-color:var(--gray-2)]">
                     <div className="spinner-pulse-dot"></div>
                   </div>)}
-                </button>
+                </button> */}
               </form>
             </div>
           ))}
