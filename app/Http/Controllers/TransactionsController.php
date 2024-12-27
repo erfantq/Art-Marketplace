@@ -29,10 +29,12 @@ class TransactionsController extends Controller
     
             $artId = $request->artId;
             $number = $request->number;
+            $artistUsername = $request->artist;
     
             $transactionInfo = [
                 'timestamp' => new UTCDateTime(Carbon::now()->timestamp * 1000),
                 'art_id' => new ObjectId((string) $artId),
+                'artist' => $artistUsername,
                 'buyer' => $buyerUsername,
                 'number' => $number,
                 'order_status' => 0,  
