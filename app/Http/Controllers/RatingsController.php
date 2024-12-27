@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Ratings;
 use Carbon\Carbon;
-use MongoDB\BSON\UTCDateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 // use MongoDB\Laravel\Eloquent\Casts\ObjectId;
@@ -22,7 +21,7 @@ class RatingsController extends Controller
 
         $info = [
             '_id' => new ObjectId(),
-            'timestamp' => new UTCDateTime(Carbon::now()->timestamp * 1000),
+            'timestamp' => Carbon::now()->timestamp,
             'rate' => $rate,
             'comment' => $comment,
             'username' => $username,

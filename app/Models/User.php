@@ -12,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Session;
 use MongoDB\Client;
 use MongoDB\BSON\ObjectId;
-use MongoDB\BSON\UTCDateTime;
 
 
 use function Symfony\Component\Clock\now;
@@ -91,7 +90,7 @@ class User extends Authenticatable
                 // 'current_auctions' => [],
                 // 'previous_auctions' => [],
                 'arts' => [],
-                'created_at' => new UTCDateTime(Carbon::now()->timestamp * 1000),
+                'created_at' => Carbon::now()->timestamp,
             ]);
 
             return [

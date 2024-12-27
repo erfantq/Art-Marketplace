@@ -7,7 +7,6 @@ use App\Notifications\BiddingLoserNotification;
 use App\Notifications\BiddingWinnerNotification;
 use Carbon\Carbon;
 use MongoDB\BSON\ObjectId;
-use MongoDB\BSON\UTCDateTime;
 use Exception;
 use Illuminate\Support\Facades\Session;
 
@@ -75,23 +74,26 @@ class BiddingService
     {
         try {
             $now = Carbon::now()->timestamp;
-            // $now = new UTCDateTime(Carbon::now()->timestamp * 1000);
             $biddings = $this->biddingsCollection->find()->toArray();
             foreach ($biddings as $bidding) {
                 if($now >= $bidding['end_time']) {
-                    dd($bidding);
+                    // dd($bidding);
                     
                     $winnerUsername = $bidding['winner'];
-                    $winner = $this->usersCollection->findOne(['username' => $winnerUsername]);
+                    
                     $artId = $bidding['art_id'];
-                    $this->updateTransaction($bidding, $winner, $artId);
+                    if($winnerUsername != null) {
+                        $winner = $this->usersCollection->findOne(['username' => $winnerUsername]);
+                        $this->updateTransaction($bidding, $winner, $artId);
+                        Notification::insertWinnerNotification($bidding);
+                    }
 
                     $this->updateArt($artId);
 
                     $this->updateBidding($artId);
 
                     // $winner->notify(new BiddingWinnerNotification($bidding));
-                    Notification::insertWinnerNotification($bidding);
+                    
                 }
             }
         } catch (\Exception $e) {

@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use MongoDB\BSON\ObjectId;
-use MongoDB\BSON\UTCDateTime;
 
 
 class BiddingController extends Controller
@@ -51,18 +50,14 @@ class BiddingController extends Controller
         $endTime = $request->end_date;
         $artId = $request->art_id;
 
-        // $carbonInstance = Carbon::createFromFormat('Y:m:d H:i:s', (string) $endTime);
-
         $info = [
             'art_id' => new ObjectId((string) $artId),
             'artist' => $artist['username'],
             'base_price' => $base_price,
             'highest_suggestion' => 0,
             'winner' => null,
-            // 'start_time' =>  new UTCDateTime(Carbon::now()->timestamp * 1000),
             'start_time' =>  Carbon::now()->timestamp,
-            // 'end_time' => new UTCDateTime(Carbon::parse($endTime)->timestamp * 1000),
-            'end_time' => Carbon::parse($endTime)->timestamp,
+            'end_time' => Carbon::now()->addMinutes(2)->timestamp,
         ];
 
         try {

@@ -3,7 +3,7 @@ import Navbar from "../Share/NavBar";
 import { useFormik } from "formik";
 import { CreateArtworkSchema, CreateBiddingSchema, WalletChargeSchema } from "../../schemas";
 import api from "../../../api/axiosApi";
-import { format, subHours } from 'date-fns';
+import { format, setDate, subHours } from 'date-fns';
 import axios from "axios";
 import useToastify from "../../../hooks/useToastify";
 import { CiCircleAlert } from "react-icons/ci";
@@ -13,6 +13,7 @@ export default function CreateBiddingg({ user, arts }) {
   const [btnSubmit, setBtnSubmit] = useState(false);
   const showToast = useToastify()
   const [dateTime, setDateTime] = useState('');
+  const [date, setDate] = useState('')
 
   const handleChangeTime = (event) => {
     const value = event.target.value;
@@ -31,8 +32,7 @@ export default function CreateBiddingg({ user, arts }) {
         baseURL: '/',
         withCredentials: true
       })
-      const date = new Date()
-      const response = await api.post("/bidding/add",values);
+      const response = await api.post("/bidding/add", { ...values, end_date: date });
 
       setBtnSubmit(true);
       showToast('success', response.data.message)
@@ -88,7 +88,8 @@ export default function CreateBiddingg({ user, arts }) {
     // console.log(values.end_date);
     // console.log(format(new Date(values.end_date), 'yyyy-MM-dd HH:mm:ss'));
     console.log(values.end_date);
-    console.log(values.end_date.replace('T', ' ').concat(':00'))
+    setDate(values.end_date.replace('T', ' ').concat(':00').toString())
+    console.log(date);
   }, [values.end_date])
   const styles = {
     input: {
@@ -225,7 +226,7 @@ export default function CreateBiddingg({ user, arts }) {
                       ? JSON.stringify(styles.input.inValid)
                       : JSON.stringify(styles.input.valid)
                   }
-                  value={values.end_date.replace('T', ' ').concat(':00').toString()}
+                  value={values.end_date}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

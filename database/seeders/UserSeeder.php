@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use MongoDB\BSON\UTCDateTime;
 
 
 class UserSeeder extends Seeder
@@ -36,7 +35,7 @@ class UserSeeder extends Seeder
                 // 'current_auctions' => [],
                 // 'previous_auctions' => [],
                 'arts' => [],
-                'created_at' => new UTCDateTime(Carbon::now()->timestamp * 1000),
+                'created_at' => Carbon::now()->timestamp,
             ]);
         }
         DB::table('users')->insert([
@@ -53,7 +52,7 @@ class UserSeeder extends Seeder
             // 'current_auctions' => [],
             // 'previous_auctions' => [],
             'arts' => [],
-            'created_at' => new UTCDateTime(Carbon::now()->timestamp * 1000),
+            'created_at' => Carbon::now()->timestamp,
         ]);
         
     }
