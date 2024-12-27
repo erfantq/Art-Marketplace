@@ -18,16 +18,19 @@ class BiddingController extends Controller
 {
     private $biddingService;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->biddingService = new BiddingService();
     }
 
     public function index($artId)
     {
         try {
+            // dd($artId);
             $bidding = Bidding::getBidding($artId);
             $user = Session::get('user') ?? null;
-            return Inertia::render('/', compact('bidding', 'user'));
+            $art = Arts::getArt($artId);
+            return Inertia::render('components/User/SuggestBidding', compact('bidding', 'user','art'));
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
@@ -38,8 +41,8 @@ class BiddingController extends Controller
         // TODO
         $user = Session::get('user');
         $arts = Arts::getArtistArts($user->username);
-        return Inertia::render('components/Artist/CreateBiddingg',compact('arts','user'));
-        }
+        return Inertia::render('components/Artist/CreateBiddingg', compact('arts', 'user'));
+    }
 
     public function add(Request $request)
     {
@@ -88,7 +91,4 @@ class BiddingController extends Controller
             return response()->json(['message' => $e->getMessage()], 403);
         }
     }
-    
-
-    
 }

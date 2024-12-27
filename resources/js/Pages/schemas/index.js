@@ -39,6 +39,10 @@ export const PurchaseSchema = yup.object().shape({
     number : yup.string().required("Please enter an amount")
 })
 
+export const SuggestBiddingSchema = yup.object().shape({
+    price : yup.string().required("Please enter an amount")
+})
+
 export const ArtworkCommentSchema = yup.object().shape({
     comment : yup.string().required("Please write a comment")
 })

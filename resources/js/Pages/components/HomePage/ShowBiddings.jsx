@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useToastify from '../../../hooks/useToastify'
 import { CiCircleAlert } from "react-icons/ci";
 import { number } from 'yup';
+import { Link } from '@inertiajs/react';
 export default function ShowBiddings({ arts }) {
 
     const [dataArts, setDataArts] = useState(arts)
@@ -57,7 +58,7 @@ export default function ShowBiddings({ arts }) {
 
             }
         },
-        noUsers: "flex flex-col items-center justify-center h-screen col-start-4 col-end-9 text-gray-400 text-3xl", // Centering styles
+        noUsers: "flex flex-col items-center justify-center  col-start-4 col-end-9 text-gray-400 text-3xl", // Centering styles
 
     }
     return (
@@ -66,7 +67,7 @@ export default function ShowBiddings({ arts }) {
             {dataArts.length === 0 ? (
                 <div className={styles.noUsers}>
                     <CiCircleAlert className='text-5xl mb-2' />
-                    <span className='flex text-center'>Inactive artist does not exist!</span>
+                    <span className='flex text-center'>Bidding for an artwork does not exist!</span>
                 </div>
             )
                 : dataArts.map((art, index) => (
@@ -79,18 +80,12 @@ export default function ShowBiddings({ arts }) {
                                 {/* <p className='text-sm font-normal'>{user.first_name} , {user.last_name} , {user.email}</p> */}
                             </p>
                             {/* <p className='col-span-2 items-center flex'>Created at : {user.created_at.$date.$numberLong}</p> */}
-                            <button type='submit'
-                                className={btnSubmit[art.name] ? JSON.stringify(styles.buttun.submitting)
-                                    : JSON.stringify(styles.buttun.normal)}
-                                onClick={() => setUserSelect(user.username)}>
-                                Activate
-                                {btnSubmit[art.name] && (<div className="ml-2 spinner-dot-pulse spinner-sm [--spinner-color:var(--gray-2)]">
-                                    <div className="spinner-pulse-dot"></div>
-                                </div>)}
-                                {/* {btnSubmit && (<svg className="spinner-ring spinner-sm [--spinner-color:var(--gray-2)]" viewBox="25 25 50 50" strokeWidth="5">
-                <circle cx="50" cy="50" r="20" />
-              </svg>)} */}
-                            </button>
+                            <Link
+                                className={JSON.stringify(styles.buttun.normal)}
+                                href={'/bidding/' + art._id.$oid}
+                            >
+                                Price offer
+                            </Link>
                         </form>
                     </div>
                 ))}

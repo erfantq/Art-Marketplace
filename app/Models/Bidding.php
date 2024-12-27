@@ -22,7 +22,7 @@ class Bidding extends Model
         try {
             $db = DBConnection::getDb();
             $biddingsCollection = $db->biddings;
-            $bidding = $biddingsCollection->findOne(['_id' => new ObjectId((string) $artId)]);
+            $bidding = $biddingsCollection->findOne(['art_id' => new ObjectId((string) $artId)]);
         } catch (\Exception $e) {
             throw new \Exception("Database error: " . $e->getMessage());
         }

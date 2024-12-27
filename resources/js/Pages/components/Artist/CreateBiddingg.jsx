@@ -27,6 +27,9 @@ export default function CreateBiddingg({ user, arts }) {
       showToast('success', response.data.message)
       setTimeout(() => {
         setBtnSubmit(false);
+        if (response.status === 200) {
+          window.location.href = "/"
+        }
         // navigate('/home')
       }, 4000);
       console.log(response.data);
