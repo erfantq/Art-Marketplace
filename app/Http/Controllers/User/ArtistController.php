@@ -54,8 +54,6 @@ class ArtistController extends Controller
         try {
             $this->transactionService->changeOrderStatus($transactionId, 1);
 
-            // change the order_status into 2 after 5 minutes
-            ApproveTransactionJob::dispatch($transactionId)->delay(now()->addMinutes(5));
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

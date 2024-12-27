@@ -75,7 +75,8 @@ use function Laravel\Prompts\alert;
     });
 
     Route::get('/buyrequests', [ArtistController::class, 'buyRequests'])->middleware(RoleMiddleware::class.'artist');
-    Route::get('/approve/{transactionId}', [ArtistController::class, 'approveBuyRequest'])->middleware(RoleMiddleware::class.'artist');
+    // Route::get('/approve/{transactionId}', [ArtistController::class, 'approveBuyRequest'])->middleware(RoleMiddleware::class.'artist');
+    Route::get('/approve/{transactionId}', [ArtistController::class, 'approveBuyRequest']);
 
     Route::get('/inactiveusers', [AdminController::class, 'inactiveUsers'])->middleware(RoleMiddleware::class.':admin');
     

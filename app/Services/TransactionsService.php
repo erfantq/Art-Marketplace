@@ -27,7 +27,7 @@ class TransactionsService
     {
     
         $filter = ['_id' => new ObjectId((string) $transactionId)];
-        $update = ['$set' => ['oreder_status' => $status]];
+        $update = ['$set' => ['order_status' => $status]];
         try {
             $this->transactionsCollection->updateOne($filter, $update);
         } catch (\Exception $e) {
