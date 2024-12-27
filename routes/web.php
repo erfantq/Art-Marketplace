@@ -64,17 +64,17 @@ use function Laravel\Prompts\alert;
         Route::get('{username}/walletcharge', [BaseUserController::class, 'showWallet'])->middleware(RoleMiddleware::class.':admin,user');
         Route::post('{username}/walletcharge', [BaseNormalUserAdminController::class, 'updateWallet'])->middleware(RoleMiddleware::class.':admin,user');
 
-        Route::get('/notifications', [NotificationController::class, 'index']);
-
-        Route::prefix('/bidding')->group(function () {
-            Route::get('/add', [BiddingController::class, 'showAdd'])->middleware(RoleMiddleware::class.':artist');
-            Route::post('/add', [BiddingController::class, 'add'])->middleware(RoleMiddleware::class.':artist');
-            Route::post('/suggest', [BiddingController::class, 'suggestNewPrice'])->middleware(RoleMiddleware::class.':user');
-        });
-
-        Route::get('/buyrequests', [ArtistController::class, 'buyRequests'])->middleware(RoleMiddleware::class.'artist');
-        Route::get('/approve/{transactionId}', [ArtistController::class, 'approveBuyRequest'])->middleware(RoleMiddleware::class.'artist');
     });
+    Route::get('/notifications', [NotificationController::class, 'index']);
+
+    Route::prefix('/bidding')->group(function () {
+        Route::get('/add', [BiddingController::class, 'showAdd'])->middleware(RoleMiddleware::class.':artist');
+        Route::post('/add', [BiddingController::class, 'add'])->middleware(RoleMiddleware::class.':artist');
+        Route::post('/suggest', [BiddingController::class, 'suggestNewPrice'])->middleware(RoleMiddleware::class.':user');
+    });
+
+    Route::get('/buyrequests', [ArtistController::class, 'buyRequests'])->middleware(RoleMiddleware::class.'artist');
+    Route::get('/approve/{transactionId}', [ArtistController::class, 'approveBuyRequest'])->middleware(RoleMiddleware::class.'artist');
 
     Route::get('/inactiveusers', [AdminController::class, 'inactiveUsers'])->middleware(RoleMiddleware::class.':admin');
     
