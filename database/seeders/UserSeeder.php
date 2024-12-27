@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use MongoDB\BSON\UTCDateTime;
+
 
 class UserSeeder extends Seeder
 {
@@ -30,11 +32,11 @@ class UserSeeder extends Seeder
                 'address' => null,
                 'wallet_balance' => 0,
                 'active' => true,
-                'previous_purchases' => [],
-                'current_auctions' => [],
-                'previous_auctions' => [],
+                // 'previous_purchases' => [],
+                // 'current_auctions' => [],
+                // 'previous_auctions' => [],
                 'arts' => [],
-                'created_at' => Carbon::now(),
+                'created_at' => new UTCDateTime(Carbon::now()->timestamp * 1000),
             ]);
         }
         DB::table('users')->insert([
@@ -47,11 +49,11 @@ class UserSeeder extends Seeder
             'address' => null,
             'wallet_balance' => 0,
             'active' => true,
-            'previous_purchases' => [],
-            'current_auctions' => [],
-            'previous_auctions' => [],
+            // 'previous_purchases' => [],
+            // 'current_auctions' => [],
+            // 'previous_auctions' => [],
             'arts' => [],
-            'created_at' => Carbon::now(),
+            'created_at' => new UTCDateTime(Carbon::now()->timestamp * 1000),
         ]);
         
     }

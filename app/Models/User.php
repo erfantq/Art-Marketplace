@@ -12,6 +12,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Session;
 use MongoDB\Client;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\UTCDateTime;
+
 
 use function Symfony\Component\Clock\now;
 
@@ -85,11 +87,11 @@ class User extends Authenticatable
                 'address' => null,
                 'active' => $active,
                 'wallet_balance' => 0,
-                'previous_purchases' => [],
-                'current_auctions' => [],
-                'previous_auctions' => [],
+                // 'previous_purchases' => [],
+                // 'current_auctions' => [],
+                // 'previous_auctions' => [],
                 'arts' => [],
-                'created_at' => Carbon::now(),
+                'created_at' => new UTCDateTime(Carbon::now()->timestamp * 1000),
             ]);
 
             return [
@@ -156,15 +158,29 @@ class User extends Authenticatable
         }
     }
 
-    public static function getPurchases($username)
+    public static function getNormalUserPurchases($username)
     {
         try {
             $db = DBConnection::getDb();
-            $usersCollection = $db->users;
+            // $usersCollection = $db->users;
 
-            $transactionIds = $usersCollection->find(['username' => $username], ['previous_purchases' => 1, '_id' => 0])->toArray();
+            // $transactionIds = $usersCollection->find(['username' => $username], ['previous_purchases' => 1, '_id' => 0])->toArray();
 
-            $transactions = $db->transactions->find(['_id' => ['$in' => $transactionIds]])->toArray();
+            // $transactions = $db->transactions->find(['_id' => ['$in' => $transactionIds]])->toArray();
+            $transactions = $db->transactions->find(['buyer' => $username])->toArray();
+            
+            return $transactions;
+        } catch (\Exception $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
+    }
+
+    public static function getArtistPurchases($username)
+    {
+        
+        try {            
+            $db = DBConnection::getDb();
+            $transactions = $db->transactions->find(['artist' => $username])->toArray();
             return $transactions;
         } catch (\Exception $e) {
             throw new Exception("Database error: " . $e->getMessage());

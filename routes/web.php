@@ -70,6 +70,7 @@ use function Laravel\Prompts\alert;
     Route::prefix('/bidding')->group(function () {
         Route::get('/add', [BiddingController::class, 'showAdd'])->middleware(RoleMiddleware::class.':artist');
         Route::post('/add', [BiddingController::class, 'add'])->middleware(RoleMiddleware::class.':artist');
+        Route::get('/{artId}', [BiddingController::class, 'index'])->middleware(RoleMiddleware::class.':user,artist');;
         Route::post('/suggest', [BiddingController::class, 'suggestNewPrice'])->middleware(RoleMiddleware::class.':user');
     });
 

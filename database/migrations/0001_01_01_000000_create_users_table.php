@@ -25,18 +25,17 @@ return new class extends Migration
         /*
             User {
                 Username
+                first_name
+                last_name
                 Password
                 Role 
                 Email
                 Address
-                Created_at
                 Wallet-balance
-                    Relations {
-                        Discount-codes
-                        Previous_purchases
-                        Current_auctions
-                        Previous_auctions	
-                    }
+                active
+                arts
+                Created_at
+                    
             }
         */
 

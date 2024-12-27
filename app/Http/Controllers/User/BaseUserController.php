@@ -17,14 +17,10 @@ class BaseUserController extends Controller
 
         $username = $request->username;
         $firstname = $request->firstname ?? null;
-        // $firstname = 'test';
         $lastname = $request->lastname ?? null;
-        // $lastname = 'test';
         $password = $request->password;
         $role = $request->role;
         $email = $request->email ?? null;
-        // $email = 'test@gmail.com';
-
 
         $active = true;
 
@@ -136,9 +132,15 @@ class BaseUserController extends Controller
     // If it is normal user gives the buyed arts, If it is artist gives the selled arts
     public function getPurchases()
     {
-        $user_username = Session::get('user')['username'];
+        $user = Session::get('user');
+        $user_username = $user['username'];
+        $role = $user['role'];
         try {
-            $purchases = User::getPurchases($user_username);
+            if(strtolower($role) == 'user') {
+                $purchases = User::getNormalUserPurchases($user_username);
+            } else if(strtolower($role) == 'artist') {
+                $purchases = User::getArtistPurchases($user_username);
+            }
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
