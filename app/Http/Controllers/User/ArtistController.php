@@ -45,7 +45,7 @@ class ArtistController extends Controller
 
         // return response()->json(['buy_requests' => $buyRequests]);
         // TODO
-        return Inertia::render('', compact('buy_requests'));
+        return Inertia::render('components/User/HistoryPurchases', compact('buy_requests'));
     }
 
     public function approveBuyRequest($transactionId)

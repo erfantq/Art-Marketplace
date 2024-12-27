@@ -29,6 +29,12 @@ export const WalletChargeSchema = yup.object().shape({
     charge : yup.string().required("Please enter an amount")
 })
 
+export const CreateBiddingSchema = yup.object().shape({
+    art_id : yup.string().required("Please enter an amount"),
+    base_price : yup.string().required("Please enter an amount"),
+    end_date : yup.string().required("Please enter an amount")
+})
+
 export const PurchaseSchema = yup.object().shape({
     number : yup.string().required("Please enter an amount")
 })

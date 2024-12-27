@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Share/NavBar';
 import UserArtworks from '../Artworks/UserArtworks';
+import ShowBiddings from './ShowBiddings';
 
 export default function UserHome({ user, arts }) {
 
+    const [biddingArts, setBiddingArts] = useState(arts)
     useEffect(() => {
         console.log(user);
+        setBiddingArts((prevArts) => prevArts.filter((art) => art.bidding !== false))
+        console.log('bidd', biddingArts);
     }, [])
     return (
         <div>
@@ -15,8 +19,11 @@ export default function UserHome({ user, arts }) {
                 {/* <UserArtworks /> */}
                 {/* </div> */}
                 <UserArtworks arts={arts} />
-
-
+                <div className="flex items-center gap-1">
+                    Biddings
+                    <div className="divider divider-horizontal w-full shadow-lg shadow-purple-800/50 bg-transparent"></div>
+                </div>
+                <ShowBiddings arts={biddingArts} />
             </div>
         </div>
     )

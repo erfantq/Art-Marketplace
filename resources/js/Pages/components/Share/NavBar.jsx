@@ -56,7 +56,7 @@ export default function Navbar({ username, role }) {
                     <IoWalletOutline className="flex ml-2" />
 
                 </Link>)}
-                <a className="navbar-item text-white">Contact</a>
+                <a className="navbar-item text-white">Bidding</a>
             </div>
 
             <div className="navbar-end">
@@ -98,10 +98,18 @@ export default function Navbar({ username, role }) {
                                     </Link>
                                     {role.toLowerCase() === 'artist' && (
                                         <Link
-                                            href={username + "/arts/create"}
+                                            href={"/" + username + "/arts/create"}
                                             // onClick={createArtwork}
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
                                             Create Artwork
+                                        </Link>)
+                                    }
+                                    {role.toLowerCase() === 'user' && (
+                                        <Link
+                                            href={"/buyrequests"}
+                                            // onClick={createArtwork}
+                                            className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
+                                            History of purchases
                                         </Link>)
                                     }
                                     {role.toLowerCase() === 'artist' && (
@@ -118,11 +126,11 @@ export default function Navbar({ username, role }) {
                                             My Seles
                                         </Link>)
                                     }
-                                        <Link
-                                            href="/logout"
-                                            className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
-                                            Logout
-                                        </Link>
+                                    <Link
+                                        href="/logout"
+                                        className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
+                                        Logout
+                                    </Link>
                                 </div>
                             </div>
                         </div>

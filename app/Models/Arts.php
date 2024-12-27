@@ -35,7 +35,7 @@ class Arts extends Model
             $db = DBConnection::getDb();
             $artCollection = $db->arts;
 
-            $arts = $artCollection->find(['bidding' => false])->toArray();
+            $arts = $artCollection->find()->toArray();
         } catch (\Exception $e) {
             throw new Exception("Database error: " . $e->getMessage());
         }

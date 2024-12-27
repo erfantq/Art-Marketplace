@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Arts;
 use App\Models\Bidding;
 use App\Services\BiddingService;
 use Carbon\Carbon;
@@ -24,8 +25,9 @@ class BiddingController extends Controller
     public function showAdd()
     {
         // TODO
-        dd(Session::get('user'));
-        return Inertia::render('components/Artist/CreateBiddingg');
+        $user = Session::get('user');
+        $arts = Arts::getArtistArts($user->username);
+        return Inertia::render('components/Artist/CreateBiddingg',compact('arts','user'));
     }
 
     public function add(Request $request)
