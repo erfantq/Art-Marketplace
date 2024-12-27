@@ -3,7 +3,7 @@ import Navbar from "../Share/NavBar";
 import { useFormik } from "formik";
 import { CreateArtworkSchema, CreateBiddingSchema, WalletChargeSchema } from "../../schemas";
 import api from "../../../api/axiosApi";
-import { format } from 'date-fns';
+import { format, subHours } from 'date-fns';
 import axios from "axios";
 import useToastify from "../../../hooks/useToastify";
 import { CiCircleAlert } from "react-icons/ci";
@@ -12,16 +12,27 @@ export default function CreateBiddingg({ user, arts }) {
 
   const [btnSubmit, setBtnSubmit] = useState(false);
   const showToast = useToastify()
+  const [dateTime, setDateTime] = useState('');
 
+  const handleChangeTime = (event) => {
+    const value = event.target.value;
+    setDateTime(value);
+
+    // Convert string to Date object
+    const dateObject = new Date(value);
+
+    // Format the date to 'yyyy-MM-dd HH:mm:ss'
+    const formattedDate = format(dateObject, 'yyyy-MM-dd HH:mm:ss');
+    console.log(formattedDate); // This will log the formatted date
+  };
   const onSubmit = async (values, action) => {
     try {
       const api = axios.create({
         baseURL: '/',
         withCredentials: true
       })
-      const response = await api.post("/bidding/add",
-        { ...values, end_date: format(new Date(values.end_date), 'yyyy-MM-dd HH:mm:ss') }
-      );
+      const date = new Date()
+      const response = await api.post("/bidding/add",values);
 
       setBtnSubmit(true);
       showToast('success', response.data.message)
@@ -41,11 +52,7 @@ export default function CreateBiddingg({ user, arts }) {
     }
   };
 
-  useEffect(() => {
-    console.log("mdmms", arts);
-    console.log(user);
 
-  }, [])
 
   const {
     values,
@@ -71,6 +78,18 @@ export default function CreateBiddingg({ user, arts }) {
   const incorrectInput =
     "max-w-full px-4 py-2 text-sm bg-gray-800 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500";
 
+  useEffect(() => {
+    // console.log("mdmms", arts);
+    // console.log(user);
+    // const date = new Date(values.end_date)
+
+    // const oneHourAgo = subHours(date, 1); // محاسبه یک ساعت قبل
+    // console.log(format(date, 'yyyy-MM-dd HH:mm:ss'));
+    // console.log(values.end_date);
+    // console.log(format(new Date(values.end_date), 'yyyy-MM-dd HH:mm:ss'));
+    console.log(values.end_date);
+    console.log(values.end_date.replace('T', ' ').concat(':00'))
+  }, [values.end_date])
   const styles = {
     input: {
       valid: {
@@ -206,7 +225,7 @@ export default function CreateBiddingg({ user, arts }) {
                       ? JSON.stringify(styles.input.inValid)
                       : JSON.stringify(styles.input.valid)
                   }
-                  value={values.end_date}
+                  value={values.end_date.replace('T', ' ').concat(':00')}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
