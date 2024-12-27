@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\UTCDateTime;
 
 class TransactionsController extends Controller
 {
@@ -23,7 +24,6 @@ class TransactionsController extends Controller
     {
         try {
             
-            $timestamp = Carbon::now();
             $user = Session::get('user');
             $buyerUsername = $user['username'];
     
@@ -31,7 +31,7 @@ class TransactionsController extends Controller
             $number = $request->number;
     
             $transactionInfo = [
-                'timestamp' => $timestamp,
+                'timestamp' => new UTCDateTime(Carbon::now()->timestamp * 1000),
                 'art_id' => new ObjectId((string) $artId),
                 'buyer' => $buyerUsername,
                 'number' => $number,

@@ -162,9 +162,10 @@ class User extends Authenticatable
             $db = DBConnection::getDb();
             $usersCollection = $db->users;
 
-            $purchasesInfo = $usersCollection->find(['username' => $username], ['previous_purchases' => 1, '_id' => 0])->toArray();
+            $transactionIds = $usersCollection->find(['username' => $username], ['previous_purchases' => 1, '_id' => 0])->toArray();
 
-            return $purchasesInfo;
+            $transactions = $db->transactions->find(['_id' => ['$in' => $transactionIds]])->toArray();
+            return $transactions;
         } catch (\Exception $e) {
             throw new Exception("Database error: " . $e->getMessage());
         }
