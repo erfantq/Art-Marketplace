@@ -138,15 +138,16 @@ class BaseUserController extends Controller
         try {
             if(strtolower($role) == 'user') {
                 $purchases = User::getNormalUserPurchases($user_username);
+                return Inertia::render('components/User/PurchasesHistory', compact('purchases'));
+
             } else if(strtolower($role) == 'artist') {
                 $purchases = User::getArtistPurchases($user_username);
+                return Inertia::render('components/Artist/ArtistPurchaseHistory', compact('purchases'));
             }
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
         // return Inertia::render('components/Artist/Artist', compact('user'));
-        return response()->json(['purchases' => $purchases]);
-
     }
 
     public function showUpdate($username)

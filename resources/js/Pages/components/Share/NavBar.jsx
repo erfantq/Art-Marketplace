@@ -104,12 +104,12 @@ export default function Navbar({ username, role }) {
                                             Create Artwork
                                         </Link>)
                                     }
-                                    {role.toLowerCase() === 'user' && (
+                                    {role.toLowerCase() !== 'admin' && (
                                         <Link
-                                            href={"/buyrequests"}
+                                            href={"/orders"}
                                             // onClick={createArtwork}
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
-                                            History of purchases
+                                            History of Purchases
                                         </Link>)
                                     }
                                     {role.toLowerCase() === 'artist' && (
@@ -117,13 +117,6 @@ export default function Navbar({ username, role }) {
                                             href={"/bidding/add"}
                                             className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
                                             Create Bidding
-                                        </Link>)
-                                    }
-                                    {role.toLowerCase() === 'artist' && (
-                                        <Link
-                                            href='/orders'
-                                            className="dropdown-item text-sm text-gray-900 hover:border-l-2 hover:border-purple-600">
-                                            My Seles
                                         </Link>)
                                     }
                                     <Link

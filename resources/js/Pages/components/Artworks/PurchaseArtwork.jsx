@@ -20,6 +20,12 @@ export default function PurchaseArtwork({ art, user }) {
             const response = await api.post('/purchase', values)
             console.log(response);
             showToast('success', response.data.message)
+
+            setTimeout(() => {
+                if (response.status === 200) {
+                    window.location.href = "/orders"
+                }
+            }, 5000);
         } catch (error) {
             showToast("error", error.response?.data.message)
             console.log(error);
@@ -40,7 +46,7 @@ export default function PurchaseArtwork({ art, user }) {
         initialValues: {
             artId: art._id.$oid || '',
             number: 1,
-            username : user.username
+            artist: art.artist.username
         },
         validationSchema: PurchaseSchema,
         onSubmit
