@@ -44,6 +44,7 @@ class Notification extends Model
             'item_name' => $itemName,
             'username' => $bidding['winner'],
             'end_time' => $bidding['end_time'],
+            'read_at' => null,
             'message' => "Congratulations! You've won the bidding for {$bidding->item_name}.",
         ];
 
@@ -66,6 +67,7 @@ class Notification extends Model
             'item_name' => $itemName,
             'username' => $loserUsername,  //
             'end_time' => $bidding['end_time'],
+            'read_at' => null,
             'message' => "Oh no! The user {$winner} has suggested
                            a more price than you for bidding {$itemName}. Your wallet is recharged.",
         ];
