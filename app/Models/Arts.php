@@ -64,7 +64,7 @@ class Arts extends Model
             $db = DBConnection::getDb();
             $artsCollection = $db->arts;
 
-            $art = $artsCollection->findOne(['_id' => new ObjectId($id)]);
+            $art = $artsCollection->findOne(['_id' => new ObjectId((string) $id)]);
             // $art = $artsCollection->find(strval($id));
         } catch (\Exception $e) {
             throw new Exception("Database error: " . $e->getMessage());
