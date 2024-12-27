@@ -28,6 +28,7 @@ class HomeController extends Controller
 
             if($user != null) {
                 $notifications = Notification::getUserNotifications($user['username']); // All notifications
+                Notification::markAllAsRead();
             } else {
                 $notifications = null;
             }
