@@ -78,7 +78,7 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
               key={purchase._id.$oid}
               className="col-span-5 container bg-gray-800 rounded-lg shadow-lg transform hover:mx-2 transition-all duration-300"
             >
-              <form className="p-6 grid grid-cols-3 " onSubmit={handleSubmit}>
+              <form className="p-6 grid grid-cols-3 " method='get' action={'/approve/' + purchaseSelect}>
                 <p className="col-span-2 font-semibold text-2xl items-center ">{index + 1}. {purchase.buyer}
                   <p className='text-sm font-normal'>{purchase._id.$oid}</p>
                 </p>
