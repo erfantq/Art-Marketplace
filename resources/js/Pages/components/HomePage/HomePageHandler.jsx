@@ -4,12 +4,12 @@ import ArtistHome from './ArtistHome'
 import AdminHome from './AdminHome'
 import DefaultHome from './DefaultHome';
 
-export default function HomePageHandler({ user, arts }) {
+export default function HomePageHandler({ user, arts, notifications }) {
 
 
     switch (user?.role?.toLowerCase()) {
         case 'user':
-            return (<UserHome user={user} arts={arts}/>)
+            return (<UserHome user={user} arts={arts} notifications={notifications} />)
         case 'artist':
             return (<ArtistHome user={user} />)
         case 'admin':

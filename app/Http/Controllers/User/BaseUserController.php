@@ -138,11 +138,11 @@ class BaseUserController extends Controller
         try {
             if(strtolower($role) == 'user') {
                 $purchases = User::getNormalUserPurchases($user_username);
-                return Inertia::render('components/User/PurchasesHistory', compact('purchases'));
+                return Inertia::render('components/User/UserHistoryPurchase', compact('purchases', 'user'));
 
             } else if(strtolower($role) == 'artist') {
                 $purchases = User::getArtistPurchases($user_username);
-                return Inertia::render('components/Artist/ArtistPurchaseHistory', compact('purchases'));
+                return Inertia::render('components/Artist/ArtistPurchaseHistory', compact('purchases', 'user'));
             }
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);

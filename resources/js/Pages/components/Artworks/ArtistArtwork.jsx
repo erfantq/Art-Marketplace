@@ -55,7 +55,7 @@ export default function ArtistArtworks({ user, arts }) {
             {arts.map((art) => (
                 <div
                     key={art.name}
-                    className="col-span-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
+                    className="relative col-span-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
                 >
                     <img
                         src={
@@ -64,6 +64,8 @@ export default function ArtistArtworks({ user, arts }) {
                         alt={art.name}
                         className="w-full h-48 object-cover"
                     />
+                    {art.bidding && <span class="badge badge-flat-warning absolute top-2 right-4">Bidding</span>}
+
                     <div className="p-6">
                         <p className="font-semibold text-2xl">{art.name}</p>
                         <p className="text-purple-400 ">
@@ -78,7 +80,7 @@ export default function ArtistArtworks({ user, arts }) {
                         <p className="text-sm text-gray-400 my-2">
                             Price : ${art.price}
                         </p>
-                        <Link href={user.username+'/arts/' + art._id.$oid}
+                        <Link href={user.username + '/arts/' + art._id.$oid}
                             className={JSON.stringify(styles.buttun.normal)}>
                             About it
                         </Link>
