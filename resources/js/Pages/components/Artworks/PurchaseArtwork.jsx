@@ -39,7 +39,8 @@ export default function PurchaseArtwork({ art, user }) {
     } = useFormik({
         initialValues: {
             artId: art._id.$oid || '',
-            number: 1
+            number: 1,
+            username : user.username
         },
         validationSchema: PurchaseSchema,
         onSubmit

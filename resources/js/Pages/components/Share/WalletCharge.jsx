@@ -11,6 +11,52 @@ export default function WalletCharge({ user }) {
 
     // const [user, setUser] = useState({})
     const showToast = useToastify()
+    const [btnSubmit, setBtnSubmit] = useState(false);
+
+    const styles = {
+        input: {
+            valid: {
+                grid: " w-full h-9 px-2 py-1 rounded-md ",
+                color: " text-sm bg-gray-800 border border-gray-700 ",
+                focus: " focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 "
+            },
+            inValid: {
+                grid: " w-full h-9 px-2 py-1 rounded-md ",
+                color: " text-sm bg-gray-800 border border-red-700 text-gray-300 ",
+                focus: " focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-red-500 "
+            }
+        },
+        div: {
+            transition: " transform transition-colors duration-500 ",
+            grid: " w-full h-9 px-2 py-2 rounded-md ",
+            color: " text-sm bg-gray-800 border-l-2 border-gray-700 hover:border-purple-600 text-gray-300 "
+        },
+        buttun: {
+            normal: {
+                grid: "  w-full btn h-9 px-2 py-2 my-4 rounded-md  ",
+                color: " text-sm font-medium text-white bg-purple-700 "
+            },
+            submitting: {
+                grid: "  w-full btn h-9 px-2 py-2 my-4 rounded-md  ",
+                color: " text-sm font-medium text-white bg-purple-400 cursor-not-allowed "
+
+            }
+        },
+        span: {
+            error: " form-label-alt block text-red-500 text-md "
+        },
+        textarea: {
+            valid: {
+                grid: " bg-gray-800 w-full rounded-md ",
+                color: " w-full p-3 text-gray-400 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-200 "
+            },
+            inValid: {
+                grid: " bg-gray-800 w-full rounded-md ",
+                color: " w-full p-3 text-gray-600 border-2 border-red-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200 "
+            }
+        }
+    }
+
 
     // useEffect(() => {
     //     setUser(JSON.parse(sessionStorage.getItem('user')));
@@ -32,10 +78,13 @@ export default function WalletCharge({ user }) {
 
             // setBtnSubmit(true);
             showToast('success', "Update Seccessfully!")
-
+            setBtnSubmit(true)
             setTimeout(() => {
-                // setBtnSubmit(false);
-                // navigate('/home')
+                setBtnSubmit(false);
+                if (response.status === 200) {
+                    window.location.href = "/"
+                }
+
             }, 4000);
             console.log(response.data);
         } catch (error) {
@@ -96,7 +145,7 @@ export default function WalletCharge({ user }) {
                                     <label
                                         className="col-span-4 mb-2 text-sm font-medium text-gray-400"
                                         htmlFor="charge"
-                                    >   
+                                    >
                                         Amount of charge
                                     </label>
                                     <input
@@ -119,13 +168,17 @@ export default function WalletCharge({ user }) {
                                             {errors.charge}
                                         </span>
                                     )}
-                                    <button
-                                        type="submit"
+                                    <div className="col-span-full">
+                                        <button
+                                            type="submit"
                                         // onClick={() => navigate('/edit-profile')}
-                                        className="col-start-2 col-end-4 h-9 px-4 py-2 text-sm font-medium text-white bg-purple-700 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-md"
-                                    >
-                                        Charge
-                                    </button>
+                                            className={btnSubmit
+                                                ? JSON.stringify(styles.buttun.submitting)
+                                                : JSON.stringify(styles.buttun.normal)}
+                                        >
+                                            {btnSubmit ? "Charging..." : "Charge"}
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
 
