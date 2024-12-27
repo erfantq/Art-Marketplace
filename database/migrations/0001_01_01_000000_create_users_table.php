@@ -20,6 +20,8 @@ return new class extends Migration
 
         $database->createCollection('users');
 
+        $database->users->createIndex(['username' => 1]);
+
         /*
             User {
                 Username
