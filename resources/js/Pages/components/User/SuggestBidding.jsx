@@ -6,16 +6,20 @@ import { CiImageOff } from "react-icons/ci";
 import axios from "axios";
 import useToastify from "../../../hooks/useToastify";
 import ShowComments from '../Artworks/ShowComments'
+import { format } from "date-fns";
 export default function SuggestBidding({ bidding, user, art }) {
     // const [comments, setComments] = useState(art.reviews);
     const [btnSubmit, setBtnSubmit] = useState(false);
     const [imgError, setImgError] = useState(false)
+    const [formattedDate, setFormattedDate] = useState('');
+
+    const dateObject = new Date(bidding.end_time.$date.$numberLong * 1000); // Convert seconds to milliseconds
     const showToast = useToastify()
     useEffect(() => {
-        console.log(user);
-        console.log(bidding);
-        console.log(art);
-    }, []);
+        const formatted = format(dateObject, 'yyyy-MM-dd HH:mm:ss');
+        setFormattedDate(formatted);
+
+    }, [dateObject]);
 
     const styles = {
         input: {
@@ -138,10 +142,30 @@ export default function SuggestBidding({ bidding, user, art }) {
                                 <label
                                     className="block mb-2 text-sm font-medium text-gray-400"
                                 >
+                                    End Time
+                                </label>
+                                <div className={JSON.stringify(styles.div)}>
+                                    {formattedDate.toString()}
+                                </div>
+                            </div>
+                            <div className="col-span-3 ">
+                                <label
+                                    className="block mb-2 text-sm font-medium text-gray-400"
+                                >
                                     Sold Number
                                 </label>
                                 <div className={JSON.stringify(styles.div)}>
                                     {art.sold_number}
+                                </div>
+                            </div>
+                            <div className="col-span-3 ">
+                                <label
+                                    className="block mb-2 text-sm font-medium text-gray-400"
+                                >
+                                    Winner Now
+                                </label>
+                                <div className={JSON.stringify(styles.div)}>
+                                    {bidding.winner}
                                 </div>
                             </div>
                             {/* <div className="col-span-3">
