@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Arts;
 use App\Models\DBConnection;
 use App\Models\Transactions;
 use App\Services\TransactionsService;
@@ -30,6 +31,7 @@ class TransactionsController extends Controller
             $artId = $request->artId;
             $number = $request->number;
             $artistUsername = $request->artist;
+
     
             $transactionInfo = [
                 'timestamp' => new UTCDateTime(Carbon::now()->timestamp * 1000),

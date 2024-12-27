@@ -56,7 +56,7 @@ export default function Navbar({ username, role }) {
                     <IoWalletOutline className="flex ml-2" />
 
                 </Link>)}
-                <a className="navbar-item text-white">Bidding</a>
+                {/* <a className="navbar-item text-white">Bidding</a> */}
             </div>
 
             <div className="navbar-end">

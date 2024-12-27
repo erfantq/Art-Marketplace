@@ -40,7 +40,7 @@ export default function UserArtworks({ arts, user }) {
             {arts.map((art) => (
                 <div
                     key={art.name}
-                    className="col-span-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
+                    className="relative col-span-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
                 >
                     <img
                         src={
@@ -49,6 +49,7 @@ export default function UserArtworks({ arts, user }) {
                         alt={art.name}
                         className="w-full h-48 object-cover"
                     />
+                    {art.bidding && <span class="badge badge-flat-warning absolute top-2 right-4">Bidding</span>}
                     <div className="p-6">
                         <p className="font-semibold text-2xl">{art.name}</p>
                         <p className="text-purple-400 ">

@@ -4,7 +4,7 @@ import useToastify from '../../../hooks/useToastify'
 import { CiCircleAlert } from "react-icons/ci";
 import { number } from 'yup';
 import Navbar from '../Share/NavBar';
-export default function ArtistPurchaseHistory({ purchases, user }) {
+export default function UserHistoryPurchase({ purchases, user }) {
 
   const [purchaseSelect, setPurchaseSelect] = useState('')
   const [dataPurchases, setDataPurchases] = useState(purchases)
@@ -79,7 +79,7 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
               className="col-span-5 container bg-gray-800 rounded-lg shadow-lg transform hover:mx-2 transition-all duration-300"
             >
               <form className="p-6 grid grid-cols-3 " onSubmit={handleSubmit}>
-                <p className="col-span-2 font-semibold text-2xl items-center ">{index + 1}. {purchase.buyer}
+                <p className="col-span-2 font-semibold text-2xl items-center ">{index + 1}. {purchase.artist}
                   <p className='text-sm font-normal'>{purchase._id.$oid}</p>
                 </p>
                 <ol className="steps col-span-full mt-2">
