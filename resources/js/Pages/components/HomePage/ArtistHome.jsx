@@ -55,7 +55,7 @@ export default function ArtistHome({ user,notifications }) {
         {/* <UserArtworks /> */}
         {/* </div> */}
         <ArtistArtworks arts={arts} user={user} />
-        <Notification notifications={notifications}/>
+        {/* <Notification notifications={notifications}/> */}
 
 
       </div>

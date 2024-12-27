@@ -89,12 +89,9 @@ export default function UserHistoryPurchase({ purchases, user }) {
                   </li>
                   <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 1 ? 'step-active' : 'step-done'}`}>
                     <div className="step-circle">1</div>
-                    <h3>Post</h3>
-                  </li>
-                  <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 2 ? 'step-active' : 'step-done'}`}>
-                    <div className="step-circle">2</div>
                     <h3>Done</h3>
                   </li>
+
                 </ol>
                 {/* <p className='col-span-2 items-center flex'>Created at : {user.created_at.$date.$numberLong}</p> */}
                 {/* <button type='submit'

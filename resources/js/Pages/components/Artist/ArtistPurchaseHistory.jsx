@@ -89,10 +89,6 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
                   </li>
                   <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 1 ? 'step-active' : 'step-done'}`}>
                     <div className="step-circle">1</div>
-                    <h3>Post</h3>
-                  </li>
-                  <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 2 ? 'step-active' : 'step-done'}`}>
-                    <div className="step-circle">2</div>
                     <h3>Done</h3>
                   </li>
                 </ol>
