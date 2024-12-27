@@ -14,9 +14,9 @@ export default function UserHome({ user, arts, notifications }) {
         console.log('noti', notifications);
     }, [])
     return (
-        <div>
+        <div className='relative'>
             <Navbar username={user.username} role={user.role} />
-            <div className="relative container min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100  items-center justify-center p-6 mt-14">
+            <div className=" container min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100  items-center justify-center p-6 mt-14">
                 {/* <div className="grid grid-cols-12"> */}
                 {/* <UserArtworks /> */}
                 {/* </div> */}
@@ -27,11 +27,7 @@ export default function UserHome({ user, arts, notifications }) {
                 </div>
                 <ShowBiddings arts={biddingArts} />
 
-                <label htmlFor='drawer-1'
-                    className='btn btn-secondary absolute top-96'>
-                    Notifications
-                </label>
-                <Notification />
+                <Notification notifications={notifications}/>
             </div>
         </div>
     )

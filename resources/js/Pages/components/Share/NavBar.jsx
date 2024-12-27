@@ -56,6 +56,10 @@ export default function Navbar({ username, role }) {
                     <IoWalletOutline className="flex ml-2" />
 
                 </Link>)}
+                <label htmlFor='drawer-1'
+                    className='navbar-item bg-black text-white'>
+                    Notifications
+                </label>
                 {/* <a className="navbar-item text-white">Bidding</a> */}
             </div>
 

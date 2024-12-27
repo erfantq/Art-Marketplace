@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function Notification({ notifications }) {
-    
+
     return (
         <div>
             {/* Drawer */}
@@ -23,16 +23,6 @@ export default function Notification({ notifications }) {
                     {/* Data box */}
                     <div>
                         <div className="p-6">
-                            <div className="breadcrumbs text-sm">
-                                <ul>
-                                    <li>
-                                        <p>sdv</p>
-                                    </li>
-                                    <li>
-                                        <p>vsd</p>
-                                    </li>
-                                </ul>
-                            </div>
                             {/* <p className="font-semibold text-2xl my-2">
                                 {selectArt.name}
                             </p>
@@ -46,12 +36,6 @@ export default function Notification({ notifications }) {
                                 Price : ${selectArt.price}
                             </p> */}
                         </div>
-                    </div>
-                    <div className="h-full flex flex-row justify-end items-end gap-2">
-                        <button className="btn btn-ghost">Cancel</button>
-                        <button className="btn bg-purple-600 text-white">
-                            Purchace
-                        </button>
                     </div>
                 </div>
             </div>

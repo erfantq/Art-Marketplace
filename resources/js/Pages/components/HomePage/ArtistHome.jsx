@@ -3,7 +3,8 @@ import Navbar from '../Share/NavBar';
 import UserArtworks from '../Artworks/UserArtworks';
 import useToastify from '../../../hooks/useToastify';
 import ArtistArtworks from '../Artworks/ArtistArtwork';
-export default function ArtistHome({ user }) {
+import Notification from '../Share/Notification';
+export default function ArtistHome({ user,notifications }) {
 
   const showToast = useToastify()
   const [arts, setArts] = useState([])
@@ -54,6 +55,7 @@ export default function ArtistHome({ user }) {
         {/* <UserArtworks /> */}
         {/* </div> */}
         <ArtistArtworks arts={arts} user={user} />
+        <Notification notifications={notifications}/>
 
 
       </div>
