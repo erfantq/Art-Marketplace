@@ -35,7 +35,7 @@ class ArtsController extends Controller
     public function create($username)
     {
         // TODO
-        return Inertia::render('components/Artist/CreateArtwork', $username);
+        return Inertia::render('components/Artist/CreateArtwork', compact('username'));
     }
 
     /**
@@ -73,14 +73,14 @@ class ArtsController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
-        
+
         // return response()->json([
         //     'username' => $username,
         //     'art' => $art,
         // ]);
 
         // TODO
-        return Inertia::render('', compact('username', 'art'));
+        return Inertia::render('components/Artworks/ArtistSelectedArtwork', compact('username', 'art'));
     }
 
     /**

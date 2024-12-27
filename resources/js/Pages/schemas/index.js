@@ -22,7 +22,7 @@ export const RegisterSchema = yup.object().shape({
 export const CreateArtworkSchema = yup.object().shape({
     name : yup.string().required(requiredTxt),
     price : yup.string().required(requiredTxt),
-    number : yup.string().required(requiredTxt),
+    number : yup.string().min(1).required(requiredTxt),
 })
 
 export const WalletChargeSchema = yup.object().shape({

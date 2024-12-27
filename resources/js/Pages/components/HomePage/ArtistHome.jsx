@@ -16,8 +16,26 @@ export default function ArtistHome({ user }) {
       });
       const response = await api.get(user.username + "/arts")
       setArts(response.data.arts)
+      // response = await api.get("/orders")
+      // console.log("res3", response);
 
-      console.log(response);
+    } catch (error) {
+      showToast('error', error.response?.data.message)
+    }
+  };
+
+  const getOrders = async (values, action) => {
+    try {
+      const api = axios.create({
+        baseURL: '/', // Replace with your backend URL
+        withCredentials: true
+      });
+      const response = await api.get("orders")
+      // setArts(response.data.arts)
+      // response = await api.get("/orders")
+      // console.log("res3", response);
+      console.log("ress", response);
+
     } catch (error) {
       showToast('error', error.response?.data.message)
     }
@@ -25,6 +43,7 @@ export default function ArtistHome({ user }) {
 
   useEffect(() => {
     getArtistArts()
+    getOrders()
   }, [])
 
   return (
@@ -34,7 +53,7 @@ export default function ArtistHome({ user }) {
         {/* <div className="grid grid-cols-12"> */}
         {/* <UserArtworks /> */}
         {/* </div> */}
-        {/* <ArtistArtworks arts={arts} user={user} /> */}
+        <ArtistArtworks arts={arts} user={user} />
 
 
       </div>

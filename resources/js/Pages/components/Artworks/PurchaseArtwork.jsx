@@ -19,7 +19,7 @@ export default function PurchaseArtwork({ art, user }) {
 
             const response = await api.post('/purchase', values)
             console.log(response);
-            showToast('succuss', response.data.message)
+            showToast('success', response.data.message)
         } catch (error) {
             showToast("error", error.response?.data.message)
             console.log(error);
