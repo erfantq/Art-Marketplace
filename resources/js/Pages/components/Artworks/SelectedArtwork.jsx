@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Share/NavBar";
-import CommentSection from "./CommentSection"; // Importing CommentSection
 import { useFormik } from "formik";
 import { ArtworkCommentSchema } from "../../schemas";
 import { CiImageOff } from "react-icons/ci";
@@ -11,6 +10,7 @@ import PurchaseArtwork from "./PurchaseArtwork";
 
 export default function SelectedArtwork({ art, user }) {
     // const [comments, setComments] = useState(art.reviews);
+    const [currComments, setCurrComments] = useState(art.reviews)
     const [btnSubmit, setBtnSubmit] = useState(false);
     const [imgError, setImgError] = useState(false)
     const [newComment, setNewComment] = useState()
@@ -65,6 +65,7 @@ export default function SelectedArtwork({ art, user }) {
             showToast('success', 'Registered your comment')
             console.log("ress", response);
             setNewComment(response.data.comment)
+            setCurrComments((prev) => ([...prev, response.data.comment]))
             // setComments((prevComments) => setComments(...prevComments, response.data.comment))
             setBtnSubmit(true)
             setTimeout(() => {
@@ -221,7 +222,7 @@ export default function SelectedArtwork({ art, user }) {
                         }
                     </div>
 
-                    <ShowComments comments={art.reviews} />
+                    <ShowComments comments={currComments} />
                 </div>
             </div>
         </div>

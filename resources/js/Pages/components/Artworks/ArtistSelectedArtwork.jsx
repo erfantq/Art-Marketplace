@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Share/NavBar";
-import CommentSection from "./CommentSection"; // Importing CommentSection
 import { useFormik } from "formik";
 import { ArtworkCommentSchema } from "../../schemas";
 import { CiImageOff } from "react-icons/ci";
@@ -138,17 +137,6 @@ export default function ArtistSelectedArtwork({ art, username }) {
                                 <div className={JSON.stringify(styles.div)}>
                                     {art.number}
                                 </div>
-                            </div>
-                            <div className="col-span-3">
-
-                                <label
-                                    htmlFor="modal-1"
-                                    type="button"
-                                    className={JSON.stringify(styles.buttun.normal) + " w-full"}
-                                >
-                                    Purchuse
-                                </label>
-
                             </div>
                             <div className="col-span-3">
 

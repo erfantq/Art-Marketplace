@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Notification({ notifications }) {
-    
+
+    useEffect(() => {
+        console.log("notiff", notifications);
+    }, [])
     return (
         <div>
             {/* Drawer */}
@@ -21,38 +24,22 @@ export default function Notification({ notifications }) {
                         ✕
                     </label>
                     {/* Data box */}
-                    <div>
-                        <div className="p-6">
-                            <div className="breadcrumbs text-sm">
-                                <ul>
-                                    <li>
-                                        <p>sdv</p>
-                                    </li>
-                                    <li>
-                                        <p>vsd</p>
-                                    </li>
-                                </ul>
-                            </div>
-                            {/* <p className="font-semibold text-2xl my-2">
-                                {selectArt.name}
+                    {notifications.map((notif, index) => (
+                        <div key={notif._id.$oid}>
+                            <div className="p-6 border-b-2">
+                                <p className="font-semibold text-2xl my-2">
+                                    item :  {notif.item_name}
                             </p>
-                            <p className="text-purple-400 ">
-                                Artist : {selectArt.artist.username}
-                            </p>
-                            <p className="text-sm text-gray-500 my-2">
-                                Quantity : {selectArt.number}
+                                <p className="text-white ">
+                                    message : {notif.message}
                             </p>
                             <p className="text-sm text-gray-400 my-2">
-                                Price : ${selectArt.price}
-                            </p> */}
+                                    username : {notif.username}
+                                </p>
                         </div>
                     </div>
-                    <div className="h-full flex flex-row justify-end items-end gap-2">
-                        <button className="btn btn-ghost">Cancel</button>
-                        <button className="btn bg-purple-600 text-white">
-                            Purchace
-                        </button>
-                    </div>
+
+                    ))}
                 </div>
             </div>
         </div>

@@ -70,7 +70,7 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
         {purchases.length === 0 ? (
           <div className={styles.noUsers}>
             <CiCircleAlert className='text-5xl mb-2' />
-            <span className='flex text-center'>Inactive artist does not exist!</span>
+            <span className='flex text-center'>History is Empty!</span>
           </div>
         )
           : dataPurchases.map((purchase, index) => (
@@ -78,7 +78,7 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
               key={purchase._id.$oid}
               className="col-span-5 container bg-gray-800 rounded-lg shadow-lg transform hover:mx-2 transition-all duration-300"
             >
-              <form className="p-6 grid grid-cols-3 " onSubmit={handleSubmit}>
+              <form className="p-6 grid grid-cols-3 " method='get' action={'/approve/' + purchaseSelect}>
                 <p className="col-span-2 font-semibold text-2xl items-center ">{index + 1}. {purchase.buyer}
                   <p className='text-sm font-normal'>{purchase._id.$oid}</p>
                 </p>
@@ -89,10 +89,6 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
                   </li>
                   <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 1 ? 'step-active' : 'step-done'}`}>
                     <div className="step-circle">1</div>
-                    <h3>Post</h3>
-                  </li>
-                  <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 2 ? 'step-active' : 'step-done'}`}>
-                    <div className="step-circle">2</div>
                     <h3>Done</h3>
                   </li>
                 </ol>
