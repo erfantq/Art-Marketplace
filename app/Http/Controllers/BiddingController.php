@@ -49,8 +49,11 @@ class BiddingController extends Controller
         $base_price = $request->base_price;
         $artId = $request->art_id;
 
+        $itemName = Arts::getArt($artId)['name'];
+
         $info = [
             'art_id' => new ObjectId((string) $artId),
+            'item_name' => $itemName,
             'artist' => $artist['username'],
             'base_price' => $base_price,
             'highest_suggestion' => 0,

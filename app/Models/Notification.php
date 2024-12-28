@@ -36,11 +36,11 @@ class Notification extends Model
 
     public static function insertWinnerNotification($bidding)
     {
-        $artIdString = (string) $bidding['art_id'];
-        $itemName = Arts::getArt($artIdString)['name'];
+        // $artIdString = (string) $bidding['art_id'];
+        // $itemName = Arts::getArt($artIdString)['name'];
         $info = [
             // 'bidding_id' => $bidding['_id'],
-            'item_name' => $itemName,
+            'item_name' => $bidding->item_name,
             'username' => $bidding['winner'],
             'end_time' => $bidding['end_time'],
             'read_at' => null,
@@ -56,19 +56,19 @@ class Notification extends Model
         }
     }
 
-    public static function insertLoserNotification($bidding, $loserUsername)
+    public static function insertLoserNotification($bidding, $loserUsername, $buyerUsername)
     {
-        $artIdString = (string) $bidding['art_id'];
-        $itemName = Arts::getArt($artIdString)['name'];
+        // $artIdString = (string) $bidding['art_id'];
+        // $itemName = Arts::getArt($artIdString)['name'];
         $winner = $bidding['winner'];
         $info = [
             // 'bidding_id' => $bidding['_id'],
-            'item_name' => $itemName,
+            'item_name' => $bidding->item_name,
             'username' => $loserUsername,  //
             'end_time' => $bidding['end_time'],
             'read_at' => null,
-            'message' => "Oh no! The user {$winner} has suggested
-                           a more price than you for bidding {$itemName}. Your wallet is recharged.",
+            'message' => "Oh no! The user {$buyerUsername} has suggested
+                           a more price than you for bidding {$bidding->item_name}. Your wallet is recharged.",
         ];
 
         try {

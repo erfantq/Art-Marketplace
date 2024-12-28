@@ -58,7 +58,7 @@ class BiddingService
                 throw new \Exception("You should suggest a higher price than last suggested price.");
             }
             if($bidding['winner'] != null) {
-                $this->processOldWinner($bidding);
+                $this->processOldWinner($bidding, $buyerUsername);
             }
             $this->processNewWinner($user, $suggestedPrice);
 
@@ -84,7 +84,8 @@ class BiddingService
                     $artId = $bidding['art_id'];
                     if($winnerUsername != null) {
                         $winner = $this->usersCollection->findOne(['username' => $winnerUsername]);
-                        $this->updateTransaction($bidding, $winner, $artId);
+                        $winnerUsername = $winner['username'];
+                        $this->updateTransaction($bidding, $winnerUsername, $artId);  //
                         Notification::insertWinnerNotification($bidding);
                     }
 
@@ -106,7 +107,7 @@ class BiddingService
         
         $artIdString = (string) $artId;
         $transactionInfo = [
-            'timestamp' => Carbon::now(),
+            'timestamp' => Carbon::now()->timestamp,
             'buyer' => $winner,
             'artId' => new ObjectId((string) $artId),
             'number' => 1,
@@ -130,7 +131,7 @@ class BiddingService
         $this->biddingsCollection->deleteOne(['art_id' => $artId]);
     }
 
-    private function processOldWinner($bidding)  // notify
+    private function processOldWinner($bidding, $buyerUsername)  // notify
     {
         try {
             $backMoney = $bidding['highest_suggestion'];
@@ -146,7 +147,7 @@ class BiddingService
             $this->usersCollection->updateOne($filter, $update);
 
             // $oldWinner->notify(new BiddingLoserNotification($bidding, $oldWinnerUsername));
-            Notification::insertLoserNotification($bidding, $oldWinnerUsername);
+            Notification::insertLoserNotification($bidding, $oldWinnerUsername, $buyerUsername);
         } catch (\Exception $e) {
             throw new \Exception("Database error1: " . $e->getMessage());
         }
