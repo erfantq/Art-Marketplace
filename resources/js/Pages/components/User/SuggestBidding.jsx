@@ -12,19 +12,22 @@ export default function SuggestBidding({ bidding, user, art }) {
     const [btnSubmit, setBtnSubmit] = useState(false);
     const [imgError, setImgError] = useState(false)
     const [formattedDate, setFormattedDate] = useState('');
+    const showToast = useToastify()
+    const dateObject = bidding?.end_time
+        ? new Date(bidding.end_time * 1000)
+        : null;
 
-    const dateObject = bidding?.end_time?.$date?.$numberLong
-  ? new Date(bidding.end_time.$date.$numberLong * 1000)
-  : null;
-
-useEffect(() => {
-  if (dateObject) {
-    const formatted = format(dateObject, 'yyyy-MM-dd HH:mm:ss');
-    setFormattedDate(formatted);
-  } else {
-    setFormattedDate("Invalid Date");
-  }
-}, [dateObject]);
+    useEffect(() => {
+        // console.log(bidding);
+        // const dateObject = new Date(bidding.end_time * 1000)
+        // setFormattedDate(dateObject, 'yyyy-MM-dd HH:mm:ss')
+        if (dateObject) {
+            const formatted = format(dateObject, 'yyyy-MM-dd HH:mm:ss');
+            setFormattedDate(formatted);
+        } else {
+            setFormattedDate("Invalid Date");
+        }
+    }, []);
 
     const styles = {
         input: {

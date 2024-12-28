@@ -57,11 +57,11 @@ export default function Navbar({ username, role }) {
                     <IoWalletOutline className="flex ml-2" />
 
                 </Link>)}
-                <label htmlFor='drawer-1'
+                {username && role.toLowerCase() === 'user' && (<label htmlFor='drawer-1'
                     className='navbar-item text-white bg-black flex items-center'>
                     <span>Notifications</span>
                     <IoIosNotificationsOutline className="flex ml-2 text-xl" />
-                </label>
+                </label>)}
                 {/* <a className="navbar-item text-white">Bidding</a> */}
             </div>
 
