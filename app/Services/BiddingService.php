@@ -111,6 +111,7 @@ class BiddingService
             'buyer' => $winner,
             'artist' => $bidding['artist'],
             'artId' => new ObjectId((string) $artId),
+            'item_name' => $bidding['item_name'],
             'number' => 1,
             'order_status' => 0,    
             'bidding' => true,
