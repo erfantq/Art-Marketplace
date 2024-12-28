@@ -29,7 +29,7 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
       setPurchaseSelect('')
       showToast('success', response.data.message)
       setTimeout(() => {
-        setPurchaseSelect((prevUsers) => prevUsers.filter(purchase => purchase._id.$oid !== purchaseSelect));
+        // setPurchaseSelect((prevUsers) => prevUsers.filter(purchase => purchase._id.$oid !== purchaseSelect));
         setBtnSubmit((prev) => ({ ...prev, [purchaseSelect]: false }));
       }, 5000);
 
@@ -79,8 +79,9 @@ export default function ArtistPurchaseHistory({ purchases, user }) {
               className="col-span-5 container bg-gray-800 rounded-lg shadow-lg transform hover:mx-2 transition-all duration-300"
             >
               <form className="p-6 grid grid-cols-3 " onSubmit={handleSubmit}>
-                <p className="col-span-2 font-semibold text-2xl items-center ">{index + 1}. {purchase.buyer}
-                  <p className='text-sm font-normal'>{purchase._id.$oid}</p>
+                <p className="col-span-2 font-semibold text-2xl items-center my-2">{index + 1}. {purchase.item_name.name}
+                  <p className='text-sm font-normal'>Number : {purchase.number}</p>
+                  <p className='text-lg font-normal text-purple-500'>Buyer : {purchase.buyer}</p>
                 </p>
                 <ol className="steps col-span-full mt-2">
                   <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 0 ? 'step-active' : 'step-done'}`}>

@@ -65,7 +65,7 @@ export default function UserHistoryPurchase({ purchases, user }) {
 
     <div className="container min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100  items-center justify-center p-6 mt-14">
       <Navbar username={user.username} role={user.role} />
-      <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12 gap-3">
 
         {purchases.length === 0 ? (
           <div className={styles.noUsers}>
@@ -79,8 +79,9 @@ export default function UserHistoryPurchase({ purchases, user }) {
               className="col-span-5 container bg-gray-800 rounded-lg shadow-lg transform hover:mx-2 transition-all duration-300"
             >
               <form className="p-6 grid grid-cols-3 " onSubmit={handleSubmit}>
-                <p className="col-span-2 font-semibold text-2xl items-center ">{index + 1}. {purchase.artist}
-                  <p className='text-sm font-normal'>{purchase._id.$oid}</p>
+                <p className="col-span-2 font-semibold text-2xl items-center my-2">{index + 1}. {purchase.item_name.name}
+                  <p className='text-sm font-normal'>Number : {purchase.number}</p>
+                  <p className='text-xl font-normal text-purple-500'>Artist: {purchase.artist}</p>
                 </p>
                 <ol className="steps col-span-full mt-2">
                   <li className={`step step-secondary step-active overflow-hidden ${purchase.order_status == 0 ? 'step-active' : 'step-done'}`}>
