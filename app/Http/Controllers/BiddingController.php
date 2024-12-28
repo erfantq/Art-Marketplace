@@ -47,7 +47,6 @@ class BiddingController extends Controller
     {
         $artist = Session::get('user');
         $base_price = $request->base_price;
-        $endTime = $request->end_date;
         $artId = $request->art_id;
 
         $info = [
@@ -57,7 +56,7 @@ class BiddingController extends Controller
             'highest_suggestion' => 0,
             'winner' => null,
             'start_time' =>  Carbon::now()->timestamp,
-            'end_time' => Carbon::now()->addMinutes(2)->timestamp,
+            'end_time' => Carbon::now()->addMinutes(3)->timestamp,
         ];
 
         try {

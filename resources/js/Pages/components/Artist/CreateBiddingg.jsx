@@ -66,7 +66,7 @@ export default function CreateBiddingg({ user, arts }) {
     initialValues: {
       art_id: "",
       base_price: 100,
-      end_date: ""
+      end_date: "2024-12-08 01:30:05"
     },
     validationSchema: CreateBiddingSchema,
     onSubmit,
@@ -209,34 +209,7 @@ export default function CreateBiddingg({ user, arts }) {
                   </span>
                 )}
               </div>
-              <div className="my-4 col-span-4">
-                <label
-                  className="block text-sm font-medium text-gray-400"
-                  htmlFor="charge"
-                >
-                  End Time
-                </label>
-                <input
-                  type="datetime-local"
-                  id="end_date"
-                  name="end_date"
-                  className={
-                    errors.end_date && touched.end_date
-
-                      ? JSON.stringify(styles.input.inValid)
-                      : JSON.stringify(styles.input.valid)
-                  }
-                  value={values.end_date}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-
-                {errors.end_date && touched.end_date && (
-                  <span className="text-red-500 text-xs col-span-4 mb-4 mt-1">
-                    {errors.end_date}
-                  </span>
-                )}
-              </div>
+              
               <div className="col-span-4">
 
                 <button

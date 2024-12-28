@@ -13,13 +13,18 @@ export default function SuggestBidding({ bidding, user, art }) {
     const [imgError, setImgError] = useState(false)
     const [formattedDate, setFormattedDate] = useState('');
 
-    const dateObject = new Date(bidding.end_time.$date.$numberLong * 1000); // Convert seconds to milliseconds
-    const showToast = useToastify()
-    useEffect(() => {
-        const formatted = format(dateObject, 'yyyy-MM-dd HH:mm:ss');
-        setFormattedDate(formatted);
+    const dateObject = bidding?.end_time?.$date?.$numberLong
+  ? new Date(bidding.end_time.$date.$numberLong * 1000)
+  : null;
 
-    }, [dateObject]);
+useEffect(() => {
+  if (dateObject) {
+    const formatted = format(dateObject, 'yyyy-MM-dd HH:mm:ss');
+    setFormattedDate(formatted);
+  } else {
+    setFormattedDate("Invalid Date");
+  }
+}, [dateObject]);
 
     const styles = {
         input: {
