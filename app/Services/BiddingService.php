@@ -109,6 +109,7 @@ class BiddingService
         $transactionInfo = [
             'timestamp' => Carbon::now()->timestamp,
             'buyer' => $winner,
+            'artist' => $bidding['artist'],
             'artId' => new ObjectId((string) $artId),
             'number' => 1,
             'order_status' => 0,    
